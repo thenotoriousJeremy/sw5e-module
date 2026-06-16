@@ -394,6 +394,15 @@ function excludeManeuversFromFeatures() {
 	});
 }
 
+function patchActivitySpellcastingAbility() {
+	Hooks.on("sw5e.Activity.spellcastingAbility", function (_this, result, config, ...args) {
+		const item = _this.item;
+		if ( item && (item.type === "sw5e.maneuver" || item.type === "sw5e-module.maneuver") ) {
+			config.result = item.system._typeAbilityMod;
+		}
+	});
+}
+
 export function patchManeuver() {
 	adjustItemSpellcastingGetter();
 	patchItemSheet();
@@ -406,4 +415,5 @@ export function patchManeuver() {
 	addCompendiumBrowserTab();
 	normalizeManeuverDropType();
 	excludeManeuversFromFeatures();
+	patchActivitySpellcastingAbility();
 }

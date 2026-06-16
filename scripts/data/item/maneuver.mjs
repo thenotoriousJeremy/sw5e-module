@@ -229,10 +229,27 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 		if (!this.parent.actor?.system?.attributes?.prof) this.prof = new Proficiency(0, 0);
 		else this.prof = new Proficiency(this.parent.actor.system.attributes.prof, this.proficiencyMultiplier ?? 0);
 
-		const superiorityDc = Number(this.parent.actor?.system?.superiority?.types?.[this.type.value]?.dc);
-		if ( Number.isFinite(superiorityDc) ) {
-			for ( const activity of maneuverSaveActivitiesAsArray(this.activities) ) {
-				if ( activity.save?.dc && typeof activity.save.dc === "object" ) activity.save.dc.value = superiorityDc;
+		const actor = this.parent.actor;
+		if ( actor ) {
+			const type = this.type.value || "general";
+			const typeConfig = CONFIG.DND5E.superiority?.types?.[type];
+			if ( typeConfig ) {
+				const { simplifyBonus } = dnd5e.utils;
+				const base = 8 + (actor.system.attributes?.prof ?? 0);
+				const bonusAll = simplifyBonus(actor.system.bonuses?.superiority?.dc?.all, rollData);
+				const bonus = simplifyBonus(actor.system.bonuses?.superiority?.dc?.[type], rollData) + bonusAll;
+				const best = getBestAbility(actor, typeConfig.attr, 0);
+				const superiorityDc = base + best.mod + bonus;
+				for ( const activity of maneuverSaveActivitiesAsArray(this.activities) ) {
+					if ( activity.save?.dc && typeof activity.save.dc === "object" ) {
+						activity.save.dc.value = superiorityDc;
+						const ability = activity.spellcastingAbility;
+						activity.labels.save = game.i18n.format("DND5E.SaveDC", {
+							dc: superiorityDc,
+							ability: CONFIG.DND5E.abilities[ability]?.label ?? ""
+						});
+					}
+				}
 			}
 		}
 	}

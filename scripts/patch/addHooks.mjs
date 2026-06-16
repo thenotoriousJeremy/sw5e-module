@@ -49,6 +49,8 @@ export function addHooks() {
 	// Item5e Hooks
 	addHook('dnd5e.documents.Item5e.prototype.spellcasting', 'Item5e.spellcasting');
 	addHookAsync('dnd5e.documents.Item5e.fromDropData', 'Item5e.fromDropData');
+	// Activity Hooks
+	addHook('dnd5e.dataModels.activity.BaseActivityData.prototype.spellcastingAbility', 'Activity.spellcastingAbility');
 
 	//-----------------//
 	// DataModel Hooks //

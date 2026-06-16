@@ -48,3 +48,4 @@ If you want the newest public release, open Foundry's **Install Module** window 
 
 ```text
 https://github.com/sw5e-foundry/sw5e-module/releases/latest/download/module.json
+```
