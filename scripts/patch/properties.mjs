@@ -1,6 +1,8 @@
 import { getFlag } from "../utils.mjs";
 
 import { patchKeen } from "./properties/keen.mjs";
+import { patchBrutal } from "./properties/brutal.mjs";
+import { patchVicious } from "./properties/vicious.mjs";
 import { patchReload } from "./properties/reload.mjs";
 
 function addHelper() {
@@ -237,4 +239,6 @@ export function patchProperties() {
 
 	// patchReload();
 	patchKeen();
+	patchBrutal();
+	patchVicious();
 }

@@ -473,22 +473,22 @@ function preparePowercasting() {
 				for (const cls of _this.itemTypes?.class ?? []) {
 					const pc = cls.spellcasting;
 
-					if (!pc || pc.levels < 1) continue;
+					if (!pc || cls.system.levels < 1) continue;
 					const progression = pc[castType];
 
 					if (!(progression in typeConfig.progression) || progression === "none") continue;
-					if (progression === "half" && castType === "tech" && pc.levels < 2) continue; // Tech half-casters only get techcasting at lvl 2
+					if (progression === "half" && castType === "tech" && cls.system.levels < 2) continue; // Tech half-casters only get techcasting at lvl 2
 
 					const progConfig = typeConfig.progression[progression];
 
 					obj.classes++;
-					obj.powersKnownMax += progConfig.powersKnown[pc.levels];
-					obj.points += pc.levels * progConfig.powerPoints;
-					obj.casterLevel += pc.levels * progConfig.powerMaxLevel[20] / 9;
+					obj.powersKnownMax += progConfig.powersKnown[cls.system.levels];
+					obj.points += cls.system.levels * progConfig.powerPoints;
+					obj.casterLevel += cls.system.levels * progConfig.powerMaxLevel[20] / 9;
 					obj.maxPowerLevel = Math.max(obj.maxPowerLevel, progConfig.powerMaxLevel[20]);
 
-					if (pc.levels > obj.maxClassLevel) {
-						obj.maxClassLevel = pc.levels;
+					if (cls.system.levels > obj.maxClassLevel) {
+						obj.maxClassLevel = cls.system.levels;
 						obj.maxClassProg = progression;
 					}
 				}
@@ -976,7 +976,7 @@ function patchPowerbooks() {
 				return false;
 			});
 
-			if ( section.items.length === 0 && ((section?.dataset?.method === "powerCasting") || (key === "powerCasting")) ) {
+			if ( section.items.length === 0 && ((section?.dataset?.method === "powerCasting") || (key === "powerCasting") || ["spell0", "spell1", "spell2", "spell3", "spell4", "spell5", "spell6", "spell7", "spell8", "spell9", "pact"].includes(key)) ) {
 				delete spellbook[key];
 			}
 		}
@@ -1242,6 +1242,20 @@ function _toggleEditPoints(progressClass, event, edit) {
 	if ( edit ) input.focus();
 }
 
+function patchActivitySpellcastingAbility() {
+	Hooks.on("sw5e.Activity.spellcastingAbility", function (_this, result, config, ...args) {
+		const item = _this.item;
+		if ( item && item.type === "spell" && item.system.method === "powerCasting" ) {
+			const actor = _this.actor;
+			if ( !actor ) return;
+			const availableAbilities = Array.from(item.system.availableAbilities ?? []);
+			if ( availableAbilities.length > 0 ) {
+				config.result = getBestAbility(actor, availableAbilities).id ?? availableAbilities[0];
+			}
+		}
+	});
+}
+
 export function patchPowercasting() {
 	adjustItemSpellcastingGetter();
 	normalizeDroppedPowerDefaults();
@@ -1254,4 +1268,5 @@ export function patchPowercasting() {
 	showPowercastingStats();
 	makePowerPointsConsumable();
 	showPowercastingBar();
+	patchActivitySpellcastingAbility();
 }

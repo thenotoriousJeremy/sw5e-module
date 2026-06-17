@@ -107,7 +107,7 @@ function prepareSuperiority() {
 				for (const cls of _this.itemTypes?.class ?? []) {
 					const pc = cls.spellcasting;
 
-					if (!pc || pc.levels < 1) continue;
+					if (!pc || cls.system.levels < 1) continue;
 					const progression = pc[superType];
 
 					if (!(progression in superConfig.progression) || progression === "none") continue;
@@ -116,10 +116,10 @@ function prepareSuperiority() {
 					const maxConfig = superConfig.progression[obj.maxClassProg];
 
 					// obj.maneuversKnownCur = ?;
-					obj.maneuversKnownMax += progConfig.known[pc.levels];
+					obj.maneuversKnownMax += progConfig.known[cls.system.levels];
 					// obj.diceSize = ?;
-					obj.diceCount += progConfig.quant[pc.levels];
-					obj.casterLevel += pc.levels;
+					obj.diceCount += progConfig.quant[cls.system.levels];
+					obj.casterLevel += cls.system.levels;
 					if ((obj.maxClassProg === null) || (maxConfig.divisor > progConfig.divisor)) obj.maxClassProg = progression;
 				}
 

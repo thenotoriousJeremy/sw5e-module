@@ -1735,6 +1735,14 @@ export function patchConfig(config, strict = true) {
 	};
 	// Currencies — Galactic Credits default only; third-party modules may customize further.
 	applySw5eGalacticCreditsDefault(config);
+	config.defaultCurrency = "gc";
+	if (strict) {
+		delete config.currencies.cp;
+		delete config.currencies.sp;
+		delete config.currencies.gp;
+		delete config.currencies.ep;
+		delete config.currencies.pp;
+	}
 	// Damage
 	// config.damageTypes.force.reference = ""; // TODO
 	// config.damageTypes.thunder.reference = ""; // TODO
