@@ -1,35 +1,58 @@
 import { getModuleId } from "../module-support.mjs";
 import { isActorDroidCustomizationHost } from "../droid-customizations.mjs";
 
+let speciesPatched = false;
+
 export function patchSpecies() {
 	// Droid Class IV Immunities & Droid Resistances
-	libWrapper.register(getModuleId(), "dnd5e.documents.Actor5e.prototype.prepareDerivedData", function (wrapped, ...args) {
-		wrapped(...args);
+	if (!speciesPatched) {
+		speciesPatched = true;
+		libWrapper.register(getModuleId(), "dnd5e.documents.Actor5e.prototype.prepareDerivedData", function (wrapped, ...args) {
+			wrapped(...args);
 
-		if (isActorDroidCustomizationHost(this)) {
-			// Ensure traits objects exist
-			this.system.traits = this.system.traits || {};
-			
-			this.system.traits.di = this.system.traits.di || {};
-			this.system.traits.di.value = this.system.traits.di.value || new Set();
-			
-			this.system.traits.dr = this.system.traits.dr || {};
-			this.system.traits.dr.value = this.system.traits.dr.value || new Set();
+			if (isActorDroidCustomizationHost(this)) {
+				// Ensure traits objects exist
+				this.system.traits = this.system.traits || {};
+				
+				this.system.traits.di = this.system.traits.di || {};
+				this.system.traits.di.value = this.system.traits.di.value || new Set();
+				
+				this.system.traits.dr = this.system.traits.dr || {};
+				this.system.traits.dr.value = this.system.traits.dr.value || new Set();
 
-			this.system.traits.ci = this.system.traits.ci || {};
-			this.system.traits.ci.value = this.system.traits.ci.value || new Set();
+				this.system.traits.ci = this.system.traits.ci || {};
+				this.system.traits.ci.value = this.system.traits.ci.value || new Set();
 
-			// Add immunities
-			this.system.traits.di.value.add("poison");
-			this.system.traits.ci.value.add("poisoned");
-			this.system.traits.ci.value.add("diseased");
-			this.system.traits.ci.value.add("sleep");
+				// Add immunities
+				this.system.traits.di.value.add("poison");
+				this.system.traits.ci.value.add("poisoned");
+				this.system.traits.ci.value.add("diseased");
+				this.system.traits.ci.value.add("sleep");
 
-			// Add resistances
-			this.system.traits.dr.value.add("necrotic");
-			this.system.traits.dr.value.add("psychic");
-		}
-	}, "WRAPPER");
+				// Add resistances
+				this.system.traits.dr.value.add("necrotic");
+				this.system.traits.dr.value.add("psychic");
+			}
+
+			// Defensive weapon AC bonus (highest defensive value from equipped weapons)
+			let defensiveBonus = 0;
+			if (this.items) {
+				for (const item of this.items) {
+					if (item.type === "weapon" && item.system.equipped) {
+						const props = item.system.properties;
+						const hasDefensive = props instanceof Set ? props.has("defensive") : Array.isArray(props) ? props.includes("defensive") : false;
+						if (hasDefensive) {
+							const val = item.flags?.sw5e?.properties?.defensive ?? 1;
+							defensiveBonus = Math.max(defensiveBonus, val);
+						}
+					}
+				}
+			}
+			if (defensiveBonus > 0 && this.system.attributes?.ac) {
+				this.system.attributes.ac.value = (this.system.attributes.ac.value ?? 10) + defensiveBonus;
+			}
+		}, "WRAPPER");
+	}
 
 	// Undersized Property Disadvantage
 	Hooks.on("dnd5e.preRollAttack", (item, rollConfig) => {
