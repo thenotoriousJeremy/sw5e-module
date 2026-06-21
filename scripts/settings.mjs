@@ -143,14 +143,14 @@ export function registerModuleSettings() {
 	//   requiresReload: true
 	// });
 
-	// // NPCs consume ammo
-	// game.settings.register("sw5e", "npcConsumeAmmo", {
-	//   name: "SETTINGS.SWnpcConsumeAmmoN",
-	//   hint: "SETTINGS.SWnpcConsumeAmmoL",
-	//   scope: "world",
-	//   config: true,
-	//   type: Boolean,
-	//   default: false,
-	//   requiresReload: true
-	// });
+	// NPCs consume ammo
+	game.settings.register(SETTINGS_NAMESPACE, "npcConsumeAmmo", {
+		name: "SW5E.Settings.NpcConsumeAmmo.Name",
+		hint: "SW5E.Settings.NpcConsumeAmmo.Hint",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false,
+		requiresReload: true
+	});
 }

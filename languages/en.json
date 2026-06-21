@@ -1610,6 +1610,9 @@
 	"SW5E.Settings.ThemeMode.Choice.sw5e-dark": "SW5E Dark",
 	"SW5E.Settings.ThemeMode.Choice.off": "Off — Use Foundry/dnd5e Styling",
 
+	"SW5E.Settings.NpcConsumeAmmo.Name": "NPCs Consume Ammo",
+	"SW5E.Settings.NpcConsumeAmmo.Hint": "When enabled, NPC weapons require ammo targets and consume ammo charges upon attack, matching standard PC behavior.",
+
 	"MODULE.hello": "hello",
 
 	"SW5E.variant": {

@@ -1,4 +1,5 @@
 import { getFlag, makeElement } from "../../utils.mjs";
+import { getModuleSettingValue } from "../../module-support.mjs";
 import CheckboxSelect from "../../../applications/checkbox-select.mjs";
 
 function buildReloadNode(item, app) {
@@ -19,8 +20,7 @@ function buildReloadNode(item, app) {
 	reload.hasChoices = reload.usesAmmo && (Object.keys(reload.ammoChoices).length > 1);
     reload.disabled = reload.usesAmmo && !reload.target;
     reload.full = reload.value === reload.max;
-	// TODO: Readd this
-	// if (actor.type === "npc" && !game.settings.get("sw5e", "npcConsumeAmmo")) reload.disabled = false;
+	if (actor?.type === "npc" && !getModuleSettingValue("npcConsumeAmmo", false)) reload.disabled = false;
 
 	const numInputListener = app.isEditable ? { "change": (event) => {
 		const input = event.target;
@@ -194,9 +194,7 @@ function addAmmoHelpers() {
 	dnd5e.dataModels.item.WeaponData.prototype.reloadWeapon = async function() {
 		const ammo = this.ammo;
 		const reload = this.reload;
-		// TODO: Readd this
-		const freeShot = false;
-		// const freeShot = this.parent?.actor?.type === "npc" && !game.settings.get("sw5e", "npcConsumeAmmo");
+		const freeShot = this.parent?.actor?.type === "npc" && !getModuleSettingValue("npcConsumeAmmo", false);
 
 		let toReload = reload.max - reload.value;
 		const wpnUpdates = {};
