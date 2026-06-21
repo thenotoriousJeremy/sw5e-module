@@ -24,3 +24,12 @@ CLAUDE.MD
 docs/
 ai/
 AGENTS.md
+
+# Temporary Test & Agent Files
+tests/actors_copy/
+tests/actors_adversarial_copy/
+scratch/
+.agents/
+TEST_READY.md
+TEST_INFRA.md
+

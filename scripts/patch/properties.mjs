@@ -3,6 +3,7 @@ import { getFlag } from "../utils.mjs";
 import { patchKeen } from "./properties/keen.mjs";
 import { patchBrutal } from "./properties/brutal.mjs";
 import { patchVicious } from "./properties/vicious.mjs";
+import { patchHeavy } from "./properties/heavy.mjs";
 import { patchClassRedirects } from "./properties/classRedirects.mjs";
 import { patchReload } from "./properties/reload.mjs";
 
@@ -242,5 +243,6 @@ export function patchProperties() {
 	patchKeen();
 	patchBrutal();
 	patchVicious();
+	patchHeavy();
 	patchClassRedirects();
 }
