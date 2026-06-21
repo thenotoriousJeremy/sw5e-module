@@ -239,7 +239,7 @@ export function patchProperties() {
 	addHelper();
 	patchSheet();
 
-	// patchReload();
+	patchReload();
 	patchKeen();
 	patchBrutal();
 	patchVicious();
