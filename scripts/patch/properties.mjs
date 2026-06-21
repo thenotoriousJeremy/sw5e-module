@@ -8,6 +8,7 @@ import { patchClassRedirects } from "./properties/classRedirects.mjs";
 import { patchReload } from "./properties/reload.mjs";
 import { patchDouble } from "./properties/double.mjs";
 import { patchShocking } from "./properties/shocking.mjs";
+import { patchPenetrating } from "./properties/penetrating.mjs";
 
 function addHelper() {
 	const ItemDataModel = dnd5e.dataModels.abstract?.ItemDataModel;
@@ -249,4 +250,5 @@ export function patchProperties() {
 	patchClassRedirects();
 	patchDouble();
 	patchShocking();
+	patchPenetrating();
 }
