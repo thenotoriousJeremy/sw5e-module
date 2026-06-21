@@ -9,6 +9,8 @@ import { patchReload } from "./properties/reload.mjs";
 import { patchDouble } from "./properties/double.mjs";
 import { patchShocking } from "./properties/shocking.mjs";
 import { patchPenetrating } from "./properties/penetrating.mjs";
+import { patchBurst } from "./properties/burst.mjs";
+import { patchRapid } from "./properties/rapid.mjs";
 
 function addHelper() {
 	const ItemDataModel = dnd5e.dataModels.abstract?.ItemDataModel;
@@ -251,4 +253,6 @@ export function patchProperties() {
 	patchDouble();
 	patchShocking();
 	patchPenetrating();
+	patchBurst();
+	patchRapid();
 }
