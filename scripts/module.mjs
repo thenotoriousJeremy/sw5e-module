@@ -10,6 +10,7 @@ import { patchPowercasting } from "./patch/powercasting.mjs";
 import { patchForceRecovery } from "./patch/force-recovery.mjs";
 import { patchProficiencyInit, patchProficiencyReady } from "./patch/proficiency.mjs";
 import { patchProperties } from "./patch/properties.mjs";
+import { patchSpecies } from "./patch/species.mjs";
 import { patchStealth } from "./patch/stealth.mjs";
 import { patchStarshipCreate } from "./patch/starship-create.mjs";
 import { patchStarshipPrepare } from "./patch/starship-prepare.mjs";
@@ -73,6 +74,7 @@ Hooks.once('init', async function() {
 	patchForceRecovery();
 	patchProficiencyInit();
 	patchProperties();
+	patchSpecies();
 	patchChassisItemSheet();
 	patchStarshipCreate();
 	patchStarshipPrepare();
