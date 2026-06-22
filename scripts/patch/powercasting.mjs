@@ -122,7 +122,8 @@ function getDroppedPowerNormalizationUpdates(itemData) {
 
 	return {
 		"system.method": "powerCasting",
-		"system.prepared": true
+		"system.prepared": true,
+		"system.preparation.prepared": true
 	};
 }
 
@@ -133,6 +134,8 @@ function normalizeDroppedPowerData(itemData) {
 	itemData.system ??= {};
 	itemData.system.method = updates["system.method"];
 	itemData.system.prepared = updates["system.prepared"];
+	itemData.system.preparation ??= {};
+	itemData.system.preparation.prepared = updates["system.preparation.prepared"];
 	return itemData;
 }
 
@@ -422,6 +425,15 @@ function normalizeDroppedPowerDefaults() {
 function preparePowercasting() {
 	Hooks.on('sw5e.preActor5e._prepareSpellcasting', function (_this, result, config, ...args) {
 		if (!_this.system.spells) return;
+
+		// Dynamically ensure all force/tech powers are marked as prepared
+		for (const pwr of _this.itemTypes?.spell ?? []) {
+			if (isSw5ePowerData(pwr)) {
+				pwr.system.preparation ??= {};
+				pwr.system.preparation.prepared = true;
+			}
+		}
+
 		const isNPC = _this.type === "npc";
 
 		// Prepare base progression data
