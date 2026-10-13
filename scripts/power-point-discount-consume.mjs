@@ -71,13 +71,18 @@ export function resolvePowerPointConsumptionDisplay({
 	const currentRaw = globalThis.foundry?.utils?.getProperty?.(actor?.system, target)
 		?? target.split(".").reduce((o, k) => o?.[k], actor?.system);
 	const current = Number.isFinite(Number(currentRaw)) ? Number(currentRaw) : 0;
+	const tempTarget = target.replace(/\.value$/, ".temp");
+	const currentTempRaw = globalThis.foundry?.utils?.getProperty?.(actor?.system, tempTarget)
+		?? tempTarget.split(".").reduce((o, k) => o?.[k], actor?.system);
+	const currentTemp = Number.isFinite(Number(currentTempRaw)) ? Number(currentTempRaw) : 0;
+	const available = current + currentTemp;
 	const finalCost = resolved.finalCost;
 	return {
 		applies: true,
 		finalCost,
 		rawCost: resolved.rawCost,
-		current,
-		warn: finalCost > current,
+		current: available,
+		warn: finalCost > available,
 		cost: String(finalCost)
 	};
 }
@@ -131,6 +136,9 @@ function installConsumeWrapper(attributeType) {
 		const finalCost = resolved.finalCost;
 		const keyPath = `system.${target}`;
 		const current = getPendingOrCurrentAttributeValue(this.actor, updates, keyPath);
+		const tempKeyPath = `system.powercasting.${expectedType}.points.temp`;
+		const currentTemp = getPendingOrCurrentAttributeValue(this.actor, updates, tempKeyPath);
+		const available = current + currentTemp;
 
 		const utils = globalThis.dnd5e?.utils ?? {};
 		const formatNumber = utils.formatNumber ?? (value => String(value));
@@ -141,20 +149,28 @@ function installConsumeWrapper(attributeType) {
 			?? globalThis.Error;
 
 		let warningMessage;
-		if ( (finalCost > 0) && !current ) warningMessage = "DND5E.CONSUMPTION.Warning.None";
-		else if ( current < finalCost ) warningMessage = "DND5E.CONSUMPTION.Warning.NotEnough";
+		if ( (finalCost > 0) && !available ) warningMessage = "DND5E.CONSUMPTION.Warning.None";
+		else if ( available < finalCost ) warningMessage = "DND5E.CONSUMPTION.Warning.NotEnough";
 		if ( warningMessage ) {
 			const localize = globalThis.game?.i18n?.format?.bind(globalThis.game.i18n)
 				?? ((key, data) => `${key}:${JSON.stringify(data)}`);
 			throw new ConsumptionError(localize(warningMessage, {
-				available: formatNumber(current),
+				available: formatNumber(available),
 				cost: formatNumber(finalCost),
 				type: localize("DND5E.CONSUMPTION.Type.Attribute.Warning", { attribute })
 			}));
 		}
 
 		updates.actor ??= {};
-		updates.actor[keyPath] = current - finalCost;
+		if ( currentTemp >= finalCost ) {
+			updates.actor[tempKeyPath] = currentTemp - finalCost;
+		} else if ( currentTemp > 0 ) {
+			updates.actor[tempKeyPath] = 0;
+			const remainingCost = finalCost - currentTemp;
+			updates.actor[keyPath] = current - remainingCost;
+		} else {
+			updates.actor[keyPath] = current - finalCost;
+		}
 		config[POWER_POINT_DISCOUNT_APPLIED] = true;
 	}
 

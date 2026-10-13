@@ -17,6 +17,11 @@ const jsonFiles = [
 
 async function walkMjsFiles(targetDir) {
 	const fullDir = path.resolve(rootDir, targetDir);
+	try {
+		await fs.access(fullDir);
+	} catch {
+		return [];
+	}
 	const entries = await fs.readdir(fullDir, { withFileTypes: true });
 	const files = [];
 	for ( const entry of entries ) {

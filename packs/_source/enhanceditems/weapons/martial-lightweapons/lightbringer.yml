@@ -1,0 +1,264 @@
+_id: WpK7nQv3eR1sM8tX
+name: Lightbringer
+type: weapon
+img: modules/sw5e-module/icons/packs/Martial%20Lightweapons/MartialLightsaber.webp
+effects:
+  - name: "Lightbringer: Aura of Warding"
+    img: modules/sw5e-module/icons/packs/Martial%20Lightweapons/MartialLightsaber.webp
+    origin: Compendium.sw5e-module.enhanceditems.Item.WpK7nQv3eR1sM8tX
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    transfer: true
+    disabled: false
+    _id: ebbP5Oepe1TOPPeE
+    changes:
+      - key: flags.midi-qol.magicResistance.all
+        mode: 0
+        value: '1'
+        priority: 20
+      - key: flags.midi-qol.magicResistance.save.all
+        mode: 0
+        value: '1'
+        priority: 20
+      - key: flags.sw5e.advantage.ability.save.force.all
+        mode: 5
+        value: '1'
+        priority: 20
+    description: "<p>While you hold the drawn lightweapon, it creates an aura in a 10-foot radius around you (30 feet if 17+ guardian levels). You and friendly creatures in the aura have advantage on saving throws against force powers and their effects.</p>"
+folder: pY01V35NGlg9j5QC
+sort: 0
+flags:
+  sw5e-importer:
+    timestamp: '2026-10-09T22:00:00.000Z'
+    importer_version: 3
+    uid: EnhancedItem.name-lightbringer.subtype-any_lightweapon
+  sw5e:
+    properties:
+      hidden: true
+      luminous: true
+      ver: true
+    reload:
+      types: []
+  dnd5e:
+    riders:
+      activity: []
+      effect: []
+system:
+  description:
+    value: "<h4>Weapon (Any lightweapon), legendary</h4>\n<p><em><strong>Requires attunement by force-caster</strong></em></p>\n<hr />\n<p>You gain a +3 bonus to attack and damage rolls made with this enhanced weapon. When you hit an aberration or an undead with it, that creature takes an extra [[/damage 2d10 energy]]{2d10 energy} damage.</p>\n<p>While you hold the drawn lightweapon, it creates an aura in a 10-foot radius around you. You and all creatures friendly to you in the aura have advantage on saving throws against force powers and their effects. If you have 17 or more levels in the guardian class, the radius of the aura increases to 30 feet.</p>\n<hr />\n<h2>Martial lightsaber</h2>\n<h3>Hidden</h3>\n<p>You have advantage on Dexterity (Sleight of Hand) checks made to conceal a weapon with this property.</p>\n<h3>Luminous</h3>\n<p>A weapon with this property sheds dim light in a 5-foot radius while activated. Additionally, Dexterity (Stealth) checks made while the weapon is activated have disadvantage.</p>\n<h3>Versatile ([[/damage 1d10 energy]])</h3>\n<p>A weapon with this property can be used with one or two hands. A damage value in parentheses appears with the property—the damage when the weapon is used with two hands to make a melee attack.</p>"
+    chat: ''
+  source:
+    custom: WH
+  quantity: 1
+  weight:
+    value: 3
+    units: lb
+  price:
+    value: 200000
+    denomination: gc
+  attunement: required
+  equipped: false
+  rarity: legendary
+  identified: true
+  activation:
+    type: action
+    cost: 1
+    condition: ''
+  duration:
+    value: ''
+    units: inst
+  cover: null
+  crewed: false
+  target:
+    value: '1'
+    width: null
+    units: ''
+    type: enemy
+    prompt: false
+  range:
+    value: null
+    long: null
+    units: ft
+  uses:
+    value: null
+    max: ''
+    per: null
+    recovery: ''
+    prompt: true
+  consume:
+    type: ''
+    target: ''
+    amount: null
+    scale: false
+  ability: ''
+  actionType: mwak
+  chatFlavor: ''
+  critical:
+    threshold: null
+    damage: ''
+  damage:
+    parts:
+      - - 1d8 + @mod
+        - energy
+    versatile:
+      custom:
+        enabled: false
+      number: 1
+      denomination: 10
+      types:
+        - energy
+      scaling:
+        mode: ''
+        number: 1
+    base:
+      custom:
+        enabled: false
+      denomination: 8
+      number: 1
+      scaling:
+        number: 1
+        mode: ''
+      types:
+        - energy
+  formula: ''
+  save:
+    ability: ''
+    dc: null
+    scaling: spell
+  armor:
+    value: 10
+  hp:
+    value: 0
+    max: 0
+    dt: null
+    conditions: ''
+  modify:
+    chassis: none
+    augmentSlots: 0
+    modSlots: 4
+    items: []
+    changes: {}
+  weaponClass: blade
+  ammo:
+    target: null
+    value: null
+    use: null
+    types: []
+  properties:
+    - hidden
+    - luminous
+    - mgc
+    - ver
+  proficient: null
+  type:
+    value: martialLW
+    subtype: ''
+    baseItem: martiallightsaber
+  unidentified:
+    description: ''
+  attack:
+    bonus: ''
+    flat: false
+  container: null
+  attuned: false
+  enchantment: null
+  summons: null
+  magicalBonus: 3
+  firingArc: ''
+  activities:
+    sw5e0attack00000:
+      _id: sw5e0attack00000
+      name: Attack
+      otherActivityId: none
+      midiProperties:
+        otherActivityCompatible: false
+        triggeredActivityId: none
+      activation:
+        type: action
+      attack:
+        ability: ''
+        bonus: ''
+        flat: false
+        type:
+          classification: weapon
+          value: melee
+      damage:
+        critical: {}
+        includeBase: true
+        parts: []
+      description: {}
+      duration:
+        units: inst
+        value: ''
+      img: null
+      range:
+        override: false
+        units: ft
+        value: '5'
+      target:
+        affects:
+          count: '1'
+          type: enemy
+          choice: false
+          special: ''
+        override: false
+        prompt: false
+      type: attack
+    extraAberrUndead:
+      _id: extraAberrUndead
+      name: Aberration or Undead
+      otherActivityId: none
+      midiProperties:
+        automationOnly: false
+        otherActivityCompatible: false
+        triggeredActivityId: none
+      activation:
+        type: special
+        value: null
+        override: false
+      damage:
+        critical:
+          allow: true
+          bonus: ''
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            denomination: 10
+            number: 2
+            bonus: ''
+            types:
+              - energy
+      description:
+        chatFlavor: 'Extra damage vs aberration or undead'
+      duration:
+        units: inst
+        value: ''
+      range:
+        override: false
+      target:
+        affects:
+          choice: false
+          count: '1'
+          type: any
+          special: 'Aberration or undead'
+        override: false
+        prompt: true
+      type: damage
+ownership:
+  default: 0
+_stats:
+  systemId: dnd5e
+  systemVersion: 5.3.3
+  coreVersion: '13.351'
+  createdTime: 1781048580140
+  modifiedTime: 1781048580140
+  lastModifiedBy: dnd5ebuilder0000
+  duplicateSource: null
+_key: '!items!WpK7nQv3eR1sM8tX'

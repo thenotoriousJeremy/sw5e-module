@@ -1,6 +1,15 @@
 import { getFlag } from "../utils.mjs";
 
 import { patchKeen } from "./properties/keen.mjs";
+import { patchBrutal } from "./properties/brutal.mjs";
+import { patchVicious } from "./properties/vicious.mjs";
+import { patchHeavy } from "./properties/heavy.mjs";
+import { patchClassRedirects } from "./properties/classRedirects.mjs";
+import { patchDouble } from "./properties/double.mjs";
+import { patchShocking } from "./properties/shocking.mjs";
+import { patchPenetrating } from "./properties/penetrating.mjs";
+import { patchBurst } from "./properties/burst.mjs";
+import { patchRapid } from "./properties/rapid.mjs";
 
 function addHelper() {
 	const ItemDataModel = dnd5e.dataModels.abstract?.ItemDataModel;
@@ -235,4 +244,13 @@ export function patchProperties() {
 	patchSheet();
 
 	patchKeen();
+	patchBrutal();
+	patchVicious();
+	patchHeavy();
+	patchClassRedirects();
+	patchDouble();
+	patchShocking();
+	patchPenetrating();
+	patchBurst();
+	patchRapid();
 }

@@ -186,6 +186,20 @@ function changeProficiency(result, type) {
 	}
 }
 
+function addStarshipWeaponFacingFields(schema) {
+	schema.firingArc = new StringField({
+		required: true,
+		blank: true,
+		initial: "",
+		label: "SW5E.StarshipWeaponFacing"
+	});
+	schema.turreted = new BooleanField({
+		required: true,
+		initial: false,
+		label: "SW5E.StarshipWeaponTurreted"
+	});
+}
+
 export function patchDataModels() {
 	// Powercasting
 	libWrapper.register(getModuleId(), 'dnd5e.dataModels.item.ClassData.defineSchema', addProgression, 'WRAPPER');
@@ -214,6 +228,7 @@ export function patchDataModels() {
 	libWrapper.register(getModuleId(), 'dnd5e.dataModels.item.WeaponData.defineSchema', function (wrapped, ...args) {
 		const result = wrapped(...args);
 		changeProficiency(result, "weapon");
+		addStarshipWeaponFacingFields(result);
 		return result;
 	}, 'WRAPPER');
 

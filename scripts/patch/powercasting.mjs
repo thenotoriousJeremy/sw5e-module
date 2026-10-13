@@ -519,6 +519,14 @@ function normalizeDroppedPowerDefaults() {
 function preparePowercasting() {
 	Hooks.on('sw5e.preActor5e._prepareSpellcasting', function (_this, result, config, ...args) {
 		if (!_this.system.spells) return;
+
+		// Dynamically ensure all force/tech powers are marked as prepared
+		for (const pwr of _this.itemTypes?.spell ?? []) {
+			if (isSw5ePowerData(pwr)) {
+				pwr.system.prepared = true;
+			}
+		}
+
 		const isNPC = _this.type === "npc";
 
 		// Prepare base progression data
@@ -667,7 +675,8 @@ function preparePowercasting() {
 				target.level ??= obj.casterLevel;
 				target.limit ??= obj.limit;
 				target.maxPowerLevel ??= obj.maxPowerLevel;
-				target.points.max ??= obj.points;
+				const pointsBonus = getNumericValue(target.points.max) ?? 0;
+				target.points.max = obj.points + pointsBonus;
 			}
 		}
 

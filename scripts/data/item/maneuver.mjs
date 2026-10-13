@@ -236,6 +236,18 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 
 	/* -------------------------------------------- */
 
+	/**
+	 * Maneuvers do not have advancements; return an empty interface for scaleValues safety.
+	 * @type {object}
+	 */
+	get advancement() {
+		return { byType: () => [] };
+	}
+
+	/* -------------------------------------------- */
+	/*  Data Preparation                            */
+	/* -------------------------------------------- */
+
 	/** @inheritDoc */
 	prepareFinalData() {
 		const rollData = this.parent.getRollData({ deterministic: true });
@@ -251,10 +263,31 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 		if (!this.parent.actor?.system?.attributes?.prof) this.prof = new Proficiency(0, 0);
 		else this.prof = new Proficiency(this.parent.actor.system.attributes.prof, this.proficiencyMultiplier ?? 0);
 
-		const superiorityDc = Number(this.parent.actor?.system?.superiority?.types?.[this.type.value]?.dc);
-		if ( Number.isFinite(superiorityDc) ) {
-			for ( const activity of maneuverSaveActivitiesAsArray(this.activities) ) {
-				if ( activity.save?.dc && typeof activity.save.dc === "object" ) activity.save.dc.value = superiorityDc;
+		const actor = this.parent.actor;
+		if ( actor ) {
+			const type = this.type.value || "general";
+			const typeConfig = CONFIG.DND5E.superiority?.types?.[type];
+			if ( typeConfig ) {
+				const { simplifyBonus } = dnd5e.utils;
+				const base = 8 + (actor.system.attributes?.prof ?? 0);
+				const bonusAll = simplifyBonus ? simplifyBonus(actor.system.bonuses?.superiority?.dc?.all, rollData) : 0;
+				const bonus = (simplifyBonus ? simplifyBonus(actor.system.bonuses?.superiority?.dc?.[type], rollData) : 0) + bonusAll;
+				
+				const actorTypeData = actor.system.superiority?.types?.[type];
+				const ability = actorTypeData?.attr || getBestAbility(actor, typeConfig.attr, 0).id;
+				const abilityMod = actor.system.abilities?.[ability]?.mod ?? 0;
+				const superiorityDc = actorTypeData?.dc ?? (base + abilityMod + bonus);
+
+				for ( const activity of maneuverSaveActivitiesAsArray(this.activities) ) {
+					if ( activity.save?.dc && typeof activity.save.dc === "object" ) {
+						activity.save.dc.value = superiorityDc;
+						const saveAbility = activity.spellcastingAbility;
+						activity.labels.save = game.i18n.format("DND5E.SaveDC", {
+							dc: superiorityDc,
+							ability: CONFIG.DND5E.abilities[saveAbility]?.label ?? ""
+						});
+					}
+				}
 			}
 		}
 	}
@@ -349,6 +382,10 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 
 	/** @inheritDoc */
 	get _typeAbilityMod() {
+		if ( this.ability ) return this.ability;
+		const type = this.type.value || "general";
+		const actorAttr = this.parent.actor?.system?.superiority?.types?.[type]?.attr;
+		if ( actorAttr && this.availableAbilities.has(actorAttr) ) return actorAttr;
 		return getBestAbility(this.parent.actor, this.availableAbilities).id ?? this.availableAbilities.first() ?? "int";
 	}
 

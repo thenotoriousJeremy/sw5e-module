@@ -55,6 +55,23 @@ export function localizeOrFallback(key, fallback = key) {
 	return (!localized || localized === key) ? fallback : localized;
 }
 
+export const localizeOr = localizeOrFallback;
+
+const registeredWrappers = new Set();
+
+export function safeRegisterWrapper(target, callback, mode = "WRAPPER") {
+	if ( !globalThis.libWrapper?.register ) return false;
+	const key = `${target}::${mode}`;
+	if ( registeredWrappers.has(key) ) return true;
+	try {
+		libWrapper.register(getModuleId(), target, callback, mode);
+		registeredWrappers.add(key);
+		return true;
+	} catch (_) {
+		return false;
+	}
+}
+
 export function getModuleId() {
 	const fromUrl = import.meta.url.match(/\/modules\/([^/]+)\//)?.[1];
 	if ( fromUrl ) return fromUrl;
