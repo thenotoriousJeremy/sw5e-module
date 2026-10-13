@@ -237,11 +237,14 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 	/* -------------------------------------------- */
 
 	/**
-	 * Maneuvers do not have advancements; return an empty interface for scaleValues safety.
-	 * @type {object}
+	 * Maneuvers do not have advancements; return an empty iterable interface for scaleValues safety.
+	 * @type {Array}
 	 */
 	get advancement() {
-		return { byType: () => [] };
+		const list = [];
+		list.byType = () => [];
+		list.byId = {};
+		return list;
 	}
 
 	/* -------------------------------------------- */

@@ -117,10 +117,15 @@ export function normalizeModuleType(type, subtype) {
 	return getModuleType(subtype);
 }
 
-export function normalizeCompendiumUuid(uuid, { moduleId=getModuleId() }={}) {
+export function normalizeCompendiumUuid(uuid, { moduleId=getModuleId(), documentType="Item" }={}) {
 	if ( typeof uuid !== "string" ) return uuid;
 	const moduleIds = COMPENDIUM_MODULE_ID_CANDIDATES.map(escapeRegex).join("|");
-	return uuid.replace(new RegExp(`^Compendium\\.(${moduleIds})\\.`), `Compendium.${moduleId}.`);
+	let res = uuid.replace(new RegExp(`^Compendium\\.(${moduleIds})\\.`), `Compendium.${moduleId}.`);
+	const m = res.match(/^Compendium\.([^.]+)\.([^.]+)\.([^.]+)$/);
+	if ( m ) {
+		res = `Compendium.${m[1]}.${m[2]}.${documentType}.${m[3]}`;
+	}
+	return res;
 }
 
 export function normalizeCompendiumReferences(text, { moduleId=getModuleId() }={}) {

@@ -1,6 +1,6 @@
 import * as dataModels from "./../data/_module.mjs";
 import { ItemSheetSW5E } from "./../applications/item-sheet.mjs";
-import { getModule, getModuleId, getModuleTypeCandidates } from "../module-support.mjs";
+import { getModule, getModuleId, getModuleTypeCandidates, safeRegisterWrapper } from "../module-support.mjs";
 import {
 	makeCastBonusFields,
 	makeLegacyPowerAttackFields,
@@ -231,6 +231,180 @@ export function patchDataModels() {
 		addStarshipWeaponFacingFields(result);
 		return result;
 	}, 'WRAPPER');
+
+	// Defensive DocumentUUID normalizer: auto-upgrade 3-part compendium UUIDs to 4-part in DocumentUUIDField
+	const DocumentUUIDField = globalThis.foundry?.data?.fields?.DocumentUUIDField;
+	if ( DocumentUUIDField?.prototype && !DocumentUUIDField.prototype._sw5eCleanPatched ) {
+		const origCleanType = DocumentUUIDField.prototype._cleanType;
+		if ( typeof origCleanType === "function" ) {
+			DocumentUUIDField.prototype._cleanType = function(value, options) {
+				if ( typeof value === "string" && value.startsWith("Compendium.") ) {
+					const m = value.match(/^Compendium\.([^.]+)\.([^.]+)\.([^.]+)$/);
+					if ( m ) {
+						const docType = this.type ?? "Item";
+						value = `Compendium.${m[1]}.${m[2]}.${docType}.${m[3]}`;
+					}
+				}
+				return origCleanType.call(this, value, options);
+			};
+		}
+		DocumentUUIDField.prototype._sw5eCleanPatched = true;
+	}
+
+	// Defensive ItemGrantConfigurationData cleaner: fix legacy 3-part compendium UUIDs
+	safeRegisterWrapper('dnd5e.dataModels.advancement.ItemGrantConfigurationData._cleanData', function(wrapped, source, options) {
+		if ( source && Array.isArray(source.items) ) {
+			for ( const entry of source.items ) {
+				if ( entry && typeof entry === "object" && typeof entry.uuid === "string" ) {
+					const m = entry.uuid.match(/^Compendium\.([^.]+)\.([^.]+)\.([^.]+)$/);
+					if ( m ) entry.uuid = `Compendium.${m[1]}.${m[2]}.Item.${m[3]}`;
+				}
+			}
+		}
+		return wrapped(source, options);
+	}, 'WRAPPER');
+
+	// Defensive Activity ID and duration sanitizers
+	safeRegisterWrapper('dnd5e.dataModels.activity.BaseActivityData._cleanData', function(wrapped, source, options) {
+		if ( source && typeof source === "object" ) {
+			let id = source._id;
+			if ( typeof id === "string" ) {
+				if ( id.length < 16 && /^[a-zA-Z0-9]+$/.test(id) ) source._id = id.padEnd(16, "0");
+				else if ( id.length > 16 ) source._id = id.slice(0, 16);
+				else if ( !/^[a-zA-Z0-9]{16}$/.test(id) ) source._id = (globalThis.foundry?.utils?.randomID?.(16) ?? "sw5e0act00000000").padEnd(16, "0");
+			}
+			if ( source.duration ) {
+				if ( source.duration.value === "inst" || (source.duration.units === "inst" && typeof source.duration.value === "string" && !/^\d+$/.test(source.duration.value.trim())) ) {
+					source.duration.value = "";
+				}
+			}
+		}
+		return wrapped(source, options);
+	}, 'WRAPPER');
+
+	safeRegisterWrapper('dnd5e.dataModels.activity.ActivityDurationData._cleanData', function(wrapped, source, options) {
+		if ( source && typeof source === "object" ) {
+			if ( source.value === "inst" || (source.units === "inst" && typeof source.value === "string" && !/^\d+$/.test(source.value.trim())) ) {
+				source.value = "";
+			}
+		}
+		return wrapped(source, options);
+	}, 'WRAPPER');
+
+	safeRegisterWrapper('dnd5e.dataModels.abstract.ItemDataModel._cleanData', function(wrapped, source, options) {
+		if ( source?.activities && typeof source.activities === "object" ) {
+			const sanitized = {};
+			for ( let [k, v] of Object.entries(source.activities) ) {
+				if ( v && typeof v === "object" ) {
+					let id = v._id || k;
+					if ( typeof id === "string" ) {
+						if ( id.length < 16 && /^[a-zA-Z0-9]+$/.test(id) ) id = id.padEnd(16, "0");
+						else if ( id.length > 16 ) id = id.slice(0, 16);
+						else if ( !/^[a-zA-Z0-9]{16}$/.test(id) ) id = (globalThis.foundry?.utils?.randomID?.(16) ?? "sw5e0act00000000").padEnd(16, "0");
+					} else {
+						id = (globalThis.foundry?.utils?.randomID?.(16) ?? "sw5e0act00000000").padEnd(16, "0");
+					}
+					v._id = id;
+					if ( v.duration && (v.duration.value === "inst" || (v.duration.units === "inst" && typeof v.duration.value === "string" && !/^\d+$/.test(v.duration.value.trim()))) ) {
+						v.duration.value = "";
+					}
+					sanitized[id] = v;
+				}
+			}
+			source.activities = sanitized;
+		}
+		return wrapped(source, options);
+	}, 'WRAPPER');
+
+	const DocumentIdField = globalThis.foundry?.data?.fields?.DocumentIdField;
+	if ( DocumentIdField?.prototype && !DocumentIdField.prototype._sw5eCleanPatched ) {
+		const origCleanType = DocumentIdField.prototype._cleanType;
+		if ( typeof origCleanType === "function" ) {
+			DocumentIdField.prototype._cleanType = function(value, options) {
+				if ( typeof value === "string" ) {
+					if ( value.length < 16 && /^[a-zA-Z0-9]+$/.test(value) ) value = value.padEnd(16, "0");
+					else if ( value.length > 16 ) value = value.slice(0, 16);
+				}
+				return origCleanType.call(this, value, options);
+			};
+		}
+		DocumentIdField.prototype._sw5eCleanPatched = true;
+	}
+
+	const ActivitiesField = globalThis.dnd5e?.dataModels?.item?.ActivitiesField;
+	if ( ActivitiesField?.prototype && !ActivitiesField.prototype._sw5eCleanPatched ) {
+		const origCleanType = ActivitiesField.prototype._cleanType;
+		if ( typeof origCleanType === "function" ) {
+			ActivitiesField.prototype._cleanType = function(value, options) {
+				if ( value && typeof value === "object" ) {
+					const sanitized = {};
+					for ( let [k, v] of Object.entries(value) ) {
+						if ( v && typeof v === "object" ) {
+							let id = v._id || k;
+							if ( typeof id === "string" ) {
+								if ( id.length < 16 && /^[a-zA-Z0-9]+$/.test(id) ) id = id.padEnd(16, "0");
+								else if ( id.length > 16 ) id = id.slice(0, 16);
+								else if ( !/^[a-zA-Z0-9]{16}$/.test(id) ) id = (globalThis.foundry?.utils?.randomID?.(16) ?? "sw5e0act00000000").padEnd(16, "0");
+							} else {
+								id = (globalThis.foundry?.utils?.randomID?.(16) ?? "sw5e0act00000000").padEnd(16, "0");
+							}
+							v._id = id;
+							if ( v.duration && (v.duration.value === "inst" || (v.duration.units === "inst" && typeof v.duration.value === "string" && !/^\d+$/.test(v.duration.value.trim()))) ) {
+								v.duration.value = "";
+							}
+							sanitized[id] = v;
+						}
+					}
+					value = sanitized;
+				}
+				return origCleanType.call(this, value, options);
+			};
+		}
+		ActivitiesField.prototype._sw5eCleanPatched = true;
+	}
+
+	// Defensive ActiveEffect change guard: prevent "setting getter-only property 'background'"
+	safeRegisterWrapper('dnd5e.documents.ActiveEffect5e.applyChangeField', function(wrapped, model, change, options) {
+		if ( change?.key === "background" || change?.key === "system.details.background" || change?.key?.endsWith(".background") ) {
+			return;
+		}
+		try {
+			return wrapped(model, change, options);
+		} catch (err) {
+			if ( err.message?.includes("getter-only property") ) return;
+			throw err;
+		}
+	}, 'WRAPPER');
+
+	// Defensive scaleValues guard: handle documents where this.advancement is undefined
+	const patchScaleValuesOnProto = (proto) => {
+		let curr = proto;
+		while ( curr && curr !== Object.prototype ) {
+			const desc = Object.getOwnPropertyDescriptor(curr, "scaleValues");
+			if ( desc?.get && !desc.get._sw5ePatched ) {
+				const orig = desc.get;
+				const patched = function() {
+					if ( !this.advancement?.byType ) return {};
+					try {
+						return orig.call(this);
+					} catch (_) {
+						return {};
+					}
+				};
+				patched._sw5ePatched = true;
+				try {
+					Object.defineProperty(curr, "scaleValues", {
+						...desc,
+						get: patched
+					});
+				} catch (_) {}
+			}
+			curr = Object.getPrototypeOf(curr);
+		}
+	};
+	patchScaleValuesOnProto(globalThis.dnd5e?.documents?.Item5e?.prototype);
+	patchScaleValuesOnProto(globalThis.CONFIG?.Item?.documentClass?.prototype);
+	patchScaleValuesOnProto(globalThis.Item?.prototype);
 
 	Object.assign(CONFIG.Item.dataModels, dataModels.item.config);
 	const module = getModule();
