@@ -1,3 +1,4 @@
+import "./patch/v14-compat.mjs";
 import { addHooks } from "./patch/addHooks.mjs";
 import { patchConfig } from "./patch/config.mjs";
 import { patchDataModels } from "./patch/dataModels.mjs";
