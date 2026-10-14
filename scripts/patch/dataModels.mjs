@@ -331,7 +331,7 @@ export function patchDataModels() {
 		DocumentIdField.prototype._sw5eCleanPatched = true;
 	}
 
-	const ActivitiesField = globalThis.dnd5e?.dataModels?.item?.ActivitiesField;
+	const ActivitiesField = globalThis.dnd5e?.dataModels?.fields?.ActivitiesField ?? globalThis.dnd5e?.dataModels?.item?.ActivitiesField;
 	if ( ActivitiesField?.prototype && !ActivitiesField.prototype._sw5eCleanPatched ) {
 		const origCleanType = ActivitiesField.prototype._cleanType;
 		if ( typeof origCleanType === "function" ) {
@@ -362,6 +362,145 @@ export function patchDataModels() {
 		}
 		ActivitiesField.prototype._sw5eCleanPatched = true;
 	}
+
+	function ensureItemActivitiesIterable(item) {
+		if ( !item?.system ) return;
+		const sys = item.system;
+		if ( sys.activities && typeof sys.activities === "object" && !(Symbol.iterator in sys.activities) ) {
+			const ActivitiesFieldCls = globalThis.dnd5e?.dataModels?.fields?.ActivitiesField ?? globalThis.dnd5e?.dataModels?.item?.ActivitiesField;
+			const field = sys.schema?.fields?.activities ?? (ActivitiesFieldCls ? new ActivitiesFieldCls() : null);
+			if ( field?.initialize ) {
+				try {
+					sys.activities = field.initialize(sys.activities, sys);
+				} catch (_) {}
+			}
+			if ( !sys.activities || !(Symbol.iterator in sys.activities) ) {
+				const arr = Object.values(sys.activities ?? {});
+				for ( const act of arr ) {
+					if ( act && typeof act === "object" && typeof act.prepareData !== "function" ) {
+						act.prepareData = () => {};
+					}
+				}
+				sys.activities = arr;
+			}
+		}
+		if ( sys.advancement && typeof sys.advancement === "object" && !(Symbol.iterator in sys.advancement) ) {
+			const AdvFieldCls = globalThis.dnd5e?.dataModels?.fields?.AdvancementCollectionField ?? globalThis.dnd5e?.dataModels?.item?.AdvancementCollectionField;
+			const advField = sys.schema?.fields?.advancement ?? (AdvFieldCls ? new AdvFieldCls() : null);
+			if ( advField?.initialize ) {
+				try {
+					sys.advancement = advField.initialize(sys.advancement, sys);
+				} catch (_) {}
+			}
+			if ( !sys.advancement || !(Symbol.iterator in sys.advancement) ) {
+				const arr = Object.values(sys.advancement ?? {});
+				for ( const adv of arr ) {
+					if ( adv && typeof adv === "object" && typeof adv.prepareData !== "function" ) {
+						adv.prepareData = () => {};
+					}
+				}
+				sys.advancement = arr;
+			}
+		}
+	}
+
+	// Defensive wrappers on document preparation to prevent "is not iterable" crashes during delta applications
+	safeRegisterWrapper('dnd5e.documents.Actor5e.prototype.prepareEmbeddedDocuments', function(wrapped, ...args) {
+		for ( const item of this.items ?? [] ) {
+			ensureItemActivitiesIterable(item);
+		}
+		return wrapped(...args);
+	}, 'WRAPPER');
+
+	safeRegisterWrapper('dnd5e.documents.Item5e.prototype.prepareEmbeddedDocuments', function(wrapped, ...args) {
+		ensureItemActivitiesIterable(this);
+		try {
+			return wrapped(...args);
+		} catch (err) {
+			if ( err?.message?.includes("is not iterable") ) {
+				ensureItemActivitiesIterable(this);
+				try {
+					return wrapped(...args);
+				} catch (_) {
+					return;
+				}
+			}
+			throw err;
+		}
+	}, 'WRAPPER');
+
+	safeRegisterWrapper('dnd5e.documents.Item5e.prototype.prepareDerivedData', function(wrapped, ...args) {
+		ensureItemActivitiesIterable(this);
+		try {
+			return wrapped(...args);
+		} catch (err) {
+			if ( err?.message?.includes("is not iterable") ) {
+				ensureItemActivitiesIterable(this);
+				try {
+					return wrapped(...args);
+				} catch (_) {
+					return;
+				}
+			}
+			throw err;
+		}
+	}, 'WRAPPER');
+
+	const patchItemPrepareOnProto = (proto) => {
+		if ( !proto ) return;
+		if ( proto.prepareEmbeddedDocuments && !proto.prepareEmbeddedDocuments._sw5ePatched ) {
+			const origEmb = proto.prepareEmbeddedDocuments;
+			proto.prepareEmbeddedDocuments = function(...args) {
+				ensureItemActivitiesIterable(this);
+				try {
+					return origEmb.call(this, ...args);
+				} catch (err) {
+					if ( err?.message?.includes("is not iterable") ) {
+						ensureItemActivitiesIterable(this);
+						try { return origEmb.call(this, ...args); } catch (_) { return; }
+					}
+					throw err;
+				}
+			};
+			proto.prepareEmbeddedDocuments._sw5ePatched = true;
+		}
+		if ( proto.prepareDerivedData && !proto.prepareDerivedData._sw5ePatched ) {
+			const origDer = proto.prepareDerivedData;
+			proto.prepareDerivedData = function(...args) {
+				ensureItemActivitiesIterable(this);
+				try {
+					return origDer.call(this, ...args);
+				} catch (err) {
+					if ( err?.message?.includes("is not iterable") ) {
+						ensureItemActivitiesIterable(this);
+						try { return origDer.call(this, ...args); } catch (_) { return; }
+					}
+					throw err;
+				}
+			};
+			proto.prepareDerivedData._sw5ePatched = true;
+		}
+	};
+	patchItemPrepareOnProto(globalThis.dnd5e?.documents?.Item5e?.prototype);
+	patchItemPrepareOnProto(globalThis.CONFIG?.Item?.documentClass?.prototype);
+	patchItemPrepareOnProto(globalThis.Item?.prototype);
+
+	const patchActorPrepareOnProto = (proto) => {
+		if ( !proto || proto.prepareEmbeddedDocuments?._sw5ePatched ) return;
+		const orig = proto.prepareEmbeddedDocuments;
+		if ( typeof orig === "function" ) {
+			proto.prepareEmbeddedDocuments = function(...args) {
+				for ( const item of this.items ?? [] ) {
+					ensureItemActivitiesIterable(item);
+				}
+				return orig.call(this, ...args);
+			};
+			proto.prepareEmbeddedDocuments._sw5ePatched = true;
+		}
+	};
+	patchActorPrepareOnProto(globalThis.dnd5e?.documents?.Actor5e?.prototype);
+	patchActorPrepareOnProto(globalThis.CONFIG?.Actor?.documentClass?.prototype);
+	patchActorPrepareOnProto(globalThis.Actor?.prototype);
 
 	// Defensive ActiveEffect change guard: prevent "setting getter-only property 'background'"
 	safeRegisterWrapper('dnd5e.documents.ActiveEffect5e.applyChangeField', function(wrapped, model, change, options) {
