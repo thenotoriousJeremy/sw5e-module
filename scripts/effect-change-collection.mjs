@@ -32,8 +32,8 @@ const EFFECT_CHANGE_BLACKLIST_RE = [
  * @returns {{ changes: object[], updateKey: "changes"|"system.changes" } | null}
  */
 export function getMigratableEffectChanges(effect) {
-	if ( Array.isArray(effect?.changes) ) return { changes: effect.changes, updateKey: "changes" };
 	if ( Array.isArray(effect?.system?.changes) ) return { changes: effect.system.changes, updateKey: "system.changes" };
+	if ( Array.isArray(effect?.changes) ) return { changes: effect.changes, updateKey: "changes" };
 	return null;
 }
 
@@ -61,7 +61,14 @@ export function remapSuperiorityEffectKeys(effect, updateData={}) {
 		change.key = mappedKey;
 		changed = true;
 	}
-	if ( changed ) updateData[resolved.updateKey] = resolved.changes;
+	if ( changed ) {
+		let key = resolved.updateKey;
+		if ( (globalThis.game?.release?.generation >= 14) && key === "changes" ) {
+			key = "system.changes";
+			delete updateData.changes;
+		}
+		updateData[key] = resolved.changes;
+	}
 	return updateData;
 }
 
@@ -80,6 +87,13 @@ export function cleanEffectAdvancementSupplantedChanges(effect, updateData={}, p
 	if ( !resolved ) return updateData;
 
 	const newChanges = resolved.changes.filter(change => !isBlacklistedEffectChangeKey(change?.key));
-	if ( newChanges.length !== resolved.changes.length ) updateData[resolved.updateKey] = newChanges;
+	if ( newChanges.length !== resolved.changes.length ) {
+		let key = resolved.updateKey;
+		if ( (globalThis.game?.release?.generation >= 14) && key === "changes" ) {
+			key = "system.changes";
+			delete updateData.changes;
+		}
+		updateData[key] = newChanges;
+	}
 	return updateData;
 }

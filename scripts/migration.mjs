@@ -425,6 +425,11 @@ async function writeCandidate(run, candidate) {
 		}
 		console.log(`Migrating ${candidate.documentType} document ${candidate.logName}`);
 		const payload = candidate.writePayload ?? candidate.preparedUpdate;
+		if ( Array.isArray(payload?.effects) && globalThis.game?.release?.generation >= 14 ) {
+			for ( const eff of payload.effects ) {
+				if ( eff && typeof eff === "object" ) delete eff.changes;
+			}
+		}
 		await candidate.document.update(payload, candidate.options);
 		run.summary.documentsUpdated += 1;
 	} catch(err) {
@@ -1076,10 +1081,25 @@ async function _migrateWorldDocuments(migrationData, run=createMigrationRunState
 					writePayload = foundry.utils.deepClone(updateData);
 					["items", "effects"].forEach(col => {
 						for ( const [i, update] of (writePayload[col] ?? []).entries() ) {
-							const original = token.actor[col].get(update._id);
-							writePayload[col][i] = foundry.utils.mergeObject(original.toObject(), update, { inplace: false });
+							const original = token.actor[col]?.get(update._id);
+							if ( !original ) continue;
+							const baseData = original.toObject();
+							if ( col === "effects" ) {
+								delete baseData.changes;
+								delete update.changes;
+							}
+							const merged = foundry.utils.mergeObject(baseData, update, { inplace: false });
+							if ( col === "effects" ) {
+								delete merged.changes;
+							}
+							writePayload[col][i] = merged;
 						}
 					});
+					if ( Array.isArray(writePayload.effects) ) {
+						for ( const eff of writePayload.effects ) {
+							delete eff.changes;
+						}
+					}
 					preparedUpdate = applyUpdateToClone(source, writePayload);
 				}
 				return {

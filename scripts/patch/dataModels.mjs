@@ -489,6 +489,31 @@ export function patchDataModels() {
 		}
 	}, 'WRAPPER');
 
+	// Defensive shimData wrapper: guard against Firefox SpiderMonkey Proxy invariant crashes on 'changes'
+	const shimClasses = [
+		globalThis.foundry?.documents?.BaseActiveEffect,
+		globalThis.foundry?.documents?.BaseActorDelta,
+		globalThis.CONFIG?.ActiveEffect?.documentClass,
+		globalThis.CONFIG?.ActorDelta?.documentClass,
+		globalThis.dnd5e?.documents?.ActiveEffect5e
+	];
+	for ( const cls of shimClasses ) {
+		if ( cls && typeof cls.shimData === "function" && !cls.shimData._sw5ePatched ) {
+			const origShim = cls.shimData;
+			cls.shimData = function(data, options) {
+				try {
+					return origShim.call(this, data, options);
+				} catch (err) {
+					if ( err?.message?.includes("incompatible property descriptor") || err?.message?.includes("non-extensible") ) {
+						return data;
+					}
+					throw err;
+				}
+			};
+			cls.shimData._sw5ePatched = true;
+		}
+	}
+
 	// Defensive scaleValues guard: handle documents where this.advancement is undefined
 	const patchScaleValuesOnProto = (proto) => {
 		let curr = proto;
