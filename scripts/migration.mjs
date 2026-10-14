@@ -425,9 +425,17 @@ async function writeCandidate(run, candidate) {
 		}
 		console.log(`Migrating ${candidate.documentType} document ${candidate.logName}`);
 		const payload = candidate.writePayload ?? candidate.preparedUpdate;
-		if ( Array.isArray(payload?.effects) && globalThis.game?.release?.generation >= 14 ) {
-			for ( const eff of payload.effects ) {
-				if ( eff && typeof eff === "object" ) delete eff.changes;
+		if ( Array.isArray(payload?.effects) ) {
+			if ( candidate.documentType === "ActorDelta" ) {
+				payload.effects = payload.effects.filter(eff => {
+					const id = eff?._id ?? eff?.id;
+					return !(typeof id === "string" && id.startsWith("dnd5e"));
+				});
+			}
+			if ( globalThis.game?.release?.generation >= 14 ) {
+				for ( const eff of payload.effects ) {
+					if ( eff && typeof eff === "object" ) delete eff.changes;
+				}
 			}
 		}
 		try {
@@ -1107,12 +1115,16 @@ async function _migrateWorldDocuments(migrationData, run=createMigrationRunState
 							writePayload[col][i] = merged;
 						}
 					});
-					if ( Array.isArray(writePayload.effects) ) {
-						for ( const eff of writePayload.effects ) {
-							delete eff.changes;
-						}
-					}
 					preparedUpdate = applyUpdateToClone(source, writePayload);
+				}
+				if ( Array.isArray(writePayload?.effects) ) {
+					writePayload.effects = writePayload.effects.filter(eff => {
+						const id = eff?._id ?? eff?.id;
+						return !(typeof id === "string" && id.startsWith("dnd5e"));
+					});
+					for ( const eff of writePayload.effects ) {
+						if ( eff && typeof eff === "object" ) delete eff.changes;
+					}
 				}
 				return {
 					documentType: "ActorDelta",

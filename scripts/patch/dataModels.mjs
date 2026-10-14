@@ -549,6 +549,89 @@ export function patchDataModels() {
 		DataModelProto._initializeSource._sw5ePatched = true;
 	}
 
+	// Defensive TypeDataModel constructor unwrap: prevents Firefox SpiderMonkey Proxy invariant crashes on Symbol("DataFieldOperatorValue")
+	for ( const docName of ["ActiveEffect", "Actor", "Item"] ) {
+		const dataModelsConfig = globalThis.CONFIG?.[docName]?.dataModels;
+		if ( dataModelsConfig && typeof dataModelsConfig === "object" ) {
+			for ( const [type, ModelClass] of Object.entries(dataModelsConfig) ) {
+				if ( typeof ModelClass === "function" && !ModelClass._sw5eProxyPatched ) {
+					const Wrapped = class extends ModelClass {
+						constructor(data, options) {
+							if ( data && typeof data === "object" ) {
+								try {
+									data = globalThis.foundry?.utils?.deepClone?.(data) ?? data;
+								} catch (_) {}
+							}
+							super(data, options);
+						}
+					};
+					Wrapped._sw5eProxyPatched = true;
+					dataModelsConfig[type] = Wrapped;
+				}
+			}
+		}
+	}
+
+	// Defensive Calendar guards: prevent "can't access property 'ordinal', this.months.values[month] is undefined"
+	const CalendarClasses = [
+		globalThis.foundry?.calendar?.Calendar?.prototype,
+		globalThis.Calendar?.prototype,
+		globalThis.CONFIG?.Calendar?.documentClass?.prototype
+	];
+	for ( const proto of CalendarClasses ) {
+		if ( proto && proto.timeToComponents && !proto.timeToComponents._sw5ePatched ) {
+			const origTime = proto.timeToComponents;
+			proto.timeToComponents = function(time, options) {
+				try {
+					return origTime.call(this, time, options);
+				} catch (err) {
+					if ( err?.message?.includes("months") || err?.message?.includes("ordinal") ) {
+						return { year: 0, month: 0, day: 0, hour: 0, minute: 0, second: 0 };
+					}
+					throw err;
+				}
+			};
+			proto.timeToComponents._sw5ePatched = true;
+		}
+		if ( proto && proto.difference && !proto.difference._sw5ePatched ) {
+			const origDiff = proto.difference;
+			proto.difference = function(...args) {
+				try {
+					return origDiff.call(this, ...args);
+				} catch (err) {
+					if ( err?.message?.includes("months") || err?.message?.includes("ordinal") ) {
+						return 0;
+					}
+					throw err;
+				}
+			};
+			proto.difference._sw5ePatched = true;
+		}
+	}
+
+	// Defensive ActiveEffect duration calculation guard
+	safeRegisterWrapper('dnd5e.documents.ActiveEffect5e.prototype._prepareDuration', function(wrapped, duration, context) {
+		try {
+			return wrapped(duration, context);
+		} catch (err) {
+			if ( err?.message?.includes("months") || err?.message?.includes("ordinal") ) {
+				return duration ?? {};
+			}
+			throw err;
+		}
+	}, 'WRAPPER');
+
+	safeRegisterWrapper('dnd5e.documents.ActiveEffect5e.prototype.prepareDerivedData', function(wrapped, ...args) {
+		try {
+			return wrapped(...args);
+		} catch (err) {
+			if ( err?.message?.includes("months") || err?.message?.includes("ordinal") ) {
+				return;
+			}
+			throw err;
+		}
+	}, 'WRAPPER');
+
 	// Defensive scaleValues guard: handle documents where this.advancement is undefined
 	const patchScaleValuesOnProto = (proto) => {
 		let curr = proto;
