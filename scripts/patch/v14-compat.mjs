@@ -1,6 +1,6 @@
 /**
  * Compatibility polyfills for legacy modules running on Foundry V14.
- * Shields the world from un-migrated third-party modules (Token Variant Art, Levels, Quick Insert, Monk's TokenBar).
+ * Shields the world from un-migrated third-party modules (Token Variant Art, Levels, Quick Insert, Monk's TokenBar, Perceptive).
  */
 
 function ensureToolsArrayMethods(tools) {
@@ -249,6 +249,32 @@ function ensureControlsCompat(controls) {
 	}
 }
 
+function patchLibWrapper() {
+	if ( typeof globalThis.libWrapper?.register === "function" && !globalThis.libWrapper.register._sw5ePatched ) {
+		const origRegister = globalThis.libWrapper.register;
+		globalThis.libWrapper.register = function(package_id, target, fn, type, ...rest) {
+			// Guard missing target scopes for un-migrated modules (e.g. Perceptive -> Levels SightHandler)
+			if ( target === "CONFIG.Levels.handlers.SightHandler.shouldIgnoreWall" ) {
+				globalThis.CONFIG ??= {};
+				globalThis.CONFIG.Levels ??= {};
+				globalThis.CONFIG.Levels.handlers ??= {};
+				globalThis.CONFIG.Levels.handlers.SightHandler ??= {
+					shouldIgnoreWall: function() {
+						return false;
+					}
+				};
+			}
+			try {
+				return origRegister.call(this, package_id, target, fn, type, ...rest);
+			} catch (err) {
+				console.warn(`SW5E COMPAT | Suppressed libWrapper registration failure for '${target}' in package '${package_id}':`, err);
+				return null;
+			}
+		};
+		globalThis.libWrapper.register._sw5ePatched = true;
+	}
+}
+
 export function applyV14CompatPolyfills() {
 	// 1. TinyMCE polyfill for quick-insert and monks-tokenbar
 	const dummyTinyMCE = {
@@ -301,14 +327,68 @@ export function applyV14CompatPolyfills() {
 	}
 
 	// 2. CombatTracker.prototype.getData polyfill for token-variants libWrapper registration
-	const ctProto = globalThis.CombatTracker?.prototype;
+	// Access via namespaced path first to prevent deprecation warnings on globalThis.CombatTracker
+	const CombatTrackerCls = globalThis.foundry?.applications?.sidebar?.tabs?.CombatTracker ?? globalThis.CombatTracker;
+	const ctProto = CombatTrackerCls?.prototype;
 	if ( ctProto && typeof ctProto.getData !== "function" ) {
 		ctProto.getData = async function(...args) {
 			return typeof this._prepareContext === "function" ? await this._prepareContext(...args) : {};
 		};
 	}
 
-	// 3. getSceneControlButtons Array-methods polyfill for levels and other legacy UI modules
+	// 3. LibWrapper defensive registration wrapper for un-migrated packages (e.g. Perceptive)
+	let _libWrapper = globalThis.libWrapper;
+	if ( typeof globalThis.libWrapper === "undefined" ) {
+		try {
+			Object.defineProperty(globalThis, "libWrapper", {
+				configurable: true,
+				enumerable: true,
+				get: () => _libWrapper,
+				set: val => {
+					_libWrapper = val;
+					patchLibWrapper();
+				}
+			});
+		} catch (_) {}
+	} else {
+		patchLibWrapper();
+	}
+
+	// 4. CONFIG.Levels.handlers.SightHandler polyfill for Perceptive compatibility
+	const ensureLevelsSightHandler = levelsObj => {
+		if ( !levelsObj || typeof levelsObj !== "object" ) return;
+		levelsObj.handlers ??= {};
+		levelsObj.handlers.SightHandler ??= {
+			shouldIgnoreWall: function() {
+				return false;
+			}
+		};
+	};
+
+	let _levels = globalThis.CONFIG?.Levels;
+	if ( globalThis.CONFIG ) {
+		try {
+			Object.defineProperty(globalThis.CONFIG, "Levels", {
+				configurable: true,
+				enumerable: true,
+				get: () => _levels,
+				set: val => {
+					_levels = val;
+					ensureLevelsSightHandler(_levels);
+				}
+			});
+		} catch (_) {}
+		ensureLevelsSightHandler(_levels);
+	}
+
+	if ( globalThis.Hooks?.on ) {
+		globalThis.Hooks.on("init", () => {
+			patchLibWrapper();
+			ensureLevelsSightHandler(globalThis.CONFIG?.Levels);
+		});
+	}
+
+	// 5. getSceneControlButtons Array-methods polyfill for levels and other legacy UI modules
 	if ( typeof globalThis.Hooks?.callAll === "function" && !globalThis.Hooks.callAll._sw5eControlsPatched ) {
 		const origCallAll = globalThis.Hooks.callAll;
 		globalThis.Hooks.callAll = function(hook, ...args) {
