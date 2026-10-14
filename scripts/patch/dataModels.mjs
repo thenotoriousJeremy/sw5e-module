@@ -237,7 +237,7 @@ export function patchDataModels() {
 	if ( DocumentUUIDField?.prototype && !DocumentUUIDField.prototype._sw5eCleanPatched ) {
 		const origCleanType = DocumentUUIDField.prototype._cleanType;
 		if ( typeof origCleanType === "function" ) {
-			DocumentUUIDField.prototype._cleanType = function(value, options) {
+			DocumentUUIDField.prototype._cleanType = function(value, options, ...args) {
 				if ( typeof value === "string" && value.startsWith("Compendium.") ) {
 					const m = value.match(/^Compendium\.([^.]+)\.([^.]+)\.([^.]+)$/);
 					if ( m ) {
@@ -245,14 +245,14 @@ export function patchDataModels() {
 						value = `Compendium.${m[1]}.${m[2]}.${docType}.${m[3]}`;
 					}
 				}
-				return origCleanType.call(this, value, options);
+				return origCleanType.call(this, value, options, ...args);
 			};
 		}
 		DocumentUUIDField.prototype._sw5eCleanPatched = true;
 	}
 
 	// Defensive ItemGrantConfigurationData cleaner: fix legacy 3-part compendium UUIDs
-	safeRegisterWrapper('dnd5e.dataModels.advancement.ItemGrantConfigurationData._cleanData', function(wrapped, source, options) {
+	safeRegisterWrapper('dnd5e.dataModels.advancement.ItemGrantConfigurationData._cleanData', function(wrapped, source, options, ...args) {
 		if ( source && Array.isArray(source.items) ) {
 			for ( const entry of source.items ) {
 				if ( entry && typeof entry === "object" && typeof entry.uuid === "string" ) {
@@ -261,11 +261,11 @@ export function patchDataModels() {
 				}
 			}
 		}
-		return wrapped(source, options);
+		return wrapped(source, options, ...args);
 	}, 'WRAPPER');
 
 	// Defensive Activity ID and duration sanitizers
-	safeRegisterWrapper('dnd5e.dataModels.activity.BaseActivityData._cleanData', function(wrapped, source, options) {
+	safeRegisterWrapper('dnd5e.dataModels.activity.BaseActivityData._cleanData', function(wrapped, source, options, ...args) {
 		if ( source && typeof source === "object" ) {
 			let id = source._id;
 			if ( typeof id === "string" ) {
@@ -279,19 +279,19 @@ export function patchDataModels() {
 				}
 			}
 		}
-		return wrapped(source, options);
+		return wrapped(source, options, ...args);
 	}, 'WRAPPER');
 
-	safeRegisterWrapper('dnd5e.dataModels.activity.ActivityDurationData._cleanData', function(wrapped, source, options) {
+	safeRegisterWrapper('dnd5e.dataModels.activity.ActivityDurationData._cleanData', function(wrapped, source, options, ...args) {
 		if ( source && typeof source === "object" ) {
 			if ( source.value === "inst" || (source.units === "inst" && typeof source.value === "string" && !/^\d+$/.test(source.value.trim())) ) {
 				source.value = "";
 			}
 		}
-		return wrapped(source, options);
+		return wrapped(source, options, ...args);
 	}, 'WRAPPER');
 
-	safeRegisterWrapper('dnd5e.dataModels.abstract.ItemDataModel._cleanData', function(wrapped, source, options) {
+	safeRegisterWrapper('dnd5e.dataModels.abstract.ItemDataModel._cleanData', function(wrapped, source, options, ...args) {
 		if ( source?.activities && typeof source.activities === "object" ) {
 			const sanitized = {};
 			for ( let [k, v] of Object.entries(source.activities) ) {
@@ -313,19 +313,19 @@ export function patchDataModels() {
 			}
 			source.activities = sanitized;
 		}
-		return wrapped(source, options);
+		return wrapped(source, options, ...args);
 	}, 'WRAPPER');
 
 	const DocumentIdField = globalThis.foundry?.data?.fields?.DocumentIdField;
 	if ( DocumentIdField?.prototype && !DocumentIdField.prototype._sw5eCleanPatched ) {
 		const origCleanType = DocumentIdField.prototype._cleanType;
 		if ( typeof origCleanType === "function" ) {
-			DocumentIdField.prototype._cleanType = function(value, options) {
+			DocumentIdField.prototype._cleanType = function(value, options, ...args) {
 				if ( typeof value === "string" ) {
 					if ( value.length < 16 && /^[a-zA-Z0-9]+$/.test(value) ) value = value.padEnd(16, "0");
 					else if ( value.length > 16 ) value = value.slice(0, 16);
 				}
-				return origCleanType.call(this, value, options);
+				return origCleanType.call(this, value, options, ...args);
 			};
 		}
 		DocumentIdField.prototype._sw5eCleanPatched = true;
@@ -335,7 +335,8 @@ export function patchDataModels() {
 	if ( ActivitiesField?.prototype && !ActivitiesField.prototype._sw5eCleanPatched ) {
 		const origCleanType = ActivitiesField.prototype._cleanType;
 		if ( typeof origCleanType === "function" ) {
-			ActivitiesField.prototype._cleanType = function(value, options) {
+			ActivitiesField.prototype._cleanType = function(value, options, _state, ...args) {
+				_state ??= (options?._state ?? { source: value });
 				if ( value && typeof value === "object" ) {
 					const sanitized = {};
 					for ( let [k, v] of Object.entries(value) ) {
@@ -357,7 +358,7 @@ export function patchDataModels() {
 					}
 					value = sanitized;
 				}
-				return origCleanType.call(this, value, options);
+				return origCleanType.call(this, value, options, _state, ...args);
 			};
 		}
 		ActivitiesField.prototype._sw5eCleanPatched = true;
