@@ -403,7 +403,34 @@ export function patchDataModels() {
 				sys.advancement = arr;
 			}
 		}
+		if ( !sys.validProperties || typeof sys.validProperties.has !== "function" ) {
+			const config = CONFIG.DND5E.validProperties?.[item.type] ?? [];
+			sys.validProperties = new Set([...config, ...(config[sys.type?.value] ?? [])]);
+		}
 	}
+
+	// Defensive validProperties getter for all ItemDataModels lacking PhysicalItemTemplate (spells, powers, feats, etc.)
+	const ItemDataModelProto = globalThis.dnd5e?.dataModels?.abstract?.ItemDataModel?.prototype;
+	if ( ItemDataModelProto && !Object.getOwnPropertyDescriptor(ItemDataModelProto, "validProperties") ) {
+		Object.defineProperty(ItemDataModelProto, "validProperties", {
+			get() {
+				const config = CONFIG.DND5E.validProperties?.[this.parent?.type] ?? [];
+				return new Set([...config, ...(config[this.type?.value] ?? [])]);
+			},
+			configurable: true,
+			enumerable: false
+		});
+	}
+
+	// Defensive requiresConcentration wrapper to prevent "validProperties is undefined" crash
+	safeRegisterWrapper('dnd5e.documents.Item5e.prototype.requiresConcentration', function(wrapped) {
+		if ( !this.system?.validProperties || typeof this.system.validProperties.has !== "function" ) {
+			const hasProp = Boolean(this.system?.properties?.has?.("concentration") || this.system?.properties?.includes?.("concentration"));
+			if ( hasProp ) return true;
+			return this.system?.activities?.contents?.[0]?.duration?.concentration ?? false;
+		}
+		return wrapped();
+	}, 'WRAPPER');
 
 	// Defensive wrappers on document preparation to prevent "is not iterable" crashes during delta applications
 	safeRegisterWrapper('dnd5e.documents.Actor5e.prototype.prepareEmbeddedDocuments', function(wrapped, ...args) {
@@ -435,7 +462,7 @@ export function patchDataModels() {
 		try {
 			return wrapped(...args);
 		} catch (err) {
-			if ( err?.message?.includes("is not iterable") ) {
+			if ( err?.message?.includes("is not iterable") || err?.message?.includes("validProperties") ) {
 				ensureItemActivitiesIterable(this);
 				try {
 					return wrapped(...args);
