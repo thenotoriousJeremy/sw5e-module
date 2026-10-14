@@ -422,15 +422,24 @@ export function patchDataModels() {
 		});
 	}
 
-	// Defensive requiresConcentration wrapper to prevent "validProperties is undefined" crash
-	safeRegisterWrapper('dnd5e.documents.Item5e.prototype.requiresConcentration', function(wrapped) {
-		if ( !this.system?.validProperties || typeof this.system.validProperties.has !== "function" ) {
-			const hasProp = Boolean(this.system?.properties?.has?.("concentration") || this.system?.properties?.includes?.("concentration"));
-			if ( hasProp ) return true;
-			return this.system?.activities?.contents?.[0]?.duration?.concentration ?? false;
+	// Robust requiresConcentration override to prevent "validProperties is undefined" and "can't access property 0 of undefined"
+	safeRegisterWrapper('dnd5e.documents.Item5e.prototype.requiresConcentration', function() {
+		try {
+			if ( this.system?.validProperties?.has?.("concentration") && this.system?.properties?.has?.("concentration") ) return true;
+			if ( this.system?.properties?.has?.("concentration") || this.system?.properties?.includes?.("concentration") ) return true;
+			const contents = this.system?.activities?.contents;
+			if ( Array.isArray(contents) || contents?.length ) {
+				return contents[0]?.duration?.concentration ?? false;
+			}
+			const values = this.system?.activities ? Object.values(this.system.activities) : [];
+			if ( values.length ) {
+				return values[0]?.duration?.concentration ?? false;
+			}
+			return false;
+		} catch (_) {
+			return false;
 		}
-		return wrapped();
-	}, 'WRAPPER');
+	}, 'OVERRIDE');
 
 	// Defensive wrappers on document preparation to prevent "is not iterable" crashes during delta applications
 	safeRegisterWrapper('dnd5e.documents.Actor5e.prototype.prepareEmbeddedDocuments', function(wrapped, ...args) {
@@ -445,15 +454,12 @@ export function patchDataModels() {
 		try {
 			return wrapped(...args);
 		} catch (err) {
-			if ( err?.message?.includes("is not iterable") ) {
-				ensureItemActivitiesIterable(this);
-				try {
-					return wrapped(...args);
-				} catch (_) {
-					return;
-				}
+			ensureItemActivitiesIterable(this);
+			try {
+				return wrapped(...args);
+			} catch (_) {
+				return;
 			}
-			throw err;
 		}
 	}, 'WRAPPER');
 
@@ -462,15 +468,12 @@ export function patchDataModels() {
 		try {
 			return wrapped(...args);
 		} catch (err) {
-			if ( err?.message?.includes("is not iterable") || err?.message?.includes("validProperties") ) {
-				ensureItemActivitiesIterable(this);
-				try {
-					return wrapped(...args);
-				} catch (_) {
-					return;
-				}
+			ensureItemActivitiesIterable(this);
+			try {
+				return wrapped(...args);
+			} catch (_) {
+				return;
 			}
-			throw err;
 		}
 	}, 'WRAPPER');
 
@@ -489,13 +492,17 @@ export function patchDataModels() {
 		}
 	}, 'WRAPPER');
 
-	// Defensive shimData wrapper: guard against Firefox SpiderMonkey Proxy invariant crashes on 'changes'
+	// Defensive shimData wrapper: guard against Firefox SpiderMonkey Proxy invariant crashes
 	const shimClasses = [
+		globalThis.foundry?.abstract?.DataModel,
+		globalThis.foundry?.abstract?.TypeDataModel,
 		globalThis.foundry?.documents?.BaseActiveEffect,
 		globalThis.foundry?.documents?.BaseActorDelta,
 		globalThis.CONFIG?.ActiveEffect?.documentClass,
 		globalThis.CONFIG?.ActorDelta?.documentClass,
-		globalThis.dnd5e?.documents?.ActiveEffect5e
+		globalThis.dnd5e?.documents?.ActiveEffect5e,
+		globalThis.dnd5e?.dataModels?.ActiveEffectDataModel,
+		globalThis.dnd5e?.dataModels?.activeEffect?.ConditionData
 	];
 	for ( const cls of shimClasses ) {
 		if ( cls && typeof cls.shimData === "function" && !cls.shimData._sw5ePatched ) {
@@ -504,7 +511,10 @@ export function patchDataModels() {
 				try {
 					return origShim.call(this, data, options);
 				} catch (err) {
-					if ( err?.message?.includes("incompatible property descriptor") || err?.message?.includes("non-extensible") ) {
+					if ( err?.message?.includes("proxy can't report")
+						|| err?.message?.includes("incompatible property descriptor")
+						|| err?.message?.includes("non-extensible")
+						|| err?.message?.includes("DataFieldOperatorValue") ) {
 						return data;
 					}
 					throw err;
@@ -512,6 +522,31 @@ export function patchDataModels() {
 			};
 			cls.shimData._sw5ePatched = true;
 		}
+	}
+
+	// Defensive DataModel._initializeSource proxy unwrap guard
+	const DataModelProto = globalThis.foundry?.abstract?.DataModel?.prototype;
+	if ( DataModelProto && !DataModelProto._initializeSource?._sw5ePatched ) {
+		const origInitSource = DataModelProto._initializeSource;
+		DataModelProto._initializeSource = function(data, options) {
+			try {
+				return origInitSource.call(this, data, options);
+			} catch (err) {
+				if ( err?.message?.includes("proxy can't report")
+					|| err?.message?.includes("incompatible property descriptor")
+					|| err?.message?.includes("non-extensible")
+					|| err?.message?.includes("DataFieldOperatorValue") ) {
+					try {
+						const clone = globalThis.foundry?.utils?.deepClone?.(data) ?? data;
+						return origInitSource.call(this, clone, options);
+					} catch (_) {
+						return data;
+					}
+				}
+				throw err;
+			}
+		};
+		DataModelProto._initializeSource._sw5ePatched = true;
 	}
 
 	// Defensive scaleValues guard: handle documents where this.advancement is undefined

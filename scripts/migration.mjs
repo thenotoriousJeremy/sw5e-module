@@ -430,7 +430,19 @@ async function writeCandidate(run, candidate) {
 				if ( eff && typeof eff === "object" ) delete eff.changes;
 			}
 		}
-		await candidate.document.update(payload, candidate.options);
+		try {
+			await candidate.document.update(payload, candidate.options);
+		} catch (updateErr) {
+			if ( updateErr?.message?.includes("proxy can't report")
+				|| updateErr?.message?.includes("DataFieldOperatorValue")
+				|| updateErr?.message?.includes("non-extensible")
+				|| updateErr?.message?.includes("incompatible property descriptor") ) {
+				const fallback = unwrapForcedReplacementsDeep(foundry.utils.deepClone(payload));
+				await candidate.document.update(fallback, candidate.options);
+			} else {
+				throw updateErr;
+			}
+		}
 		run.summary.documentsUpdated += 1;
 	} catch(err) {
 		recordDocumentFailure(run, err, {
