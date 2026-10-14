@@ -259,20 +259,20 @@ Hooks.once('ready', async function() {
 			if (captain) {
 				const auraItem = captain.items?.find(i => i.name.toLowerCase().includes("aura of command"));
 				const effect = auraItem?.effects?.contents?.[0] ?? auraItem?.effects?.[0];
-				if (effect && (effect.changes?.some(c => c.mode === 0) || effect.changes?.length !== 12 || effect.name !== "Superior Aura of Command")) {
+				if (effect && (effect.changes?.some(c => (c.type ?? c.mode) === "custom" || (c.type ?? c.mode) === 0) || effect.changes?.length !== 12 || effect.name !== "Superior Aura of Command")) {
 					const auraChanges = [
-						{ key: "system.bonuses.mwak.attack", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.mwak.damage", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.rwak.attack", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.rwak.damage", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.msak.attack", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.msak.damage", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.rsak.attack", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.rsak.damage", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.mpak.attack", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.mpak.damage", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.rpak.attack", mode: 2, value: "2", priority: 20 },
-						{ key: "system.bonuses.rpak.damage", mode: 2, value: "2", priority: 20 }
+						{ key: "system.bonuses.mwak.attack", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.mwak.damage", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.rwak.attack", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.rwak.damage", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.msak.attack", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.msak.damage", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.rsak.attack", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.rsak.damage", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.mpak.attack", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.mpak.damage", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.rpak.attack", type: "add", mode: 2, value: "2", priority: 20 },
+						{ key: "system.bonuses.rpak.damage", type: "add", mode: 2, value: "2", priority: 20 }
 					];
 					const updateData = {
 						_id: effect.id,

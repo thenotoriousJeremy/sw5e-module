@@ -447,61 +447,7 @@ export function patchDataModels() {
 		}
 	}, 'WRAPPER');
 
-	const patchItemPrepareOnProto = (proto) => {
-		if ( !proto ) return;
-		if ( proto.prepareEmbeddedDocuments && !proto.prepareEmbeddedDocuments._sw5ePatched ) {
-			const origEmb = proto.prepareEmbeddedDocuments;
-			proto.prepareEmbeddedDocuments = function(...args) {
-				ensureItemActivitiesIterable(this);
-				try {
-					return origEmb.call(this, ...args);
-				} catch (err) {
-					if ( err?.message?.includes("is not iterable") ) {
-						ensureItemActivitiesIterable(this);
-						try { return origEmb.call(this, ...args); } catch (_) { return; }
-					}
-					throw err;
-				}
-			};
-			proto.prepareEmbeddedDocuments._sw5ePatched = true;
-		}
-		if ( proto.prepareDerivedData && !proto.prepareDerivedData._sw5ePatched ) {
-			const origDer = proto.prepareDerivedData;
-			proto.prepareDerivedData = function(...args) {
-				ensureItemActivitiesIterable(this);
-				try {
-					return origDer.call(this, ...args);
-				} catch (err) {
-					if ( err?.message?.includes("is not iterable") ) {
-						ensureItemActivitiesIterable(this);
-						try { return origDer.call(this, ...args); } catch (_) { return; }
-					}
-					throw err;
-				}
-			};
-			proto.prepareDerivedData._sw5ePatched = true;
-		}
-	};
-	patchItemPrepareOnProto(globalThis.dnd5e?.documents?.Item5e?.prototype);
-	patchItemPrepareOnProto(globalThis.CONFIG?.Item?.documentClass?.prototype);
-	patchItemPrepareOnProto(globalThis.Item?.prototype);
 
-	const patchActorPrepareOnProto = (proto) => {
-		if ( !proto || proto.prepareEmbeddedDocuments?._sw5ePatched ) return;
-		const orig = proto.prepareEmbeddedDocuments;
-		if ( typeof orig === "function" ) {
-			proto.prepareEmbeddedDocuments = function(...args) {
-				for ( const item of this.items ?? [] ) {
-					ensureItemActivitiesIterable(item);
-				}
-				return orig.call(this, ...args);
-			};
-			proto.prepareEmbeddedDocuments._sw5ePatched = true;
-		}
-	};
-	patchActorPrepareOnProto(globalThis.dnd5e?.documents?.Actor5e?.prototype);
-	patchActorPrepareOnProto(globalThis.CONFIG?.Actor?.documentClass?.prototype);
-	patchActorPrepareOnProto(globalThis.Actor?.prototype);
 
 	// Defensive ActiveEffect change guard: prevent "setting getter-only property 'background'"
 	safeRegisterWrapper('dnd5e.documents.ActiveEffect5e.applyChangeField', function(wrapped, model, change, options) {

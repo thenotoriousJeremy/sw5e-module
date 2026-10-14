@@ -55,7 +55,11 @@ export function addHooks() {
 	//-----------------//
 
 	// ActorData Hooks
-	addHook('dnd5e.dataModels.ActorDataModel.prototype._prepareScaleValues', 'ActorDataModel._prepareScaleValues');
+	if ( globalThis.dnd5e?.dataModels?.ActorDataModel?.prototype?._prepareScaleValues ) {
+		addHook('dnd5e.dataModels.ActorDataModel.prototype._prepareScaleValues', 'ActorDataModel._prepareScaleValues');
+	} else if ( globalThis.dnd5e?.dataModels?.abstract?.SystemDataModel?.prototype?._prepareScaleValues ) {
+		addHook('dnd5e.dataModels.abstract.SystemDataModel.prototype._prepareScaleValues', 'ActorDataModel._prepareScaleValues');
+	}
 	// SpellData Hooks
 	addHookAsync('dnd5e.dataModels.item.SpellData.prototype.getSheetData', 'SpellData.getSheetData');
 	addHook('dnd5e.dataModels.item.SpellData.prototype.availableAbilities', 'SpellData.availableAbilities');

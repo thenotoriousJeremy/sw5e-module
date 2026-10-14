@@ -1,4 +1,4 @@
-import { getModuleId, HOOKS_NAMESPACE } from "../module-support.mjs";
+import { getModuleId, HOOKS_NAMESPACE, safeRegisterWrapper } from "../module-support.mjs";
 import {
 	applyStarshipTravelFromUnslowedCombatBase,
 	getDerivedStarshipRuntime,
@@ -55,13 +55,13 @@ function injectStarshipDetailsTier(rollData, tier) {
 
 export function patchStarshipPrepare() {
 	try {
-		libWrapper.register(getModuleId(), "dnd5e.documents.Actor5e.prototype.getRollData", function(wrapped, ...args) {
+		safeRegisterWrapper("dnd5e.documents.Actor5e.prototype.getRollData", function(wrapped, ...args) {
 			const rollData = wrapped(...args);
 			if ( !isStarshipFlagVehicle(this) ) return rollData;
 			return injectStarshipDetailsTier(rollData, getStarshipEffectiveTier(this));
 		}, "WRAPPER");
 
-		libWrapper.register(getModuleId(), "dnd5e.dataModels.actor.VehicleData.prototype.prepareAbilities", function(wrapped, ...args) {
+		safeRegisterWrapper("dnd5e.dataModels.actor.VehicleData.prototype.prepareAbilities", function(wrapped, ...args) {
 			const actorSource = getActorSource(this);
 			const isStarship = actorSource?.flags?.sw5e?.legacyStarshipActor?.type === "starship";
 			if ( isStarship ) {
@@ -130,7 +130,7 @@ export function patchStarshipPrepare() {
 
 		// prepareArmorClass runs after prepareAbilities in VehicleData.prepareDerivedData;
 		// apply flat+bonus here so it is not overwritten by the flat early-return.
-		libWrapper.register(getModuleId(), "dnd5e.dataModels.actor.VehicleData.prototype.prepareDerivedData", function(wrapped, ...args) {
+		safeRegisterWrapper("dnd5e.dataModels.actor.VehicleData.prototype.prepareDerivedData", function(wrapped, ...args) {
 			const result = wrapped(...args);
 			const actorSource = getActorSource(this);
 			const isStarship = actorSource?.flags?.sw5e?.legacyStarshipActor?.type === "starship";
