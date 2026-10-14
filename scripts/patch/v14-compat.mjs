@@ -249,31 +249,15 @@ function ensureControlsCompat(controls) {
 	}
 }
 
-function patchLibWrapper() {
-	if ( typeof globalThis.libWrapper?.register === "function" && !globalThis.libWrapper.register._sw5ePatched ) {
-		const origRegister = globalThis.libWrapper.register;
-		globalThis.libWrapper.register = function(package_id, target, fn, type, ...rest) {
-			// Guard missing target scopes for un-migrated modules (e.g. Perceptive -> Levels SightHandler)
-			if ( target === "CONFIG.Levels.handlers.SightHandler.shouldIgnoreWall" ) {
-				globalThis.CONFIG ??= {};
-				globalThis.CONFIG.Levels ??= {};
-				globalThis.CONFIG.Levels.handlers ??= {};
-				globalThis.CONFIG.Levels.handlers.SightHandler ??= {
-					shouldIgnoreWall: function() {
-						return false;
-					}
-				};
-			}
-			try {
-				return origRegister.call(this, package_id, target, fn, type, ...rest);
-			} catch (err) {
-				console.warn(`SW5E COMPAT | Suppressed libWrapper registration failure for '${target}' in package '${package_id}':`, err);
-				return null;
-			}
-		};
-		globalThis.libWrapper.register._sw5ePatched = true;
-	}
-}
+const ensureLevelsSightHandler = levelsObj => {
+	if ( !levelsObj || typeof levelsObj !== "object" ) return;
+	levelsObj.handlers ??= {};
+	levelsObj.handlers.SightHandler ??= {
+		shouldIgnoreWall: function() {
+			return false;
+		}
+	};
+};
 
 export function applyV14CompatPolyfills() {
 	// 1. TinyMCE polyfill for quick-insert and monks-tokenbar
@@ -336,56 +320,78 @@ export function applyV14CompatPolyfills() {
 		};
 	}
 
-	// 3. LibWrapper defensive registration wrapper for un-migrated packages (e.g. Perceptive)
-	let _libWrapper = globalThis.libWrapper;
-	if ( typeof globalThis.libWrapper === "undefined" ) {
-		try {
-			Object.defineProperty(globalThis, "libWrapper", {
-				configurable: true,
-				enumerable: true,
-				get: () => _libWrapper,
-				set: val => {
-					_libWrapper = val;
-					patchLibWrapper();
-				}
-			});
-		} catch (_) {}
-	} else {
-		patchLibWrapper();
-	}
-
-	// 4. CONFIG.Levels.handlers.SightHandler polyfill for Perceptive compatibility
-	const ensureLevelsSightHandler = levelsObj => {
-		if ( !levelsObj || typeof levelsObj !== "object" ) return;
-		levelsObj.handlers ??= {};
-		levelsObj.handlers.SightHandler ??= {
-			shouldIgnoreWall: function() {
-				return false;
-			}
-		};
-	};
-
-	let _levels = globalThis.CONFIG?.Levels;
+	// 3. CONFIG.Levels.handlers.SightHandler polyfill for Perceptive compatibility
 	if ( globalThis.CONFIG ) {
+		let _levels = globalThis.CONFIG.Levels;
 		try {
 			Object.defineProperty(globalThis.CONFIG, "Levels", {
 				configurable: true,
 				enumerable: true,
-				get: () => _levels,
+				get: () => {
+					if ( !_levels ) _levels = { handlers: {} };
+					ensureLevelsSightHandler(_levels);
+					return _levels;
+				},
 				set: val => {
 					_levels = val;
 					ensureLevelsSightHandler(_levels);
 				}
 			});
 		} catch (_) {}
-		ensureLevelsSightHandler(_levels);
+		if ( _levels ) ensureLevelsSightHandler(_levels);
 	}
 
 	if ( globalThis.Hooks?.on ) {
 		globalThis.Hooks.on("init", () => {
-			patchLibWrapper();
-			ensureLevelsSightHandler(globalThis.CONFIG?.Levels);
+			if ( globalThis.CONFIG?.Levels ) {
+				ensureLevelsSightHandler(globalThis.CONFIG.Levels);
+			}
 		});
+	}
+
+	// 4. Defensive guard for Item5e activities iteration and scaleValues
+	const ItemCls = globalThis.dnd5e?.documents?.Item5e;
+	if ( ItemCls?.prototype ) {
+		const origItemPrep = ItemCls.prototype.prepareEmbeddedDocuments;
+		if ( typeof origItemPrep === "function" && !origItemPrep._sw5eIterPatched ) {
+			ItemCls.prototype.prepareEmbeddedDocuments = function(...args) {
+				const activities = this.system?.activities;
+				if ( activities && typeof activities === "object" && typeof activities[Symbol.iterator] !== "function" ) {
+					try {
+						Object.defineProperty(activities, Symbol.iterator, {
+							value: function*() {
+								yield* Object.values(this);
+							},
+							enumerable: false,
+							configurable: true
+						});
+					} catch (_) {}
+				}
+				this.advancement ??= { byType: {} };
+				this.advancement.byType ??= {};
+				return origItemPrep.apply(this, args);
+			};
+			ItemCls.prototype.prepareEmbeddedDocuments._sw5eIterPatched = true;
+		}
+
+		const desc = Object.getOwnPropertyDescriptor(ItemCls.prototype, "scaleValues");
+		if ( desc?.get && !desc.get._sw5eGuarded ) {
+			const origGet = desc.get;
+			Object.defineProperty(ItemCls.prototype, "scaleValues", {
+				get: function() {
+					this.advancement ??= { byType: {} };
+					this.advancement.byType ??= {};
+					try {
+						return origGet.call(this);
+					} catch (_) {
+						return {};
+					}
+				},
+				enumerable: desc.enumerable,
+				configurable: desc.configurable
+			});
+			ItemCls.prototype.scaleValues._sw5eGuarded = true;
+		}
 	}
 
 	// 5. getSceneControlButtons Array-methods polyfill for levels and other legacy UI modules
