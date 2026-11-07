@@ -32,7 +32,7 @@ system:
     value: class
     subtype: engineerInvocation
   uses:
-    max: '2'
+    max: 2 + max(0, floor((@classes.engineer.levels - 1) / 4))
     spent: 0
     recovery: []
   activities:

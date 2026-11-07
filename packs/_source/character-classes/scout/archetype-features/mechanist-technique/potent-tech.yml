@@ -46,7 +46,7 @@ system:
   cover: null
   crewed: false
   uses:
-    max: ''
+    max: 3 + max(0, floor((@classes.scout.levels - 5) / 4))
     spent: 0
     recovery: []
   type:

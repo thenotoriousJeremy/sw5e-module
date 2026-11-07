@@ -52,7 +52,7 @@ system:
     units: ''
   uses:
     value: null
-    max: '4'
+    max: 4 + max(0, floor((@classes.engineer.levels - 9) / 4))
     per: lr
     recovery: ''
     prompt: true

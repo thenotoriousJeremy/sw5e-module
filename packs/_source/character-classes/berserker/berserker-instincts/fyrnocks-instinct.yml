@@ -30,7 +30,7 @@ system:
     value: class
     subtype: berserkerInvocation
   uses:
-    max: '2'
+    max: 2 + max(0, floor((@classes.berserker.levels - 1) / 4))
     spent: 0
     recovery: []
   activities:

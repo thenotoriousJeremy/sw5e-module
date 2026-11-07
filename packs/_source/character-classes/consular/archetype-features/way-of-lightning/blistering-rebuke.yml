@@ -38,7 +38,7 @@ system:
   cover: null
   crewed: false
   uses:
-    max: '4'
+    max: 4 + max(0, floor((@classes.consular.levels - 9) / 4))
     recovery:
       - period: lr
         type: recoverAll

@@ -34,7 +34,7 @@ system:
   cover: null
   crewed: false
   uses:
-    max: '2'
+    max: 2 + max(0, floor((@classes.scholar.levels - 1) / 4))
     recovery:
       - period: lr
         type: recoverAll

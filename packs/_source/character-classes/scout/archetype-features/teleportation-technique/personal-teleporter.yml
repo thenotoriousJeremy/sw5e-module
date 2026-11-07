@@ -53,7 +53,7 @@ system:
   cover: null
   crewed: false
   uses:
-    max: '2'
+    max: 2 + max(0, floor((@classes.scout.levels - 1) / 4))
     recovery:
       - period: sr
         type: recoverAll

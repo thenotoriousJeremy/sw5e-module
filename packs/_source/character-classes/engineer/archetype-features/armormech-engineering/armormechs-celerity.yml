@@ -36,7 +36,7 @@ system:
   cover: null
   crewed: false
   uses:
-    max: '5'
+    max: 5 + max(0, floor((@classes.engineer.levels - 13) / 4))
     recovery:
       - period: lr
         type: recoverAll

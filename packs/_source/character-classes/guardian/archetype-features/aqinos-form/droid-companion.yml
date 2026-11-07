@@ -63,7 +63,7 @@ system:
   cover: null
   crewed: false
   uses:
-    max: ''
+    max: 2 + max(0, floor((@classes.guardian.levels - 1) / 4))
     spent: 0
     recovery: []
   type:

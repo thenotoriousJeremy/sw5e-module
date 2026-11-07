@@ -55,7 +55,7 @@ system:
     units: ''
   uses:
     value: null
-    max: '3'
+    max: 3 + max(0, floor((@classes.engineer.levels - 5) / 4))
     per: sr
     recovery: ''
     prompt: true
