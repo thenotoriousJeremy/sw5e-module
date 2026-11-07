@@ -35,7 +35,9 @@ system:
   uses:
     max: max(@abilities.wis.mod, 1)
     spent: 0
-    recovery: []
+    recovery:
+      - period: lr
+        type: recoverAll
   activities:
     sw5e0check000000:
       _id: sw5e0check000000

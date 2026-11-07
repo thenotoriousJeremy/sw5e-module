@@ -38,7 +38,9 @@ system:
   uses:
     max: 2 + max(0, floor((@classes.scholar.levels - 1) / 4))
     spent: 0
-    recovery: []
+    recovery:
+      - period: lr
+        type: recoverAll
   activities:
     sw5e0utility0000:
       _id: sw5e0utility0000

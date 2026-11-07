@@ -530,7 +530,8 @@ export function patchAutoAnimationsPresets() {
 		}
 	});
 
-	// Ensure sound and visual databases are active on ready
+	// Seed the autorec menus from D&D5e Animations when they are nearly empty.
+	// PSFX registers its own Sequencer database on "sequencer.ready".
 	Hooks.once("ready", async () => {
 		try {
 			// Auto-sync Autorec presets from dnd5e-animations if AA is active and menu is sparse
@@ -544,17 +545,6 @@ export function patchAutoAnimationsPresets() {
 							await window.AutomatedAnimations.AutorecManager.mergeMenus(autorecData, { submitAll: true });
 							console.log("SW5E | Merged D&D5e Animations presets into Automated Animations.");
 						}
-					}
-				}
-			}
-
-			// Verify PSFX registration in Sequencer Database
-			if (game.modules.get("psfx")?.active && window.Sequencer?.Database) {
-				if (!Sequencer.Database.getEntry("psfx.cantrips.fire-bolt")) {
-					const psfxDb = game.modules.get("psfx")?.api?.psfxDatabase;
-					if (psfxDb) {
-						Sequencer.Database.registerEntries("psfx", psfxDb);
-						console.log("SW5E | Registered PSFX sound effects into Sequencer Database.");
 					}
 				}
 			}

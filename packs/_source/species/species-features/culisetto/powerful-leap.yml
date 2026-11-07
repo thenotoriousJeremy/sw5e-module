@@ -30,7 +30,9 @@ system:
   uses:
     max: '1'
     spent: 0
-    recovery: []
+    recovery:
+      - period: sr
+        type: recoverAll
   activities:
     sw5e0utility0000:
       _id: sw5e0utility0000
