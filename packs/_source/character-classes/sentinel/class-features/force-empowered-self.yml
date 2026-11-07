@@ -118,7 +118,7 @@ system:
           allowed: false
         spellSlot: true
         targets:
-          - type: itemUses
+          - type: attribute
             value: '1'
             target: powercasting.force.points.value
       effects: []
