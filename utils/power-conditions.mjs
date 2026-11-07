@@ -10,7 +10,9 @@
  *  - unconditional ones ("you become invisible") are linked to the utility activity.
  * Durations ("until the end of your next turn", "for 1 minute", "for the duration") become effect durations or DAE
  * special durations, and "repeat the saving throw at the end of each of its turns" becomes a midi-qol OverTime.
- * SW5E's levelled Slowed condition is created as a dnd5e "condition" effect so its speed penalty applies.
+ * SW5E's levelled Slowed condition gets its own effect carrying `flags.sw5e-module.slowedLevel`; at runtime
+ * scripts/patch/derived-conditions.mjs raises the Slowed status to that level and slowed-movement.mjs applies the speed
+ * penalty.
  *
  * Pure data in/data out (no Foundry globals), so it runs in Node (pack sources) and in the browser (world data).
  */

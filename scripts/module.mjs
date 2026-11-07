@@ -67,6 +67,7 @@ import { patchDaeIntegration } from "./patch/dae-integration.mjs";
 import { patchCharacterFlags } from "./patch/character-flags.mjs";
 import { migrateLegacyEffectKeys, patchLegacyEffectKeys } from "./patch/legacy-effect-keys.mjs";
 import { patchDerivedConditions } from "./patch/derived-conditions.mjs";
+import { patchSlowedMovement } from "./patch/slowed-movement.mjs";
 import { patchAutoAnimationsPresets } from "./patch/autoanimations-presets.mjs";
 import { patchAtlPresets } from "./patch/atl-presets.mjs";
 
@@ -159,6 +160,7 @@ Hooks.once('init', async function() {
 	patchCharacterFlags();
 	patchLegacyEffectKeys();
 	patchDerivedConditions();
+	patchSlowedMovement();
 	patchAutoAnimationsPresets();
 	patchAtlPresets();
 });
