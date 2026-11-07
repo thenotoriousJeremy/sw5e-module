@@ -17,7 +17,7 @@ effects:
     disabled: false
     _id: WQYHEv8tO63VeZCx
     changes:
-      - key: flags.sw5e.supremeAptitude
+      - key: flags.dnd5e.supremeAptitude
         mode: 0
         value: '1'
         priority: 20

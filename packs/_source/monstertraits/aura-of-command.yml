@@ -1,7 +1,86 @@
 name: Aura of Command
 type: feat
 img: modules/sw5e-module/icons/packs/Monster%20Traits/Aura%20of%20Command.webp
-effects: []
+effects:
+  - _id: Pwq0j7VG4ePDGAWl
+    flags:
+      auraeffects:
+        originalType: base
+    changes:
+      - key: system.bonuses.mwak.attack
+        mode: 2
+        value: '1'
+        priority: 20
+      - key: system.bonuses.mwak.damage
+        mode: 2
+        value: '1'
+        priority: 20
+      - key: system.bonuses.rwak.attack
+        mode: 2
+        value: '1'
+        priority: 20
+      - key: system.bonuses.rwak.damage
+        mode: 2
+        value: '1'
+        priority: 20
+      - key: system.bonuses.msak.attack
+        mode: 2
+        value: '1'
+        priority: 20
+      - key: system.bonuses.msak.damage
+        mode: 2
+        value: '1'
+        priority: 20
+      - key: system.bonuses.rsak.attack
+        mode: 2
+        value: '1'
+        priority: 20
+      - key: system.bonuses.rsak.damage
+        mode: 2
+        value: '1'
+        priority: 20
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    transfer: true
+    name: Aura of Command
+    description: ''
+    statuses: []
+    _stats:
+      coreVersion: '14.369'
+      systemId: dnd5e
+      systemVersion: 6.0.6
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    img: modules/sw5e-module/icons/packs/Monster%20Traits/Aura%20of%20Command.webp
+    type: auraeffects.aura
+    system:
+      applyToSelf: true
+      bestFormula: ''
+      canStack: false
+      collisionType: move
+      color: null
+      combatOnly: false
+      disableOnHidden: true
+      distanceFormula: '30'
+      disposition: 1
+      evaluatePreApply: true
+      overrideName: ''
+      script: ''
+      showRadius: false
+    sort: 0
+    _key: '!items.effects!u7ZaIpbUgAn9a9w2.Pwq0j7VG4ePDGAWl'
 flags: {}
 system:
   description:

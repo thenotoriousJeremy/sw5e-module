@@ -19,15 +19,7 @@ effects:
         hostile: false
         onlyOnce: false
         time: None
-    changes:
-      - key: system.bonuses.All-Attacks
-        value: '2'
-        mode: 0
-        priority: 1
-      - key: system.bonuses.All-Damage
-        value: '2'
-        mode: 0
-        priority: 1
+    changes: []
     disabled: false
     duration:
       startTime: null
@@ -40,9 +32,10 @@ effects:
     origin: Actor.oz1MItZ6zknCWBbl.Item.UYlxnuMo4uLcJTYV
     tint: '#ffffff'
     transfer: true
-    name: Aura of Command
+    name: Superior Camouflage
     description: ''
-    statuses: []
+    statuses:
+      - invisible
     _stats:
       coreVersion: '12.330'
       systemId: null

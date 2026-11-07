@@ -5,7 +5,7 @@ img: modules/sw5e-module/icons/packs/Feats/Alert.webp
 effects:
   - _id: cOPS96jeTb8E0cQS
     changes:
-      - key: flags.sw5e.initiativeAlert
+      - key: flags.dnd5e.initiativeAlert
         value: '1'
         mode: 0
         priority: 20

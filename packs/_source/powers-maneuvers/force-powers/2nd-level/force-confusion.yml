@@ -2,7 +2,36 @@ _id: qtpx7CO5H1fu73yQ
 name: Force Confusion
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/ForceConfusion.webp
-effects: []
+effects:
+  - _id: R0pKOm212DTtfefe
+    name: 'Force Confusion: Charmed'
+    img: systems/dnd5e/icons/svg/statuses/charmed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - charmed
+    duration:
+      seconds: 60
+    description: >-
+      <p>One humanoid of your choice that you can see within range must succeed
+      on a Wisdom saving throw or become charmed by you for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=wis,
+            saveDC=@powercasting.force.schools.uni.dc, saveCount=1-,
+            label="Force Confusion: Charmed"
+          priority: 20
+    _key: '!items.effects!qtpx7CO5H1fu73yQ.R0pKOm212DTtfefe'
 folder: fA8n8XYLzMuY2STb
 sort: 0
 flags:
@@ -137,6 +166,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: R0pKOm212DTtfefe
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

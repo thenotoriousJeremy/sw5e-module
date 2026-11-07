@@ -156,8 +156,9 @@ system:
             denomination: 6
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
+              formula: ''
             types:
               - kinetic
       description: {}
@@ -186,9 +187,35 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '2'
+      effects:
+        - _id: 2smevbECcSlunvxp
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: 2smevbECcSlunvxp
+    name: 'Fabricate Minor Trap: Restrained'
+    img: systems/dnd5e/icons/svg/statuses/restrained.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - restrained
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save, the creature takes 1d6 kinetic damage and is
+      restrained until the start of its next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnStart
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!hmyHJYXU4hWEWiXc.2smevbECcSlunvxp'
 _id: hmyHJYXU4hWEWiXc
 folder: Vn6PPcio8XorBtTE
 sort: 0

@@ -125,9 +125,41 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: L8oDpZM43C3YzVql
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: L8oDpZM43C3YzVql
+    name: 'Paralyze Humanoid: Poisoned & Paralyzed'
+    img: systems/dnd5e/icons/svg/statuses/poisoned.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - poisoned
+      - paralyzed
+    duration:
+      seconds: 60
+    description: >-
+      <p>The target must succeed on a Constitution saving throw or be poisoned
+      for the duration. While poisoned in this way, the target is paralyzed.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=con, saveDC=@powercasting.tech.schools.tec.dc,
+            saveCount=1-, label="Paralyze Humanoid: Poisoned & Paralyzed"
+          priority: 20
+    _key: '!items.effects!g3HHjVD9kS5muc7n.L8oDpZM43C3YzVql'
 _id: g3HHjVD9kS5muc7n
 folder: oByoBGcbpbwGx6by
 sort: 0

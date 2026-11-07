@@ -13,13 +13,13 @@ effects:
         mode: 4
         value: '1'
         priority: 20
-      - key: flags.sw5e.encumbranceMultiplier
-        mode: 4
-        value: '1'
-        priority: 1
-      - key: flags.sw5e.encumbranceMultiplier
-        mode: 2
-        value: '1'
+      - key: flags.dnd5e.powerfulBuild
+        mode: 5
+        value: 'true'
+        priority: 20
+      - key: flags.dnd5e.encumbranceMultiplier
+        mode: 5
+        value: '2'
         priority: 20
     disabled: false
     duration:

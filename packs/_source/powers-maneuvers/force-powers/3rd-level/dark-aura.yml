@@ -121,8 +121,9 @@ system:
             denomination: 8
             number: 1
             scaling:
-              mode: ''
+              mode: half
               number: 1
+              formula: ''
             types:
               - necrotic
       description: {}

@@ -133,7 +133,7 @@ system:
             denomination: 8
             number: 5
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - energy

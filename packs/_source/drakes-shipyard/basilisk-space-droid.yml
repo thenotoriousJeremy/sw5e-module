@@ -2961,8 +2961,8 @@ items:
             mode: 2
             value: '1'
             priority: 20
-          - key: flags.sw5e.initiativeAdv
-            mode: 0
+          - key: system.attributes.init.roll.mode
+            mode: 2
             value: '1'
             priority: 20
         disabled: false
@@ -4714,8 +4714,8 @@ effects:
         mode: 2
         value: '1'
         priority: 20
-      - key: flags.sw5e.initiativeAdv
-        mode: 0
+      - key: system.attributes.init.roll.mode
+        mode: 2
         value: '1'
         priority: 20
     disabled: false

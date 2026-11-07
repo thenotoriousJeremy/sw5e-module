@@ -2,7 +2,29 @@ _id: t8tMpBpvAuT4SO59
 name: Destroy Droid
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/DestroyDroid.webp
-effects: []
+effects:
+  - _id: XNxRktaqI5ACJ23e
+    name: 'Destroy Droid: Paralyzed'
+    img: systems/dnd5e/icons/svg/statuses/paralyzed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - paralyzed
+    duration:
+      seconds: 60
+    description: >-
+      <p>Each droid or construct must succeed on a Constitution saving throw or
+      be paralyzed for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!t8tMpBpvAuT4SO59.XNxRktaqI5ACJ23e'
 folder: f0q3CrqrwFIDgRk8
 sort: 0
 flags:
@@ -129,6 +151,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '8'
+      effects:
+        - _id: XNxRktaqI5ACJ23e
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

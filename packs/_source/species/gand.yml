@@ -158,10 +158,14 @@ system:
 effects:
   - _id: sfGWShWGtQCdHlHC
     changes:
-      - key: system.attributes.ac.value
+      - key: system.attributes.ac.calc
         mode: 5
-        priority: 1
-        value: 12+@abilities.dex.mod
+        priority: 20
+        value: custom
+      - key: system.attributes.ac.formula
+        mode: 5
+        priority: 20
+        value: 12 + @abilities.dex.mod
       - key: flags.sw5e.regenerative
         mode: 5
         priority: 20

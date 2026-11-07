@@ -2,7 +2,36 @@ _id: nIcdXAilNxbeqCZ4
 name: Spine-Chilling Howls
 type: sw5e-module.maneuver
 img: modules/sw5e-module/icons/packs/Maneuvers/Spine-ChillingHowls.webp
-effects: []
+effects:
+  - _id: DexSxB9cNOBeDTlg
+    name: 'Spine-Chilling Howls: Frightened'
+    img: systems/dnd5e/icons/svg/statuses/frightened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - frightened
+    duration:
+      seconds: 60
+    description: >-
+      <p>The target must then succeed on a Wisdom saving throw against your
+      Maneuver save DC or become frightened of both you and your companion for 1
+      minute.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=wis, saveDC=@superiority.types.general.dc,
+            saveCount=1-, label="Spine-Chilling Howls: Frightened"
+          priority: 20
+    _key: '!items.effects!nIcdXAilNxbeqCZ4.DexSxB9cNOBeDTlg'
 folder: UpJzZCBXCmD0YlZU
 sort: 0
 flags:
@@ -125,6 +154,9 @@ system:
           type: ''
           units: ''
       type: save
+      effects:
+        - _id: DexSxB9cNOBeDTlg
+          onSave: false
 ownership:
   default: 0
 _stats:

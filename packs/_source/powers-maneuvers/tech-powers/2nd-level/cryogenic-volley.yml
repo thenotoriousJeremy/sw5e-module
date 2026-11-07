@@ -134,9 +134,36 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: AzCwZTJYmdkSLZ1Q
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: AzCwZTJYmdkSLZ1Q
+    name: 'Cryogenic Volley: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save, a creature takes 3d6 cold damage, and gains 1 slowed
+      level until the start of your next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnStartSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes: []
+    _key: '!items.effects!FPN272OUubDOCHfT.AzCwZTJYmdkSLZ1Q'
 _id: FPN272OUubDOCHfT
 folder: oByoBGcbpbwGx6by
 sort: 0

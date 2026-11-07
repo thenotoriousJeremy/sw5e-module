@@ -2385,7 +2385,7 @@ items:
             denomination: 4
             number: 1
             scaling:
-              formula: 1d4
+              formula: ""
               mode: whole
               number: 1
             types:

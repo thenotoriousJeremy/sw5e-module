@@ -161,10 +161,14 @@ system:
 effects:
   - _id: rcIMsotffEEZpwXR
     changes:
-      - key: system.attributes.ac.value
-        value: 12+@abilities.dex.mod
+      - key: system.attributes.ac.calc
         mode: 5
-        priority: 1
+        priority: 20
+        value: custom
+      - key: system.attributes.ac.formula
+        mode: 5
+        priority: 20
+        value: 12 + @abilities.dex.mod
       - key: flags.sw5e.grovelCowerAndBeg
         value: '1'
         mode: 5

@@ -2,7 +2,29 @@ _id: NWwqfTxAa2tH2A3Z
 name: Stasis Field
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/StasisField.webp
-effects: []
+effects:
+  - _id: p3jomXa4mfwSDsRJ
+    name: 'Stasis Field: Paralyzed'
+    img: systems/dnd5e/icons/svg/statuses/paralyzed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - paralyzed
+    duration:
+      seconds: 60
+    description: >-
+      <p>Each creature within range of that point must succeed on a Wisdom
+      saving throw or be paralyzed for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!NWwqfTxAa2tH2A3Z.p3jomXa4mfwSDsRJ'
 folder: cdf75iEqdwI15gqw
 sort: 0
 flags:
@@ -132,6 +154,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '9'
+      effects:
+        - _id: p3jomXa4mfwSDsRJ
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

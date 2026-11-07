@@ -2,7 +2,28 @@ _id: CwtFj53P5a1qA7Pt
 name: Saber Strike
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/SaberStrike.webp
-effects: []
+effects:
+  - _id: C8lA0EVGdTU9FYtN
+    name: 'Saber Strike: Prone'
+    img: systems/dnd5e/icons/svg/statuses/prone.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - prone
+    duration: {}
+    description: >-
+      <p>In addition, if you hit with the attack, the target must succeed on a
+      Strength saving throw or be knocked prone.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!CwtFj53P5a1qA7Pt.C8lA0EVGdTU9FYtN'
 folder: fA8n8XYLzMuY2STb
 sort: 0
 flags:
@@ -109,7 +130,7 @@ system:
             denomination: 10
             number: 1
             scaling:
-              mode: ''
+              mode: half
               number: 1
             types:
               - ''
@@ -139,6 +160,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: C8lA0EVGdTU9FYtN
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:
@@ -152,4 +176,3 @@ _stats:
   lastModifiedBy: dnd5ebuilder0000
   duplicateSource: null
 _key: '!items!CwtFj53P5a1qA7Pt'
-

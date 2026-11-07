@@ -2,7 +2,29 @@ _id: p7m4tmyReQWSv2ZW
 name: Beast Trick
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/BeastTrick.webp
-effects: []
+effects:
+  - _id: 7HnoEYGAYQbEHIIY
+    name: 'Beast Trick: Charmed'
+    img: systems/dnd5e/icons/svg/statuses/charmed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - charmed
+    duration:
+      seconds: 86400
+    description: >-
+      <p>Otherwise, the beast must succeed on a Wisdom saving throw or be
+      charmed by you for the power's duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!p7m4tmyReQWSv2ZW.7HnoEYGAYQbEHIIY'
 folder: UUQ0fUk9s4agOjkm
 sort: 0
 flags:
@@ -127,6 +149,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '2'
+      effects:
+        - _id: 7HnoEYGAYQbEHIIY
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

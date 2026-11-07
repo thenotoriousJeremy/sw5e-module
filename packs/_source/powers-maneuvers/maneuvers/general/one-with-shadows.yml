@@ -2,7 +2,32 @@ _id: PszidyyMUSYwjjEP
 name: One With Shadows
 type: sw5e-module.maneuver
 img: modules/sw5e-module/icons/packs/Maneuvers/OneWithShadows.webp
-effects: []
+effects:
+  - _id: s3juaUMX5CCXfsqV
+    name: 'One With Shadows: Invisible'
+    img: systems/dnd5e/icons/svg/statuses/invisible.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - invisible
+    duration: {}
+    description: >-
+      <p>When you are in an area of dim light or darkness, you can use your
+      action and expend one superiority die to become invisible until you move
+      or take a hostile action.</p>
+    flags:
+      dae:
+        specialDuration:
+          - isMoved
+          - 1Attack
+          - 1Spell
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!PszidyyMUSYwjjEP.s3juaUMX5CCXfsqV'
 folder: UpJzZCBXCmD0YlZU
 sort: 0
 flags:
@@ -115,6 +140,8 @@ system:
           type: ''
           units: ''
       type: utility
+      effects:
+        - _id: s3juaUMX5CCXfsqV
 ownership:
   default: 0
 _stats:

@@ -2,7 +2,30 @@ _id: bCjVRaWSib1VjjdR
 name: Choke
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Choke.webp
-effects: []
+effects:
+  - _id: ts4AldVMZcq2n1SN
+    name: 'Choke: Restrained'
+    img: systems/dnd5e/icons/svg/statuses/restrained.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - restrained
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save target takes 5d8 force damage and is restrained until
+      the end of your next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEndSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!bCjVRaWSib1VjjdR.ts4AldVMZcq2n1SN'
 folder: 4HNSqzl2qT1cS0bP
 sort: 0
 flags:
@@ -146,6 +169,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '4'
+      effects:
+        - _id: ts4AldVMZcq2n1SN
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

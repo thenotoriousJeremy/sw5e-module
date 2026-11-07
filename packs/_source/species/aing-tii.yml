@@ -163,10 +163,14 @@ system:
 effects:
   - _id: 3aUdsUbBSwi6cZH0
     changes:
-      - key: system.attributes.ac.value
-        value: 13 + @abilities.dex.mod
+      - key: system.attributes.ac.calc
         mode: 5
-        priority: 1
+        priority: 20
+        value: custom
+      - key: system.attributes.ac.formula
+        mode: 5
+        priority: 20
+        value: 13 + @abilities.dex.mod
       - key: flags.sw5e.advantage.ability.save.force.wis
         value: '1'
         mode: 5

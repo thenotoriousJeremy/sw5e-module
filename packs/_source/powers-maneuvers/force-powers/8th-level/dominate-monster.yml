@@ -2,7 +2,29 @@ _id: ntwAAUvxG0lesWMl
 name: Dominate Monster
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/DominateMonster.webp
-effects: []
+effects:
+  - _id: XG7GM0y5ktBG74VA
+    name: 'Dominate Monster: Charmed'
+    img: systems/dnd5e/icons/svg/statuses/charmed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - charmed
+    duration:
+      seconds: 3600
+    description: >-
+      <p>It must succeed on a Wisdom saving throw or be charmed by you for the
+      duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!ntwAAUvxG0lesWMl.XG7GM0y5ktBG74VA'
 folder: cdf75iEqdwI15gqw
 sort: 0
 flags:
@@ -150,6 +172,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '9'
+      effects:
+        - _id: XG7GM0y5ktBG74VA
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

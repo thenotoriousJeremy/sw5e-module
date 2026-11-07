@@ -100,7 +100,7 @@ system:
             denomination: 12
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - poison

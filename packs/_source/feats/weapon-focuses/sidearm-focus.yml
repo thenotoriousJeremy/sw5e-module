@@ -17,7 +17,7 @@ effects:
     disabled: false
     _id: w9AuQ6aUGYdFyeBk
     changes:
-      - key: system.bonuses.rpak.damage
+      - key: system.bonuses.rwak.damage
         mode: 2
         value: '1'
         priority: 20

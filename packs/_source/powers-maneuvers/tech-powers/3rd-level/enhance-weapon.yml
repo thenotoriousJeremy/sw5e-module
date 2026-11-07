@@ -107,8 +107,9 @@ system:
             denomination: 4
             number: 1
             scaling:
-              mode: ''
+              mode: half
               number: 1
+              formula: ''
             types:
               - ''
       description: {}

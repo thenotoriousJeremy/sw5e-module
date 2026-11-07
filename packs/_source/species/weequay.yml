@@ -164,7 +164,7 @@ system:
 effects:
   - _id: N1tC15fGu1NNo2AX
     changes:
-      - key: flags.sw5e.meleeCriticalDamageDice
+      - key: flags.dnd5e.meleeCriticalDamageDice
         mode: 2
         value: '+1'
         priority: 20

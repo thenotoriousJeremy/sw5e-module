@@ -74,7 +74,7 @@ system:
     - _id: gheavt5gi2tr3fo1
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: rage-damage
         type: number
         distance:
           units: ''
@@ -155,7 +155,7 @@ system:
     - _id: DX6pIWmuW2RCTxNr
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: rages
         type: number
         distance:
           units: ''
@@ -199,4 +199,3 @@ ownership:
   default: 0
 sort: 0
 _key: '!items!m0MM6FpMP0W9FWew'
-

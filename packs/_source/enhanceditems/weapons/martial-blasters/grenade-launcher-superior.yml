@@ -58,9 +58,10 @@ system:
     type: enemy
     prompt: false
   range:
-    value: null
-    long: null
+    value: 90
+    long: 360
     units: ft
+    reach: null
   uses:
     value: null
     max: ''
@@ -150,6 +151,7 @@ system:
       range:
         override: false
         units: ft
+        value: '90'
       target:
         affects:
           count: '1'
@@ -179,4 +181,3 @@ _stats:
   lastModifiedBy: dnd5ebuilder0000
   duplicateSource: null
 _key: '!items!zdYhMp9bOjjCbdqp'
-

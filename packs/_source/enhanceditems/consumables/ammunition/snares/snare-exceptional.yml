@@ -127,7 +127,7 @@ system:
       description: {}
       duration:
         units: inst
-        value: inst
+        value: ''
       img: null
       range:
         override: false

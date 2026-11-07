@@ -21,11 +21,11 @@ effects:
         mode: 2
         value: '1'
         priority: 20
-      - key: flags.sw5e.weaponCriticalThreshold
+      - key: flags.dnd5e.weaponCriticalThreshold
         mode: 4
         value: '20'
         priority: 1
-      - key: flags.sw5e.weaponCriticalThreshold
+      - key: flags.dnd5e.weaponCriticalThreshold
         mode: 2
         value: '-1'
         priority: 20

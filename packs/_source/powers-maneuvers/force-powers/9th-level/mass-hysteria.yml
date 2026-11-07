@@ -2,7 +2,29 @@ _id: eQtAk1AYRKRlN2qe
 name: Mass Hysteria
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/MassHysteria.webp
-effects: []
+effects:
+  - _id: yb85X7a8qdvUvPT4
+    name: 'Mass Hysteria: Frightened'
+    img: systems/dnd5e/icons/svg/statuses/frightened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - frightened
+    duration:
+      seconds: 60
+    description: >-
+      <p>Each creature in a 30-foot-radius sphere is frightened for the duration
+      of the power.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!eQtAk1AYRKRlN2qe.yb85X7a8qdvUvPT4'
 folder: aqiq50poYkgoSGeZ
 sort: 0
 flags:
@@ -143,6 +165,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '10'
+      effects:
+        - _id: yb85X7a8qdvUvPT4
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

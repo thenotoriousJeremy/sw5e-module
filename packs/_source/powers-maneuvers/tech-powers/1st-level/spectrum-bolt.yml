@@ -137,8 +137,9 @@ system:
             denomination: null
             number: null
             scaling:
-              mode: ''
-              number: 1
+              mode: whole
+              number: 0
+              formula: 1d6
             types:
               - ''
       description: {}

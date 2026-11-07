@@ -166,11 +166,11 @@ effects:
   - _id: BhqpYkxEEUvVs0Z2
     changes:
       - key: flags.sw5e.advantage.ability.save.force.wis
-        value: '1'
+        value: 'true'
         mode: 5
         priority: 20
-      - key: flags.sw5e.strongLegged
-        value: '1'
+      - key: flags.dnd5e.powerfulBuild
+        value: 'true'
         mode: 5
         priority: 20
       - key: flags.sw5e.trance

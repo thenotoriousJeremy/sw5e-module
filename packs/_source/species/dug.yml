@@ -166,15 +166,15 @@ effects:
   - _id: ZXNTACyNdeD1Y7ui
     changes:
       - key: flags.sw5e.furyOfTheSmall
-        value: '1'
+        value: 'true'
         mode: 5
         priority: 20
-      - key: flags.sw5e.encumbranceMultiplier
+      - key: flags.dnd5e.powerfulBuild
         value: '+1'
         mode: 2
         priority: 20
       - key: flags.sw5e.undersized
-        value: '1'
+        value: 'true'
         mode: 5
         priority: 20
     disabled: false

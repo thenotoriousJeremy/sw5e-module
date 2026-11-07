@@ -16,34 +16,15 @@ flags:
       effect: []
 system:
   description:
-    value: >-
+    value: |-
       <p><em><strong>Prerequisite</strong>: Saber Ward</em></p>
-
-      <p>The first time you take the Attack action during your turn, you can
-      simultaneously cast this power to blend your melee weapon attacks with the
-      use of the Force. For each successful hit you make with a melee weapon
-      before the power ends, the target must make a Dexterity saving throw or
-      have a new effect apply until the end of its next turn. Once you've made
-      three weapon attacks, the power ends.</p>
-
+      <p>The first time you take the Attack action during your turn, you can simultaneously cast this power to blend your melee weapon attacks with the use of the Force. For each successful hit you make with a melee weapon before the power ends, the target must make a Dexterity saving throw or have a new effect apply until the end of its next turn. Once you've made three weapon attacks, the power ends.</p>
       <ul>
-
-      <li><strong>1st Hit:</strong> If the target fails its saving throw, it
-      gains 1 slowed level until the end of its next turn.</li>
-
-      <li><strong>2nd Hit:</strong> If the target fails its saving throw, it
-      takes [[/r 1d6]] kinetic damage and cannot take reactions until after the
-      end of its next turn.</li>
-
-      <li><strong>3rd Hit:</strong> If the target fails its saving throw, it
-      takes [[/r 2d6]] kinetic damage and cannot take bonus actions during its
-      next turn.</li>
-
+      <li><strong>1st Hit:</strong> If the target fails its saving throw, it gains 1 slowed level until the end of its next turn.</li>
+      <li><strong>2nd Hit:</strong> If the target fails its saving throw, it takes [[/r 1d6]] kinetic damage and cannot take reactions until after the end of its next turn.</li>
+      <li><strong>3rd Hit:</strong> If the target fails its saving throw, it takes [[/r 2d6]] kinetic damage and cannot take bonus actions during its next turn.</li>
       </ul>
-
-      <p><strong><em>Force Potency.</em></strong> When you cast this power using
-      a force slot of 3rd level or higher, the damage of the second and third
-      hit each increase by [[/r 1d6]] for every two slot levels above 1st.</p>
+      <p><strong><em>Force Potency.</em></strong> When you cast this power using a force slot of 3rd level or higher, the damage of the second and third hit each increase by [[/r 1d6]] for every two slot levels above 1st.</p>
     chat: ''
   source:
     custom: EC
@@ -127,7 +108,7 @@ system:
             denomination: 6
             number: 1
             scaling:
-              mode: ''
+              mode: half
               number: 1
             types:
               - kinetic
@@ -136,7 +117,7 @@ system:
             denomination: 6
             number: 2
             scaling:
-              mode: ''
+              mode: half
               number: 1
             types:
               - kinetic
@@ -180,4 +161,3 @@ _stats:
   lastModifiedBy: dnd5ebuilder0000
   duplicateSource: null
 _key: '!items!1GVIq7xHPibQ76ja'
-

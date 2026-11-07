@@ -126,9 +126,36 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: NdGvyqpyY4kND6ph
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: NdGvyqpyY4kND6ph
+    name: 'Pyrotechnics: Blinded'
+    img: systems/dnd5e/icons/svg/statuses/blinded.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - blinded
+    duration:
+      rounds: 1
+    description: >-
+      <p>Each creature within 10 feet of the target must succeed on a
+      Constitution saving throw or become blinded until the end of your next
+      turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEndSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!iQVGFAmDoSWXL38N.NdGvyqpyY4kND6ph'
 _id: iQVGFAmDoSWXL38N
 folder: oByoBGcbpbwGx6by
 sort: 0

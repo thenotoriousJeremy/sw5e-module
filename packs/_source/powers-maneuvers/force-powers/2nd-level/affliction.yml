@@ -2,7 +2,30 @@ _id: UIyXTgexRRvcy7aL
 name: Affliction
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Affliction.webp
-effects: []
+effects:
+  - _id: 9K4nP1DdnkifJ9Dt
+    name: 'Affliction: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      seconds: 60
+    description: >-
+      <p>On a failed save, the target gains 1 slowed level, it takes a -2
+      penalty to AC and Dexterity saving throws, and it can't use reactions.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes: []
+    _key: '!items.effects!UIyXTgexRRvcy7aL.9K4nP1DdnkifJ9Dt'
 folder: fA8n8XYLzMuY2STb
 sort: 0
 flags:
@@ -128,6 +151,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: 9K4nP1DdnkifJ9Dt
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

@@ -178,18 +178,18 @@ effects:
       modifiedTime: null
       lastModifiedBy: null
     changes:
-      - key: flags.sw5e.encumbranceMultiplier
+      - key: flags.dnd5e.powerfulBuild
         mode: 2
         priority: 20
         value: '+1'
       - key: flags.sw5e.forceInsensitive
         mode: 5
         priority: 20
-        value: '1'
+        value: 'true'
       - key: flags.sw5e.maintenanceMode
         mode: 5
         priority: 20
-        value: '1'
+        value: 'true'
       - key: flags.sw5e.rapidReconstruction
         mode: 5
         priority: 20

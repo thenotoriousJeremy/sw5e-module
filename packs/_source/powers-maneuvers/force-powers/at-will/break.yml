@@ -109,7 +109,7 @@ system:
             denomination: 4
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - kinetic

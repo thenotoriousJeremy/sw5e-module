@@ -123,7 +123,7 @@ system:
     - _id: 9KIaNFoWsPRwzlJO
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: force-powers-known
         type: number
         distance:
           units: ''
@@ -140,7 +140,7 @@ system:
     - _id: BwR1hK4rIQthJEPF
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: force-power-level
         type: number
         distance:
           units: ''
@@ -210,4 +210,3 @@ ownership:
   default: 0
 sort: 0
 _key: '!items!bRu1nafCbPdkqweS'
-

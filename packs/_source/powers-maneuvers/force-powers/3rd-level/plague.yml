@@ -2,7 +2,30 @@ _id: RFBrHrkIRHAADOSx
 name: Plague
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Plague.webp
-effects: []
+effects:
+  - _id: KKEF1PMquOJbhdZZ
+    name: 'Plague: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      seconds: 60
+    description: >-
+      <p>An affected target gains 1 slowed level, it takes a -2 penalty to AC
+      and Dexterity saving throws, and it can't use reactions.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes: []
+    _key: '!items.effects!RFBrHrkIRHAADOSx.KKEF1PMquOJbhdZZ'
 folder: 4HNSqzl2qT1cS0bP
 sort: 0
 flags:
@@ -122,6 +145,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '4'
+      effects:
+        - _id: KKEF1PMquOJbhdZZ
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

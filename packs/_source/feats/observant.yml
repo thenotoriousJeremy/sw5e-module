@@ -17,7 +17,7 @@ effects:
     disabled: false
     _id: uKp5Jcfy5ot8aw2I
     changes:
-      - key: flags.sw5e.observantFeat
+      - key: flags.dnd5e.observantFeat
         mode: 0
         value: '1'
         priority: 20

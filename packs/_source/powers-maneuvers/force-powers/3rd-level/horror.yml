@@ -2,7 +2,29 @@ _id: YvlNdHFOOgl1tAxC
 name: Horror
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Horror.webp
-effects: []
+effects:
+  - _id: PrKeDfuNX3yuTnOD
+    name: 'Horror: Frightened'
+    img: systems/dnd5e/icons/svg/statuses/frightened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - frightened
+    duration:
+      seconds: 60
+    description: >-
+      <p>Each creature in a 30-foot cone must succeed on a Wisdom saving throw
+      or drop whatever it is holding and become frightened for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!YvlNdHFOOgl1tAxC.PrKeDfuNX3yuTnOD'
 folder: 4HNSqzl2qT1cS0bP
 sort: 0
 flags:
@@ -136,6 +158,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '4'
+      effects:
+        - _id: PrKeDfuNX3yuTnOD
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

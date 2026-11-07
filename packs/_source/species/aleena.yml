@@ -168,14 +168,14 @@ effects:
   - _id: UCJDsDHBIg6vcQ2j
     changes:
       - key: flags.sw5e.nimbleEscape
-        value: '1'
+        value: 'true'
         mode: 5
         priority: 20
       - key: flags.sw5e.undersized
-        value: '1'
+        value: 'true'
         mode: 5
         priority: 20
-      - key: flags.sw5e.nimbleness
+      - key: flags.dnd5e.halflingNimbleness
         value: '1'
         mode: 5
         priority: 20

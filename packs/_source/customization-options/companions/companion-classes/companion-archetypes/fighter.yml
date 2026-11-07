@@ -29,7 +29,7 @@ system:
     - _id: vnj0ftswtsc372gq
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: superiority-dice-size
         type: dice
         distance:
           units: ''
@@ -155,7 +155,7 @@ system:
     - _id: 9KIaNFoWsPRwzlJO
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: maneuvers-known
         type: number
         distance:
           units: ''
@@ -175,7 +175,7 @@ system:
       hint: ''
     - type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: superiority-dice-quantity
         type: number
         distance:
           units: ''
@@ -237,4 +237,3 @@ ownership:
   default: 0
 sort: 0
 _key: '!items!NF3t4XKruSwaB8SH'
-

@@ -4,7 +4,7 @@ img: modules/sw5e-module/icons/packs/Companions/humanoid.webp
 effects:
   - _id: Q87bLYTIb0nrsIS3
     changes:
-      - key: flags.sw5e.meleeCriticalDamageDice
+      - key: flags.dnd5e.meleeCriticalDamageDice
         mode: 2
         value: '1'
         priority: 20

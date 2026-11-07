@@ -5,17 +5,29 @@ img: modules/sw5e-module/icons/packs/Feats/WeaponExpert.webp
 effects:
   - _id: 0d8iTrYN5SNWLeSw
     changes:
-      - key: system.traits.weaponProf.custom
-        value: All blasters
-        mode: 0
+      - key: system.traits.weaponProf.value
+        value: sbl
+        mode: 2
         priority: 20
-      - key: system.traits.weaponProf.custom
-        value: All lightweapons
-        mode: 0
+      - key: system.traits.weaponProf.value
+        value: mbl
+        mode: 2
         priority: 20
-      - key: system.traits.weaponProf.custom
-        value: All vibroweapons
-        mode: 0
+      - key: system.traits.weaponProf.value
+        value: slw
+        mode: 2
+        priority: 20
+      - key: system.traits.weaponProf.value
+        value: mlw
+        mode: 2
+        priority: 20
+      - key: system.traits.weaponProf.value
+        value: svb
+        mode: 2
+        priority: 20
+      - key: system.traits.weaponProf.value
+        value: mvb
+        mode: 2
         priority: 20
     disabled: false
     duration:

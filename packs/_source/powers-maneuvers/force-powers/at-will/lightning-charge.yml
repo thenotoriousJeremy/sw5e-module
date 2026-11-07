@@ -114,8 +114,8 @@ system:
             denomination: null
             number: null
             scaling:
-              mode: ''
-              number: 1
+              mode: whole
+              formula: 1d8
             types:
               - lightning
       description: {}

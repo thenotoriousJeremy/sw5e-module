@@ -107,7 +107,7 @@ system:
             denomination: 4
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - energy
@@ -116,7 +116,7 @@ system:
             denomination: 6
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - energy
@@ -125,7 +125,7 @@ system:
             denomination: 8
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - energy

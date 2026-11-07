@@ -2,7 +2,30 @@ _id: aJ4cj7mhNpbjQ3X1
 name: Menacing Attack
 type: sw5e-module.maneuver
 img: modules/sw5e-module/icons/packs/Maneuvers/MenacingAttack.webp
-effects: []
+effects:
+  - _id: 1szjrlLEzmN1XP4b
+    name: 'Menacing Attack: Frightened'
+    img: systems/dnd5e/icons/svg/statuses/frightened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - frightened
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save, it is frightened of you until the end of your next
+      turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEndSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!aJ4cj7mhNpbjQ3X1.1szjrlLEzmN1XP4b'
 folder: TQNbKGpcfnqPqcFU
 sort: 0
 flags:
@@ -124,6 +147,9 @@ system:
           type: ''
           units: ''
       type: save
+      effects:
+        - _id: 1szjrlLEzmN1XP4b
+          onSave: false
 ownership:
   default: 0
 _stats:

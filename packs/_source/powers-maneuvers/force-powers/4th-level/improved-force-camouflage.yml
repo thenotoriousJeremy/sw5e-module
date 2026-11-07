@@ -2,7 +2,30 @@ _id: veMSw4gd8F3yu85B
 name: Improved Force Camouflage
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/ImprovedForceCamouflage.webp
-effects: []
+effects:
+  - _id: hQTAmXk6USYmZ6or
+    name: 'Improved Force Camouflage: Invisible'
+    img: systems/dnd5e/icons/svg/statuses/invisible.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - invisible
+    duration:
+      seconds: 60
+    description: >-
+      <p>Prerequisite : Force Camouflage A willing creature you touch becomes
+      invisible until the power ends. Anything the target is wearing or carrying
+      is invisible as long as it is on the target's person.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!veMSw4gd8F3yu85B.hQTAmXk6USYmZ6or'
 folder: grOCu0oGHYmYxNZh
 sort: 0
 flags:
@@ -122,6 +145,8 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '5'
+      effects:
+        - _id: hQTAmXk6USYmZ6or
   method: powerCasting
   prepared: true
 ownership:

@@ -135,9 +135,36 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: uY1sZp8XkaCBTF5D
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: uY1sZp8XkaCBTF5D
+    name: 'Cryogenic Spray: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save, a creature takes 8d8 cold damage, and gains 1 slowed
+      level until the start of your next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnStartSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes: []
+    _key: '!items.effects!YSRzT6hypG47Kvo7.uY1sZp8XkaCBTF5D'
 _id: YSRzT6hypG47Kvo7
 folder: vWBm7OnkHfIDmlGL
 sort: 0

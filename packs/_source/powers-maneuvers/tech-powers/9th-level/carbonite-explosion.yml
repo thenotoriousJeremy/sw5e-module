@@ -139,9 +139,34 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '10'
+      effects:
+        - _id: BPilrd6cfDjENR5N
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: BPilrd6cfDjENR5N
+    name: 'Carbonite Explosion: Restrained'
+    img: systems/dnd5e/icons/svg/statuses/restrained.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - restrained
+    duration:
+      seconds: 60
+    description: >-
+      <p>On a failed save, the creature takes 8d6 + 20 cold damage and is
+      restrained for 1 minute as it is encased in carbonite.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!bhxYk5gTU4ujyaQ9.BPilrd6cfDjENR5N'
 _id: bhxYk5gTU4ujyaQ9
 folder: CGi8urSRy0gVkJmK
 sort: 0

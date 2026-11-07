@@ -2,7 +2,30 @@ _id: XQw0Axx4Lui3CYwH
 name: Telekinesis
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Telekinesis.webp
-effects: []
+effects:
+  - _id: gsNFfNMCKsQqfHGC
+    name: 'Telekinesis: Restrained'
+    img: systems/dnd5e/icons/svg/statuses/restrained.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - restrained
+    duration:
+      rounds: 1
+    description: >-
+      <p>Until the end of your next turn, the creature is restrained in your
+      telekinetic grip.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEndSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!XQw0Axx4Lui3CYwH.gsNFfNMCKsQqfHGC'
 folder: DptQ6FfaBK96V6oc
 sort: 0
 flags:
@@ -153,6 +176,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: gsNFfNMCKsQqfHGC
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

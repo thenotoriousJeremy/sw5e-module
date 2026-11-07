@@ -2,7 +2,29 @@ _id: WmqYvtUqHDZOFIsK
 name: Hysteria
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Hysteria.webp
-effects: []
+effects:
+  - _id: 83qMXlyTih0uNVAB
+    name: 'Hysteria: Frightened'
+    img: systems/dnd5e/icons/svg/statuses/frightened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - frightened
+    duration:
+      seconds: 60
+    description: >-
+      <p>The target must succeed on a Wisdom saving throw or become frightened
+      for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!WmqYvtUqHDZOFIsK.83qMXlyTih0uNVAB'
 folder: grOCu0oGHYmYxNZh
 sort: 0
 flags:
@@ -146,6 +168,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '5'
+      effects:
+        - _id: 83qMXlyTih0uNVAB
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

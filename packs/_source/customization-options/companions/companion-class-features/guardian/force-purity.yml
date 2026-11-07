@@ -23,7 +23,7 @@ effects:
         value: diseased
         priority: 20
     tint: '#ffffff'
-    transfer: false
+    transfer: true
     flags:
       dae:
         selfTarget: false

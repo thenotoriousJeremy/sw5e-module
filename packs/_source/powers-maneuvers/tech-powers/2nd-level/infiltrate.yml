@@ -116,9 +116,33 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: wCmgckZzR71tDswa
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: wCmgckZzR71tDswa
+    name: 'Infiltrate: Invisible'
+    img: systems/dnd5e/icons/svg/statuses/invisible.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - invisible
+    duration:
+      seconds: 3600
+    description: >-
+      <p>A creature you touch becomes invisible. Anything the target is carrying
+      is invisible as long as it is on the target.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!VLH57JJHSKafVadB.wCmgckZzR71tDswa'
 _id: VLH57JJHSKafVadB
 folder: oByoBGcbpbwGx6by
 sort: 0

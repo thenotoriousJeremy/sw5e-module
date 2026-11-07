@@ -2,7 +2,31 @@ _id: 9vk5exAIj4F67nkc
 name: No Escape
 type: sw5e-module.maneuver
 img: modules/sw5e-module/icons/packs/Maneuvers/NoEscape.webp
-effects: []
+effects:
+  - _id: 6mBoTL3hEGNdtX6b
+    name: 'No Escape: Slowed (4)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-4.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      rounds: 1
+    description: >-
+      <p>Additionally, the affected creature gains 4 slowed levels until the
+      start of its next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnStart
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 4
+    system:
+      changes: []
+    _key: '!items.effects!9vk5exAIj4F67nkc.6mBoTL3hEGNdtX6b'
 folder: 5oMySK6CCPoi6vLw
 sort: 0
 flags:
@@ -116,6 +140,8 @@ system:
           type: ''
           units: ''
       type: utility
+      effects:
+        - _id: 6mBoTL3hEGNdtX6b
 ownership:
   default: 0
 _stats:

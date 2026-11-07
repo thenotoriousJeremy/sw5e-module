@@ -112,8 +112,9 @@ system:
             denomination: 6
             number: 14
             scaling:
-              mode: ''
-              number: 1
+              mode: whole
+              number: 2
+              formula: ''
             types:
               - necrotic
       description: {}

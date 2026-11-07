@@ -142,9 +142,34 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: ySiIu1wCxGdFf6zE
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: ySiIu1wCxGdFf6zE
+    name: 'Reprogram Droid: Charmed'
+    img: systems/dnd5e/icons/svg/statuses/charmed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - charmed
+    duration:
+      seconds: 2592000
+    description: >-
+      <p>The droid must succeed on a Wisdom saving throw or become charmed by
+      you for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!IfqRJW0rRXqZMSDt.ySiIu1wCxGdFf6zE'
 _id: IfqRJW0rRXqZMSDt
 folder: vWBm7OnkHfIDmlGL
 sort: 0

@@ -2,7 +2,31 @@ _id: 0tneNqhvVxEbudX9
 name: Weak Point Strike
 type: sw5e-module.maneuver
 img: modules/sw5e-module/icons/packs/Maneuvers/WeakPointStrike.webp
-effects: []
+effects:
+  - _id: etUf6hrK7xvVlGgK
+    name: 'Weak Point Strike: Stunned'
+    img: systems/dnd5e/icons/svg/statuses/stunned.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - stunned
+    duration:
+      rounds: 1
+    description: >-
+      <p>Add the number rolled to the damage of the weapon attack and the
+      creature must succeed on a Constitution saving throw or be stunned until
+      the end of its next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEnd
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!0tneNqhvVxEbudX9.etUf6hrK7xvVlGgK'
 folder: 5oMySK6CCPoi6vLw
 sort: 0
 flags:
@@ -123,6 +147,9 @@ system:
           type: ''
           units: ''
       type: save
+      effects:
+        - _id: etUf6hrK7xvVlGgK
+          onSave: false
 ownership:
   default: 0
 _stats:

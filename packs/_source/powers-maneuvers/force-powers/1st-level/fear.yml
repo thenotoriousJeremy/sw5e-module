@@ -2,7 +2,29 @@ _id: fDzm8b06fCuenc9g
 name: Fear
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Fear.webp
-effects: []
+effects:
+  - _id: H1LXdPTgjbYD53vP
+    name: 'Fear: Frightened'
+    img: systems/dnd5e/icons/svg/statuses/frightened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - frightened
+    duration:
+      seconds: 60
+    description: >-
+      <p>The target must succeed on a Wisdom saving throw or become frightened
+      for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!fDzm8b06fCuenc9g.H1LXdPTgjbYD53vP'
 folder: UUQ0fUk9s4agOjkm
 sort: 0
 flags:
@@ -128,6 +150,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '2'
+      effects:
+        - _id: H1LXdPTgjbYD53vP
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

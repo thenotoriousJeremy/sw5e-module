@@ -132,9 +132,57 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '5'
+      effects:
+        - _id: nEhDTNZBfwv9zVdl
+          onSave: false
+        - _id: MeFQKyaaZFHBbCan
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: nEhDTNZBfwv9zVdl
+    name: 'Wire Bind: Restrained'
+    img: systems/dnd5e/icons/svg/statuses/restrained.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - restrained
+    duration:
+      seconds: 60
+    description: >-
+      <p>On a failed save, the creature is restrained and falls prone as it is
+      wrapped securely by the wire.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!dVqrJvNOXxEwLTMY.nEhDTNZBfwv9zVdl'
+  - _id: MeFQKyaaZFHBbCan
+    name: 'Wire Bind: Prone'
+    img: systems/dnd5e/icons/svg/statuses/prone.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - prone
+    duration: {}
+    description: >-
+      <p>On a failed save, the creature is restrained and falls prone as it is
+      wrapped securely by the wire.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!dVqrJvNOXxEwLTMY.MeFQKyaaZFHBbCan'
 _id: dVqrJvNOXxEwLTMY
 folder: WQAtlBgyF1YWuX2m
 sort: 0

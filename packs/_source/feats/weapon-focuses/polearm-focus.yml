@@ -17,11 +17,11 @@ effects:
     disabled: false
     _id: W2L1SOlpDof34mf6
     changes:
-      - key: system.bonuses.mpak.damage
+      - key: system.bonuses.mwak.damage
         mode: 2
         value: '1'
         priority: 20
-      - key: flags.sw5e.meleeCriticalDamageDice
+      - key: flags.dnd5e.meleeCriticalDamageDice
         mode: 2
         value: '+1'
         priority: 20

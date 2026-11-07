@@ -2,7 +2,33 @@ _id: pPxx7oVlTkpjh2wh
 name: Rattle
 type: sw5e-module.maneuver
 img: modules/sw5e-module/icons/packs/Maneuvers/Rattle.webp
-effects: []
+effects:
+  - _id: 8jN3bZoyShjmXvij
+    name: 'Rattle: Frightened'
+    img: systems/dnd5e/icons/svg/statuses/frightened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - frightened
+    duration:
+      rounds: 1
+    description: >-
+      <p>On your turn, when you hit with a weapon attack, you can use a bonus
+      action and expend and roll one superiority die to menace your target,
+      dealing extra psychic damage equal to the amount rolled and forcing it to
+      succeed on a Wisdom saving throw or be frightened of you until the end of
+      your next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEndSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!pPxx7oVlTkpjh2wh.8jN3bZoyShjmXvij'
 folder: 5oMySK6CCPoi6vLw
 sort: 0
 flags:
@@ -126,6 +152,9 @@ system:
           type: ''
           units: ''
       type: save
+      effects:
+        - _id: 8jN3bZoyShjmXvij
+          onSave: false
 ownership:
   default: 0
 _stats:

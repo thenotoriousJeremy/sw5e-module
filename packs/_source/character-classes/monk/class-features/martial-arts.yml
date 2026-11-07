@@ -43,7 +43,7 @@ effects:
       and monk weapons gain the finesse property.</p></div>
     origin: null
     tint: '#ffffff'
-    transfer: true
+    transfer: false
     statuses: []
     sort: 0
     flags:

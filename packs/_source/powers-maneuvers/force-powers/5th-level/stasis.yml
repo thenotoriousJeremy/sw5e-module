@@ -2,7 +2,36 @@ _id: BAAmutplpFkVWXcS
 name: Stasis
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Stasis.webp
-effects: []
+effects:
+  - _id: 4Y8fcKFRx3urH8Pg
+    name: 'Stasis: Paralyzed'
+    img: systems/dnd5e/icons/svg/statuses/paralyzed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - paralyzed
+    duration:
+      seconds: 60
+    description: >-
+      <p>The target must succeed on a Wisdom saving throw or be paralyzed for
+      the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=wis,
+            saveDC=@powercasting.force.schools.lgt.dc, saveCount=1-,
+            label="Stasis: Paralyzed"
+          priority: 20
+    _key: '!items.effects!BAAmutplpFkVWXcS.4Y8fcKFRx3urH8Pg'
 folder: DptQ6FfaBK96V6oc
 sort: 0
 flags:
@@ -135,6 +164,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: 4Y8fcKFRx3urH8Pg
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

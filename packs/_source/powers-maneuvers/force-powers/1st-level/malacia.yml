@@ -2,7 +2,57 @@ _id: M7KOyTGooLGTsknA
 name: Malacia
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Malacia.webp
-effects: []
+effects:
+  - _id: MCqU825FpfzXRav2
+    name: 'Malacia: Prone'
+    img: systems/dnd5e/icons/svg/statuses/prone.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - prone
+    duration: {}
+    description: >-
+      <p>The creature must succeed on a Wisdom saving throw or fall prone,
+      becoming incapacitated and unable to stand up for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!M7KOyTGooLGTsknA.MCqU825FpfzXRav2'
+  - _id: Q1BuQ42lbEBiT0x9
+    name: 'Malacia: Incapacitated'
+    img: systems/dnd5e/icons/svg/statuses/incapacitated.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - incapacitated
+    duration:
+      seconds: 60
+    description: >-
+      <p>The creature must succeed on a Wisdom saving throw or fall prone,
+      becoming incapacitated and unable to stand up for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=wis,
+            saveDC=@powercasting.force.schools.uni.dc, saveCount=1-,
+            label="Malacia: Incapacitated"
+          priority: 20
+    _key: '!items.effects!M7KOyTGooLGTsknA.Q1BuQ42lbEBiT0x9'
 folder: UUQ0fUk9s4agOjkm
 sort: 0
 flags:
@@ -133,6 +183,11 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '2'
+      effects:
+        - _id: MCqU825FpfzXRav2
+          onSave: false
+        - _id: Q1BuQ42lbEBiT0x9
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

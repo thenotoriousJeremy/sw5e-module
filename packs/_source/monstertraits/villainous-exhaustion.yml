@@ -14,8 +14,8 @@ effects:
     disabled: false
     _id: gsSffWZqSvwYHFu3
     changes:
-      - key: flags.sw5e.initiativeAdv
-        mode: 0
+      - key: system.attributes.init.roll.mode
+        mode: 2
         value: '1'
         priority: 20
     tint: '#ffffff'

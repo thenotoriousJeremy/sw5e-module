@@ -15,7 +15,7 @@ effects:
         priority: null
       - key: system.attributes.ac.formula
         mode: 5
-        value: '@abilities.int'
+        value: '@abilities.int.value'
         priority: null
     disabled: false
     duration:

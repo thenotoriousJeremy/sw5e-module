@@ -125,9 +125,40 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: OzOtOeZNpuEPPYOW
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: OzOtOeZNpuEPPYOW
+    name: 'Hold Droid: Paralyzed'
+    img: systems/dnd5e/icons/svg/statuses/paralyzed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - paralyzed
+    duration:
+      seconds: 60
+    description: >-
+      <p>The target must succeed on a Constitution saving throw or be paralyzed
+      for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=con, saveDC=@powercasting.tech.schools.tec.dc,
+            saveCount=1-, label="Hold Droid: Paralyzed"
+          priority: 20
+    _key: '!items.effects!BMEKzhMSuzGZE9QH.OzOtOeZNpuEPPYOW'
 _id: BMEKzhMSuzGZE9QH
 folder: oByoBGcbpbwGx6by
 sort: 0

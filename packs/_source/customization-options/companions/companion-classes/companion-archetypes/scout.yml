@@ -111,7 +111,7 @@ system:
     - _id: O0uXAux8C5VVW4Jv
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: rangers-quarry
         type: dice
         distance:
           units: ''
@@ -134,7 +134,7 @@ system:
     - _id: BwR1hK4rIQthJEPF
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: tech-power-level
         type: number
         distance:
           units: ''
@@ -151,7 +151,7 @@ system:
     - _id: 9KIaNFoWsPRwzlJO
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: tech-powers-known
         type: number
         distance:
           units: ''
@@ -233,4 +233,3 @@ ownership:
   default: 0
 sort: 0
 _key: '!items!RCPhdmCqyjoC2R2D'
-

@@ -1959,7 +1959,7 @@ items:
             denomination: 8
             number: 1
             scaling:
-              formula: 1d8
+              formula: ""
               mode: whole
               number: 1
             types:
@@ -3978,7 +3978,7 @@ items:
             denomination: 8
             number: 3
             scaling:
-              formula: 1d8
+              formula: ""
               mode: whole
               number: 1
             types:

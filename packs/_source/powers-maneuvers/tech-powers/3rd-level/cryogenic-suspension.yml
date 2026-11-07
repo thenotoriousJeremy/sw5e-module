@@ -115,9 +115,35 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '4'
+      effects:
+        - _id: K36yfduaqPO2bxZI
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: K36yfduaqPO2bxZI
+    name: 'Cryogenic Suspension: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      seconds: 60
+    description: >-
+      <p>An affected target gains 1 slowed level, it takes a -2 penalty to AC
+      and Dexterity saving throws, and it can't use reactions.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes: []
+    _key: '!items.effects!IZjwCFCyLQMGWoew.K36yfduaqPO2bxZI'
 _id: IZjwCFCyLQMGWoew
 folder: YX4FHVGgDCOYFYvI
 sort: 0

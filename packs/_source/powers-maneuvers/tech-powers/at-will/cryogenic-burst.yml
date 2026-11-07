@@ -108,7 +108,7 @@ system:
             denomination: 8
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - cold
@@ -126,6 +126,7 @@ system:
       type: attack
       effects:
         - _id: yY0Ae2TbZ7mQK8Lp
+        - _id: VXMHB3KLX3aDBFRR
   method: powerCasting
   prepared: true
 effects:
@@ -169,6 +170,30 @@ effects:
       modifiedTime: 1780740000000
       lastModifiedBy: dnd5ebuilder0000
     _key: '!items.effects!lkj9xq3JVc4MW1wG.yY0Ae2TbZ7mQK8Lp'
+  - _id: VXMHB3KLX3aDBFRR
+    name: 'Cryogenic Burst: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a hit, it takes 1d8 cold damage, and gains 1 slowed level until the
+      start of your next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnStartSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes: []
+    _key: '!items.effects!lkj9xq3JVc4MW1wG.VXMHB3KLX3aDBFRR'
 _id: lkj9xq3JVc4MW1wG
 folder: F7Xw56nq48vPc23j
 sort: 0

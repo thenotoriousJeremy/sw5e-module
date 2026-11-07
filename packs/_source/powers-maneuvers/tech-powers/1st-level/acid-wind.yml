@@ -133,9 +133,35 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '2'
+      effects:
+        - _id: q4ResJCj5w71je8a
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: q4ResJCj5w71je8a
+    name: 'Acid Wind: Blinded'
+    img: systems/dnd5e/icons/svg/statuses/blinded.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - blinded
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save, a creature takes 2d4 acid damage and is blinded until
+      the end of your next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEndSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!mmUhKARF6HEoyAA2.q4ResJCj5w71je8a'
 _id: mmUhKARF6HEoyAA2
 folder: Vn6PPcio8XorBtTE
 sort: 0

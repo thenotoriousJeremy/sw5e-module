@@ -2,7 +2,29 @@ _id: hrMYUMaN4KDKwWEZ
 name: Force Camouflage
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/ForceCamouflage.webp
-effects: []
+effects:
+  - _id: wAID24LivdjZ5QLv
+    name: 'Force Camouflage: Invisible'
+    img: systems/dnd5e/icons/svg/statuses/invisible.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - invisible
+    duration:
+      seconds: 3600
+    description: >-
+      <p>You become invisible until the power ends. Anything you are wearing or
+      carrying is invisible as long as it is on your person.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!hrMYUMaN4KDKwWEZ.wAID24LivdjZ5QLv'
 folder: fA8n8XYLzMuY2STb
 sort: 0
 flags:
@@ -120,6 +142,8 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: wAID24LivdjZ5QLv
   method: powerCasting
   prepared: true
 ownership:

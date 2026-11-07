@@ -123,9 +123,33 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: BJ7oyTnUm1MnHURI
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: BJ7oyTnUm1MnHURI
+    name: 'Mislead: Invisible'
+    img: systems/dnd5e/icons/svg/statuses/invisible.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - invisible
+    duration:
+      seconds: 3600
+    description: >-
+      <p>You become invisible at the same time that an illusory double of you
+      appears where you are standing.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!oqxSwz1RPCQOrpKF.BJ7oyTnUm1MnHURI'
 _id: oqxSwz1RPCQOrpKF
 folder: vWBm7OnkHfIDmlGL
 sort: 0

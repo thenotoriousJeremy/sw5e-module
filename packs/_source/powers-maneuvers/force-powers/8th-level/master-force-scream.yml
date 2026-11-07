@@ -2,7 +2,58 @@ _id: ODcFGTokHINjLmg2
 name: Master Force Scream
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/MasterForceScream.webp
-effects: []
+effects:
+  - _id: CPpFbqaqWmmbPp5I
+    name: 'Master Force Scream: Deafened & Blinded'
+    img: systems/dnd5e/icons/svg/statuses/deafened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - deafened
+      - blinded
+    duration:
+      seconds: 60
+    description: >-
+      <p>On a failed save, a creature takes 6d6 psychic damage, 6d6 sonic
+      damage, is deafened and blinded for 1 minute, and knocked prone.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=con,
+            saveDC=@powercasting.force.schools.drk.dc, saveCount=1-,
+            label="Master Force Scream: Deafened & Blinded"
+          priority: 20
+    _key: '!items.effects!ODcFGTokHINjLmg2.CPpFbqaqWmmbPp5I'
+  - _id: EcQ56eAdvfEqTiZ9
+    name: 'Master Force Scream: Prone'
+    img: systems/dnd5e/icons/svg/statuses/prone.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - prone
+    duration: {}
+    description: >-
+      <p>On a failed save, a creature takes 6d6 psychic damage, 6d6 sonic
+      damage, is deafened and blinded for 1 minute, and knocked prone.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!ODcFGTokHINjLmg2.EcQ56eAdvfEqTiZ9'
 folder: cdf75iEqdwI15gqw
 sort: 0
 flags:
@@ -151,6 +202,11 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '9'
+      effects:
+        - _id: CPpFbqaqWmmbPp5I
+          onSave: false
+        - _id: EcQ56eAdvfEqTiZ9
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

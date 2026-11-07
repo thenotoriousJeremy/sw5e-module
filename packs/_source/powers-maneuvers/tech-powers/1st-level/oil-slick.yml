@@ -138,9 +138,33 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '2'
+      effects:
+        - _id: qgWTmUtnfrT7baEQ
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: qgWTmUtnfrT7baEQ
+    name: 'Oil Slick: Prone'
+    img: systems/dnd5e/icons/svg/statuses/prone.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - prone
+    duration: {}
+    description: >-
+      <p>When the oil appears, each creature standing in its area must succeed
+      on a Dexterity saving throw or fall prone.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!GILW0rzhBUyZ6qsU.qgWTmUtnfrT7baEQ'
 _id: GILW0rzhBUyZ6qsU
 folder: Vn6PPcio8XorBtTE
 sort: 0

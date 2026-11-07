@@ -17,7 +17,7 @@ effects:
     disabled: false
     _id: KTZ4CxXtAApgcQVZ
     changes:
-      - key: flags.sw5e.elvenAccuracy
+      - key: flags.dnd5e.elvenAccuracy
         mode: 0
         value: '1'
         priority: 20

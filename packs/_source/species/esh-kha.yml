@@ -170,7 +170,7 @@ system:
 effects:
   - _id: ffzoK411b5xIiB1l
     changes:
-      - key: flags.sw5e.meleeCriticalDamageDice
+      - key: flags.dnd5e.meleeCriticalDamageDice
         mode: 2
         value: '+1'
         priority: 20

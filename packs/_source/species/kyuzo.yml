@@ -148,11 +148,11 @@ effects:
   - _id: l6mvsrEqudRi4cVt
     changes:
       - key: flags.sw5e.longlimbed
-        value: '1'
+        value: 'true'
         mode: 0
         priority: 20
-      - key: flags.sw5e.strongLegged
-        value: '1'
+      - key: flags.dnd5e.powerfulBuild
+        value: 'true'
         mode: 0
         priority: 20
       - key: flags.sw5e.foreignBiology

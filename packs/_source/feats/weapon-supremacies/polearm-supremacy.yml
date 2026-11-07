@@ -17,7 +17,7 @@ effects:
     disabled: false
     _id: 2YJ80tfD5BSsGBF8
     changes:
-      - key: system.bonuses.mpak.attack
+      - key: system.bonuses.mwak.attack
         mode: 2
         value: '1'
         priority: 20

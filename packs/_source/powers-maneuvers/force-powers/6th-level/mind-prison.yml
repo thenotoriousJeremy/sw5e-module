@@ -2,7 +2,29 @@ _id: kCraXHvaS3GgSZtx
 name: Mind Prison
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/MindPrison.webp
-effects: []
+effects:
+  - _id: SxsmrhWGeD0ZJdIk
+    name: 'Mind Prison: Restrained'
+    img: systems/dnd5e/icons/svg/statuses/restrained.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - restrained
+    duration:
+      seconds: 60
+    description: >-
+      <p>Whatever form the illusion takes, the target can't see or hear anything
+      beyond it and is restrained for the power's duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!kCraXHvaS3GgSZtx.SxsmrhWGeD0ZJdIk'
 folder: OOhp0QQS1i3tDnTR
 sort: 0
 flags:
@@ -171,6 +193,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '7'
+      effects:
+        - _id: SxsmrhWGeD0ZJdIk
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

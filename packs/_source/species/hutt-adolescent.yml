@@ -183,15 +183,15 @@ effects:
       - key: flags.sw5e.advantage.ability.save.force.wis
         mode: 5
         priority: 20
-        value: '1'
-      - key: flags.sw5e.encumbranceMultiplier
+        value: 'true'
+      - key: flags.dnd5e.powerfulBuild
         mode: 2
         priority: 20
         value: '+1'
       - key: flags.sw5e.advantage.ability.save.force.cha
         mode: 5
         priority: 20
-        value: '1'
+        value: 'true'
     disabled: false
     duration:
       startTime: null

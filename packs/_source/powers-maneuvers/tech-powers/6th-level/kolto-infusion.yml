@@ -12,15 +12,9 @@ type: spell
 img: modules/sw5e-module/icons/packs/Tech%20Powers/KoltoInfusion.webp
 system:
   description:
-    value: >-
-      <p>Choose a creature that you can see within range. A surge of kolto
-      energy washes over the creature, causing it to regain 70 hit points. This
-      power also ends blindness, deafness, and any diseases affecting the
-      target. This power has no effect on droids or constructs.</p>
-
-      <p><strong><em>Overcharge Tech.</em></strong> When you cast this power
-      using a tech slot of 7th level or higher, the amount of healing increases
-      by 10 for each slot level above 6th.</p>
+    value: |-
+      <p>Choose a creature that you can see within range. A surge of kolto energy washes over the creature, causing it to regain 70 hit points. This power also ends blindness, deafness, and any diseases affecting the target. This power has no effect on droids or constructs.</p>
+      <p><strong><em>Overcharge Tech.</em></strong> When you cast this power using a tech slot of 7th level or higher, the amount of healing increases by 10 for each slot level above 6th.</p>
     chat: ''
   source:
     custom: PHB
@@ -105,8 +99,8 @@ system:
         denomination: null
         number: null
         scaling:
-          mode: ''
-          number: 1
+          mode: whole
+          formula: '10'
         types:
           - healing
       img: null
@@ -145,4 +139,3 @@ _stats:
   lastModifiedBy: dnd5ebuilder0000
   duplicateSource: null
 _key: '!items!vXhdI7O50PnVUD4s'
-

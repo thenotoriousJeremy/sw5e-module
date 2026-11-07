@@ -2,7 +2,30 @@ _id: Pwh9nYTlJXLzoGGZ
 name: Slow
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Slow.webp
-effects: []
+effects:
+  - _id: mvqC5j5rKrSJvNyO
+    name: 'Slow: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      seconds: 3600
+    description: >-
+      <p>On a failed save, the target gains 1 slowed level until the power
+      ends.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes: []
+    _key: '!items.effects!Pwh9nYTlJXLzoGGZ.mvqC5j5rKrSJvNyO'
 folder: TIDJ0JS14D98Tz4o
 sort: 0
 flags:
@@ -117,6 +140,9 @@ system:
           type: ''
           units: ''
       type: save
+      effects:
+        - _id: mvqC5j5rKrSJvNyO
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

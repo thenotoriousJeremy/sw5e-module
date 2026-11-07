@@ -133,7 +133,7 @@ system:
             denomination: 8
             number: 4
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - necrotic
@@ -142,7 +142,7 @@ system:
             denomination: 8
             number: 4
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - necrotic

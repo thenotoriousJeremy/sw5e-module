@@ -2,7 +2,31 @@ _id: ep9tESPK4SKXEkUV
 name: Mass Malacia
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/MassMalacia.webp
-effects: []
+effects:
+  - _id: UDhhkKNHtCdfhG4g
+    name: 'Mass Malacia: Charmed & Incapacitated'
+    img: systems/dnd5e/icons/svg/statuses/charmed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - charmed
+      - incapacitated
+    duration:
+      seconds: 60
+    description: >-
+      <p>On a failed save, the creature becomes charmed for the duration. While
+      charmed by this power, the creature is incapacitated and has a speed of
+      0.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!ep9tESPK4SKXEkUV.UDhhkKNHtCdfhG4g'
 folder: 4HNSqzl2qT1cS0bP
 sort: 0
 flags:
@@ -132,6 +156,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '4'
+      effects:
+        - _id: UDhhkKNHtCdfhG4g
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

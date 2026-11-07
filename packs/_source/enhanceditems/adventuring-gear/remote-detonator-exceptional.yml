@@ -34,7 +34,7 @@ system:
       description: {}
       duration:
         units: inst
-        value: inst
+        value: ''
       img: null
       range:
         units: ft

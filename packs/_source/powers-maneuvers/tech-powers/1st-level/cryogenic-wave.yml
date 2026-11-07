@@ -136,9 +136,36 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '2'
+      effects:
+        - _id: bwSYFRfRdoTHP11s
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: bwSYFRfRdoTHP11s
+    name: 'Cryogenic Wave: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save, a creature takes 2d6 cold damage and gains 1 slowed
+      level until the end of its next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEnd
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes: []
+    _key: '!items.effects!IJ3hVcU3UUZ1bosI.bwSYFRfRdoTHP11s'
 _id: IJ3hVcU3UUZ1bosI
 folder: Vn6PPcio8XorBtTE
 sort: 0

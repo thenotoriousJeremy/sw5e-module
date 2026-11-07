@@ -150,9 +150,36 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: 3kOS2xPWgKlFhaj2
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: 3kOS2xPWgKlFhaj2
+    name: 'Rewrite Memory: Charmed & Incapacitated'
+    img: systems/dnd5e/icons/svg/statuses/charmed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - charmed
+      - incapacitated
+    duration:
+      seconds: 60
+    description: >-
+      <p>On a failed save, the target becomes charmed by you for the duration.
+      The charmed target is incapacitated and unaware of its surroundings,
+      though it can still hear you.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!EEFa8T64EeHJVfnD.3kOS2xPWgKlFhaj2'
 _id: EEFa8T64EeHJVfnD
 folder: vWBm7OnkHfIDmlGL
 sort: 0

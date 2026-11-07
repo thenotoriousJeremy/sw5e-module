@@ -2,7 +2,29 @@ _id: lZgJ4nsfjWERlumF
 name: Dominate Mind
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/DominateMind.webp
-effects: []
+effects:
+  - _id: 6mxrEpDxlAlZHQI7
+    name: 'Dominate Mind: Charmed'
+    img: systems/dnd5e/icons/svg/statuses/charmed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - charmed
+    duration:
+      seconds: 60
+    description: >-
+      <p>It must succeed on a Wisdom saving throw or be charmed by you for the
+      duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!lZgJ4nsfjWERlumF.6mxrEpDxlAlZHQI7'
 folder: DptQ6FfaBK96V6oc
 sort: 0
 flags:
@@ -151,6 +173,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: 6mxrEpDxlAlZHQI7
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

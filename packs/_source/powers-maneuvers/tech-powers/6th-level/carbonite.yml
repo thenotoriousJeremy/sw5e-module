@@ -134,9 +134,38 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '7'
+      effects:
+        - _id: YM5wPBLw0qGQxlj2
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: YM5wPBLw0qGQxlj2
+    name: 'Carbonite: Restrained'
+    img: systems/dnd5e/icons/svg/statuses/restrained.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - restrained
+    duration:
+      seconds: 60
+    description: <p>On a failed save, it is restrained as its flesh begins to harden.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=con, saveDC=@powercasting.tech.schools.tec.dc,
+            saveCount=1-, label="Carbonite: Restrained"
+          priority: 20
+    _key: '!items.effects!YMtMNaj9UoH1wzlH.YM5wPBLw0qGQxlj2'
 _id: YMtMNaj9UoH1wzlH
 folder: D3YyzYygsEa5z8lb
 sort: 0

@@ -136,9 +136,40 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '2'
+      effects:
+        - _id: P9fkL7CqL7nXfdKT
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: P9fkL7CqL7nXfdKT
+    name: 'Cryogenic Blow: Slowed (1)'
+    img: modules/sw5e-module/icons/svg/conditions/slowed-1.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - slowed
+    duration:
+      seconds: 60
+    description: <p>On a failed save, it gains a level of slowed for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+        slowedLevel: 1
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=start, saveAbility=str,
+            saveDC=@powercasting.tech.schools.tec.dc, saveCount=1-,
+            label="Cryogenic Blow: Slowed (1)"
+          priority: 20
+    _key: '!items.effects!W9IrWSKfnbsIj2QP.P9fkL7CqL7nXfdKT'
 _id: W9IrWSKfnbsIj2QP
 folder: Vn6PPcio8XorBtTE
 sort: 0

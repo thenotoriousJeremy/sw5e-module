@@ -163,7 +163,7 @@ system:
 effects:
   - _id: MAjUMql3tivJTfVO
     changes:
-      - key: flags.sw5e.halflingLucky
+      - key: flags.dnd5e.halflingLucky
         mode: 5
         value: '1'
         priority: 20

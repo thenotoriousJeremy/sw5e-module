@@ -16,7 +16,7 @@ system:
     - _id: o2un61oblzt4igqt
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: sneak-attack
         type: dice
         distance:
           units: ''
@@ -209,4 +209,3 @@ ownership:
   default: 0
 sort: 0
 _key: '!items!NKrBPv63ywWoCdvJ'
-

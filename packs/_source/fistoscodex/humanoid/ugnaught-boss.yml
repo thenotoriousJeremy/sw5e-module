@@ -1700,14 +1700,38 @@ items:
             onlyOnce: false
             time: None
         changes:
-          - key: system.bonuses.All-Attacks
+          - key: system.bonuses.mwak.attack
+            mode: 2
             value: '1'
-            mode: 0
-            priority: 1
-          - key: system.bonuses.All-Damage
+            priority: 20
+          - key: system.bonuses.mwak.damage
+            mode: 2
             value: '1'
-            mode: 0
-            priority: 1
+            priority: 20
+          - key: system.bonuses.rwak.attack
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.rwak.damage
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.msak.attack
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.msak.damage
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.rsak.attack
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.rsak.damage
+            mode: 2
+            value: '1'
+            priority: 20
         disabled: false
         duration:
           startTime: null
@@ -2015,14 +2039,38 @@ items:
 effects:
   - _id: bnqYAdHmTpPuK58M
     changes:
-      - key: system.bonuses.All-Attacks
-        value: '1'
-        mode: 0
-        priority: 1
-      - key: system.bonuses.All-Damage
-        value: '1'
-        mode: 0
-        priority: 1
+          - key: system.bonuses.mwak.attack
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.mwak.damage
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.rwak.attack
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.rwak.damage
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.msak.attack
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.msak.damage
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.rsak.attack
+            mode: 2
+            value: '1'
+            priority: 20
+          - key: system.bonuses.rsak.damage
+            mode: 2
+            value: '1'
+            priority: 20
     disabled: false
     duration:
       startTime: 450

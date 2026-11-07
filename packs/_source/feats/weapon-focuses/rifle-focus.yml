@@ -17,11 +17,11 @@ effects:
     disabled: false
     _id: SV8wjd4RYAKdjbkE
     changes:
-      - key: system.bonuses.rpak.damage
+      - key: system.bonuses.rwak.damage
         mode: 2
         value: '1'
         priority: 20
-      - key: flags.sw5e.rangedCriticalDamageDice
+      - key: flags.dnd5e.rangedCriticalDamageDice
         mode: 2
         value: '+1'
         priority: 20

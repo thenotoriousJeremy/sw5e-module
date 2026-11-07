@@ -2,7 +2,26 @@ _id: tB32K3VplwZgxo52
 name: Charging Attack
 type: sw5e-module.maneuver
 img: modules/sw5e-module/icons/packs/Maneuvers/ChargingAttack.webp
-effects: []
+effects:
+  - _id: vFR4wrCy49McnUNr
+    name: 'Charging Attack: Prone'
+    img: systems/dnd5e/icons/svg/statuses/prone.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - prone
+    duration: {}
+    description: <p>On a failed save the creature is knocked prone.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!tB32K3VplwZgxo52.vFR4wrCy49McnUNr'
 folder: 5oMySK6CCPoi6vLw
 sort: 0
 flags:
@@ -123,6 +142,9 @@ system:
           type: ''
           units: ''
       type: save
+      effects:
+        - _id: vFR4wrCy49McnUNr
+          onSave: false
 ownership:
   default: 0
 _stats:

@@ -110,7 +110,7 @@ system:
             denomination: 8
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - lightning
@@ -126,9 +126,34 @@ system:
           type: ''
           units: ''
       type: attack
+      effects:
+        - _id: FvCkUYOK4e8CVQwS
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: FvCkUYOK4e8CVQwS
+    name: 'Electroshock: Shocked'
+    img: modules/sw5e-module/icons/svg/conditions/shocked.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - shocked
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a hit, the target takes 1d8 lightning damage and becomes shocked
+      until the start of its next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnStart
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!Z3XGcIc1VXtQW64C.FvCkUYOK4e8CVQwS'
 _id: Z3XGcIc1VXtQW64C
 folder: F7Xw56nq48vPc23j
 sort: 0

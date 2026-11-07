@@ -2,7 +2,30 @@ _id: mDV2MspxmyrakMKS
 name: Crush
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/Crush.webp
-effects: []
+effects:
+  - _id: ombOEculHloWFq9k
+    name: 'Crush: Paralyzed'
+    img: systems/dnd5e/icons/svg/statuses/paralyzed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - paralyzed
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save target takes 10d8 force damage and is paralyzed until
+      the end of your next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEndSource
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!mDV2MspxmyrakMKS.ombOEculHloWFq9k'
 folder: OOhp0QQS1i3tDnTR
 sort: 0
 flags:
@@ -142,6 +165,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '7'
+      effects:
+        - _id: ombOEculHloWFq9k
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

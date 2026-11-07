@@ -146,9 +146,32 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: YwLHgd1H9UiSFao3
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: YwLHgd1H9UiSFao3
+    name: 'Override Interface: Charmed'
+    img: systems/dnd5e/icons/svg/statuses/charmed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - charmed
+    duration:
+      seconds: 60
+    description: <p>On a failed save, the creature is charmed by you for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!Nt3eRRxXxPYstEdG.YwLHgd1H9UiSFao3'
 _id: Nt3eRRxXxPYstEdG
 folder: vWBm7OnkHfIDmlGL
 sort: 0

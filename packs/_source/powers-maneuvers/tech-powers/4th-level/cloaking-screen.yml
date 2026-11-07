@@ -113,9 +113,34 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '5'
+      effects:
+        - _id: sZg8eeUzZ8HGZUNy
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: sZg8eeUzZ8HGZUNy
+    name: 'Cloaking Screen: Invisible'
+    img: systems/dnd5e/icons/svg/statuses/invisible.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - invisible
+    duration:
+      seconds: 60
+    description: >-
+      <p>You or a creature you touch becomes invisible until the power ends.
+      Anything the target is wearing or carrying is invisible as long as it is
+      on the target's person.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!P5JSOtCE5vi6hrhC.sZg8eeUzZ8HGZUNy'
 _id: P5JSOtCE5vi6hrhC
 folder: WQAtlBgyF1YWuX2m
 sort: 0

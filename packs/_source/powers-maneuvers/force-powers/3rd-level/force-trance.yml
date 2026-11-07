@@ -2,7 +2,30 @@ _id: NzkHI4j5w1vtjkRX
 name: Force Trance
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/ForceTrance.webp
-effects: []
+effects:
+  - _id: MOteQ3eud49VDqiJ
+    name: 'Force Trance: Unconscious'
+    img: systems/dnd5e/icons/svg/statuses/unconscious.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - unconscious
+    duration:
+      seconds: 600
+    description: >-
+      <p>You make a calming gesture, and up to three willing creatures of your
+      choice that you can see within range fall unconscious for the power's
+      duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!NzkHI4j5w1vtjkRX.MOteQ3eud49VDqiJ'
 folder: 4HNSqzl2qT1cS0bP
 sort: 0
 flags:
@@ -124,6 +147,8 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '4'
+      effects:
+        - _id: MOteQ3eud49VDqiJ
   method: powerCasting
   prepared: true
 ownership:

@@ -147,16 +147,16 @@ system:
 effects:
   - _id: Z2nTY93aynxgDvrZ
     changes:
-      - key: flags.sw5e.encumbranceMultiplier
+      - key: flags.dnd5e.powerfulBuild
         value: '+1'
         mode: 2
         priority: 20
       - key: flags.sw5e.longlimbed
-        value: '1'
+        value: 'true'
         mode: 5
         priority: 20
       - key: flags.sw5e.extraArms
-        value: '1'
+        value: 'true'
         mode: 5
         priority: 20
     disabled: false

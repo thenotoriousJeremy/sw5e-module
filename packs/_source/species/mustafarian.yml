@@ -161,10 +161,14 @@ system:
 effects:
   - _id: 4l39OCAp9Bu8kztj
     changes:
-      - key: system.attributes.ac.value
+      - key: system.attributes.ac.calc
         mode: 5
-        priority: 1
-        value: 12+@abilities.dex.mod
+        priority: 20
+        value: custom
+      - key: system.attributes.ac.formula
+        mode: 5
+        priority: 20
+        value: 12 + @abilities.dex.mod
     disabled: false
     duration:
       startTime: null

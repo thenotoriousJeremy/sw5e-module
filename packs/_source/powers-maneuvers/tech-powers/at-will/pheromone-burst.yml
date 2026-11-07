@@ -102,7 +102,7 @@ system:
             denomination: 4
             number: 1
             scaling:
-              mode: ''
+              mode: whole
               number: 1
             types:
               - poison
@@ -123,9 +123,36 @@ system:
           type: ''
           units: ''
       type: save
+      effects:
+        - _id: AqGTvNxHIay4d3wz
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: AqGTvNxHIay4d3wz
+    name: 'Pheromone Burst: Frightened'
+    img: systems/dnd5e/icons/svg/statuses/frightened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - frightened
+    duration:
+      rounds: 1
+    description: >-
+      <p>Each creature within range other than you must succeed on a Charisma
+      saving throw or take 1d4 poison damage and become frightened of you until
+      the start of its next turn.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnStart
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!KtonCwXEtpgJXgcb.AqGTvNxHIay4d3wz'
 _id: KtonCwXEtpgJXgcb
 folder: F7Xw56nq48vPc23j
 sort: 0

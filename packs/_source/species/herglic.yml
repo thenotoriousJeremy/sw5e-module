@@ -161,9 +161,9 @@ system:
 effects:
   - _id: YD22dYhkmmoTaN4S
     changes:
-      - key: flags.sw5e.encumbranceMultiplier
+      - key: flags.dnd5e.powerfulBuild
         mode: 2
-        value: '1'
+        value: 'true'
         priority: 20
       - key: system.attributes.hp.bonuses.level
         mode: 2

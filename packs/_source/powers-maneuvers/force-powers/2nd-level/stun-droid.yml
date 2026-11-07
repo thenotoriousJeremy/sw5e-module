@@ -2,7 +2,36 @@ _id: rOXvwh30ekksjpCL
 name: Stun Droid
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/StunDroid.webp
-effects: []
+effects:
+  - _id: CcO36OSKpXTbPWvo
+    name: 'Stun Droid: Paralyzed'
+    img: systems/dnd5e/icons/svg/statuses/paralyzed.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - paralyzed
+    duration:
+      seconds: 60
+    description: >-
+      <p>The target must succeed on a Constitution saving throw or be paralyzed
+      for the duration.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=con,
+            saveDC=@powercasting.force.schools.lgt.dc, saveCount=1-, label="Stun
+            Droid: Paralyzed"
+          priority: 20
+    _key: '!items.effects!rOXvwh30ekksjpCL.CcO36OSKpXTbPWvo'
 folder: fA8n8XYLzMuY2STb
 sort: 0
 flags:
@@ -141,6 +170,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: CcO36OSKpXTbPWvo
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

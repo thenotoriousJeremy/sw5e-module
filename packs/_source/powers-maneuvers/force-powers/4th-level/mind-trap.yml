@@ -2,7 +2,29 @@ _id: ycYyqvR874PCHMHL
 name: Mind Trap
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/MindTrap.webp
-effects: []
+effects:
+  - _id: 8EmpYCfqfT5mfYwW
+    name: 'Mind Trap: Incapacitated'
+    img: systems/dnd5e/icons/svg/statuses/incapacitated.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - incapacitated
+    duration:
+      seconds: 60
+    description: >-
+      <p>On a failed save, the creature is incapacitated for the duration as its
+      mind is trapped.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!ycYyqvR874PCHMHL.8EmpYCfqfT5mfYwW'
 folder: grOCu0oGHYmYxNZh
 sort: 0
 flags:
@@ -135,6 +157,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '5'
+      effects:
+        - _id: 8EmpYCfqfT5mfYwW
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

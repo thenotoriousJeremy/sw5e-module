@@ -54,7 +54,9 @@ system:
     threshold: null
     damage: ''
   damage:
-    parts: []
+    parts:
+      - - 1d6
+        - cold
     versatile: ''
   formula: ''
   save:
@@ -89,11 +91,24 @@ system:
   enchantment: null
   summons: null
   activities:
-    sw5e0utility0000:
-      _id: sw5e0utility0000
+    sw5e0damage00000:
+      _id: sw5e0damage00000
       activation:
         condition: ''
         type: action
+      damage:
+        critical:
+          allow: true
+        parts:
+          - custom:
+              enabled: false
+            denomination: 6
+            number: 1
+            scaling:
+              mode: whole
+              number: 1
+            types:
+              - cold
       description: {}
       duration:
         units: round
@@ -102,14 +117,12 @@ system:
       range:
         override: false
         units: ft
-      roll:
-        formula: ''
       target:
         template:
           size: '0'
           type: ''
           units: ''
-      type: utility
+      type: damage
   method: powerCasting
   prepared: true
 effects: []

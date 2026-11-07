@@ -14,11 +14,13 @@ effects:
     disabled: false
     _id: Z9Sb2Okh6uelJcdd
     changes:
-      - key: system.attributes.super.known.max
+      - key: system.superiority.known.max
+        type: add
         mode: 2
         value: '2'
         priority: 20
-      - key: system.attributes.super.dice.max
+      - key: system.superiority.dice.max
+        type: add
         mode: 2
         value: '2'
         priority: 20

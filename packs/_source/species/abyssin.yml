@@ -147,7 +147,7 @@ effects:
         mode: 5
         value: '1'
         priority: 20
-      - key: flags.sw5e.meleeCriticalDamageDice
+      - key: flags.dnd5e.meleeCriticalDamageDice
         mode: 2
         value: '1'
         priority: 20

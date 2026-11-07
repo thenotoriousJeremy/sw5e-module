@@ -103,8 +103,9 @@ system:
         denomination: 4
         number: 1
         scaling:
-          mode: ''
-          number: 1
+          mode: whole
+          number: 0
+          formula: '5'
         types:
           - temphp
       img: null

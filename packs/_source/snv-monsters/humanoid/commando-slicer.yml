@@ -2041,7 +2041,7 @@ items:
             denomination: 6
             number: 1
             scaling:
-              formula: 1d6
+              formula: ""
               mode: whole
               number: 1
             types:

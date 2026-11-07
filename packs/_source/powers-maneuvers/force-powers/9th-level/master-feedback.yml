@@ -2,7 +2,35 @@ _id: e4ojutfjQ4v7QdDX
 name: Master Feedback
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/MasterFeedback.webp
-effects: []
+effects:
+  - _id: nR4hgiYqgyNgrMjc
+    name: 'Master Feedback: Stunned'
+    img: systems/dnd5e/icons/svg/statuses/stunned.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - stunned
+    duration: {}
+    description: >-
+      <p>On a failed save, a target takes 14d6 psychic damage and is
+      stunned.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes:
+        - key: flags.midi-qol.OverTime
+          type: override
+          value: >-
+            turn=end, saveAbility=wis,
+            saveDC=@powercasting.force.schools.drk.dc, saveCount=1-,
+            label="Master Feedback: Stunned"
+          priority: 20
+    _key: '!items.effects!e4ojutfjQ4v7QdDX.nR4hgiYqgyNgrMjc'
 folder: aqiq50poYkgoSGeZ
 sort: 0
 flags:
@@ -140,6 +168,9 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '10'
+      effects:
+        - _id: nR4hgiYqgyNgrMjc
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

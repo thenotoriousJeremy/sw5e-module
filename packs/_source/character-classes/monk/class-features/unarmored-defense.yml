@@ -16,7 +16,7 @@ effects:
         priority: null
       - key: system.attributes.ac.formula
         mode: 5
-        value: 10 + max(@abilities.wis.mod,@abilities.cha.mod)
+        value: 10 + @abilities.dex.mod + max(@abilities.wis.mod,@abilities.cha.mod)
         priority: null
     disabled: false
     duration:

@@ -107,8 +107,8 @@ system:
             denomination: null
             number: null
             scaling:
-              mode: ''
-              number: 1
+              mode: whole
+              formula: 1d4
             types:
               - fire
       description: {}

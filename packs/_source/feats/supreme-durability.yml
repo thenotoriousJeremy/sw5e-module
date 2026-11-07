@@ -17,7 +17,7 @@ effects:
     disabled: false
     _id: ZfocHCRK0K7Xyi0j
     changes:
-      - key: flags.sw5e.supremeDurability
+      - key: flags.dnd5e.supremeDurability
         mode: 0
         value: '1'
         priority: 20

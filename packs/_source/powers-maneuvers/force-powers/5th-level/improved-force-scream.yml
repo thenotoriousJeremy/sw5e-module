@@ -2,7 +2,51 @@ _id: CUZIyOOvX7FdwczO
 name: Improved Force Scream
 type: spell
 img: modules/sw5e-module/icons/packs/Force%20Powers/ImprovedForceScream.webp
-effects: []
+effects:
+  - _id: uJ22hiYsqMRgtBd5
+    name: 'Improved Force Scream: Deafened'
+    img: systems/dnd5e/icons/svg/statuses/deafened.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - deafened
+    duration:
+      rounds: 1
+    description: >-
+      <p>On a failed save, a creature take 5d6 psychic damage, 5d6 sonic damage,
+      is deafened until the end of its next turn, and is knocked prone.</p>
+    flags:
+      dae:
+        specialDuration:
+          - turnEnd
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!CUZIyOOvX7FdwczO.uJ22hiYsqMRgtBd5'
+  - _id: iJ5TsA15bqu4tKXi
+    name: 'Improved Force Scream: Prone'
+    img: systems/dnd5e/icons/svg/statuses/prone.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - prone
+    duration: {}
+    description: >-
+      <p>On a failed save, a creature take 5d6 psychic damage, 5d6 sonic damage,
+      is deafened until the end of its next turn, and is knocked prone.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!CUZIyOOvX7FdwczO.iJ5TsA15bqu4tKXi'
 folder: DptQ6FfaBK96V6oc
 sort: 0
 flags:
@@ -149,6 +193,11 @@ system:
             target: powercasting.force.points.value
             type: attribute
             value: '6'
+      effects:
+        - _id: uJ22hiYsqMRgtBd5
+          onSave: false
+        - _id: iJ5TsA15bqu4tKXi
+          onSave: false
   method: powerCasting
   prepared: true
 ownership:

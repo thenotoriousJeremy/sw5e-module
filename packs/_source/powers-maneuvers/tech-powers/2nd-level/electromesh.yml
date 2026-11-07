@@ -148,9 +148,34 @@ system:
             target: powercasting.tech.points.value
             type: attribute
             value: '3'
+      effects:
+        - _id: UqYc51USQirEZT98
+          onSave: false
   method: powerCasting
   prepared: true
-effects: []
+effects:
+  - _id: UqYc51USQirEZT98
+    name: 'Electromesh: Restrained'
+    img: systems/dnd5e/icons/svg/statuses/restrained.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - restrained
+    duration:
+      seconds: 3600
+    description: >-
+      <p>On a failed save, the creature is restrained as long as it remains in
+      the mesh or until it breaks free.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!glvuRNpcCKJdZ1m0.UqYc51USQirEZT98'
 _id: glvuRNpcCKJdZ1m0
 folder: oByoBGcbpbwGx6by
 sort: 0

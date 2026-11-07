@@ -16,7 +16,7 @@ system:
     - _id: 9rds1dpfv2x19yoh
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: martial-arts-die
         type: dice
         distance:
           units: ''
@@ -160,7 +160,7 @@ system:
     - _id: 9hgmZpRjl10aGYFM
       type: ScaleValue
       configuration:
-        identifier: ''
+        identifier: focus-points
         type: number
         distance:
           units: ''
@@ -225,4 +225,3 @@ ownership:
   default: 0
 sort: 0
 _key: '!items!9fcnnc7gIks8vg31'
-

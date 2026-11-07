@@ -2,7 +2,26 @@ _id: wpUsWmmPy5MitoAj
 name: Trip Attack
 type: sw5e-module.maneuver
 img: modules/sw5e-module/icons/packs/Maneuvers/TripAttack.webp
-effects: []
+effects:
+  - _id: mWyGiQ98h9o0z0Wd
+    name: 'Trip Attack: Prone'
+    img: systems/dnd5e/icons/svg/statuses/prone.svg
+    type: base
+    transfer: false
+    disabled: false
+    statuses:
+      - prone
+    duration: {}
+    description: <p>On a failed save, you knock the target prone.</p>
+    flags:
+      dae:
+        specialDuration: []
+        stackable: noneName
+      sw5e-module:
+        derivedCondition: true
+    system:
+      changes: []
+    _key: '!items.effects!wpUsWmmPy5MitoAj.mWyGiQ98h9o0z0Wd'
 folder: 5oMySK6CCPoi6vLw
 sort: 0
 flags:
@@ -123,6 +142,9 @@ system:
           type: ''
           units: ''
       type: save
+      effects:
+        - _id: mWyGiQ98h9o0z0Wd
+          onSave: false
 ownership:
   default: 0
 _stats:

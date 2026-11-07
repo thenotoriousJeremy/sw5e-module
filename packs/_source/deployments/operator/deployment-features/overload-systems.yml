@@ -17,7 +17,7 @@ effects:
         mode: 2
         value: '-2'
         priority: 20
-      - key: system.abilities.dex.bonuses.save
+      - key: system.abilities.dex.save.roll.bonus
         mode: 2
         value: '-2'
         priority: 20

@@ -68,9 +68,10 @@ system:
     type: enemy
     prompt: false
   range:
-    value: null
-    long: null
+    value: 60
+    long: 240
     units: ft
+    reach: null
   uses:
     value: null
     max: '6'
@@ -159,6 +160,7 @@ system:
       range:
         override: false
         units: ft
+        value: '60'
       target:
         template:
           contiguous: false

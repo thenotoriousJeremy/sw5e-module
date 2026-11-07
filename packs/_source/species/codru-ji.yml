@@ -152,10 +152,14 @@ system:
 effects:
   - _id: aU47lgX8jlnHbYS6
     changes:
-      - key: system.attributes.ac.value
+      - key: system.attributes.ac.calc
         mode: 5
-        value: 12+@abilities.dex.mod
         priority: 20
+        value: custom
+      - key: system.attributes.ac.formula
+        mode: 5
+        priority: 20
+        value: 12 + @abilities.dex.mod
       - key: flags.sw5e.extraArms
         mode: 5
         value: '1'
