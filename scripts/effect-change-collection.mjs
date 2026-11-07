@@ -32,8 +32,8 @@ const EFFECT_CHANGE_BLACKLIST_RE = [
  * @returns {{ changes: object[], updateKey: "changes"|"system.changes" } | null}
  */
 export function getMigratableEffectChanges(effect) {
-	if ( Array.isArray(effect?.system?.changes) ) return { changes: effect.system.changes, updateKey: "system.changes" };
 	if ( Array.isArray(effect?.changes) ) return { changes: effect.changes, updateKey: "changes" };
+	if ( Array.isArray(effect?.system?.changes) ) return { changes: effect.system.changes, updateKey: "system.changes" };
 	return null;
 }
 

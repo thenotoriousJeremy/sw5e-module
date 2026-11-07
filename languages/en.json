@@ -249,6 +249,8 @@
 	"SW5E.DamageEnergy": "Energy",
 	"SW5E.DamageIon": "Ion",
 	"SW5E.DamageKinetic": "Kinetic",
+	"SW5E.DamageResistanceForcePower": "Force Powers",
+	"SW5E.DamageResistanceTechPower": "Tech Powers",
 	"SW5E.Feature": {
 		"Class": {
 			"Label": "Class Feature",
@@ -358,6 +360,8 @@
 	"SW5E.FlagsSupremeDurabilityHint": "Add your Constitution modifier to your maximum hit points for each level.",
 	"SW5E.FlagsEncumbranceMultiplier": "Encumbrance Multiplier",
 	"SW5E.FlagsEncumbranceMultiplierHint": "Multiply your carrying capacity by this value.",
+	"SW5E.FlagsRangedCriticalDice": "Ranged Critical Damage Dice",
+	"SW5E.FlagsRangedCriticalDiceHint": "Number of additional damage dice rolled when scoring a critical hit with a ranged weapon.",
 	"SW5E.BonusMPAttack": "Melee Power Attack Bonus",
 	"SW5E.BonusMPDamage": "Melee Power Damage Bonus",
 	"SW5E.BonusRPAttack": "Ranged Power Attack Bonus",
@@ -926,6 +930,7 @@
 			"UniFixedAbility": "Universal Fixed Ability"
 		},
 		"NoLevelsAvailable": "You have no available cast levels with which to cast {name}.",
+		"HighLevelAlreadyUsed": "You have already cast a high-level power of this level today. High-level powers ({limit}th–9th level) can only be cast once per long rest.",
 		"NoPoints": "You do not have enough {resource} to cast {name} at any available level.",
 		"PointDiscount": {
 			"Label": "Point Discount"
@@ -2106,5 +2111,32 @@
 			"CreateOption": "Space Station"
 		}
 	},
-	"SW5E.SubclassInvocations.LimitedTitle": "Limited Invocations"
+	"SW5E.SubclassInvocations.LimitedTitle": "Limited Invocations",
+	"enhancedcombathud-dnd5e.hud.castspell.name": "Cast Power",
+	"enhancedcombathud-dnd5e.portraitConfig.prepared.label": "Prepared Powers",
+	"enhancedcombathud-dnd5e.portraitConfig.prepared.all": "All Known Powers",
+	"enhancedcombathud-dnd5e.hud.spells.cantrip": "At-Will Powers",
+	"enhancedcombathud-dnd5e.hud.spells.1": "1st-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.2": "2nd-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.3": "3rd-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.4": "4th-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.5": "5th-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.6": "6th-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.7": "7th-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.8": "8th-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.9": "9th-Level Powers",
+	"enhancedcombathud-dnd5e.hud.spells.innate": "Innate Powers",
+	"enhancedcombathud-dnd5e.hud.spells.will": "At-Will Powers",
+	"enhancedcombathud-dnd5e.hud.spells.pact": "Power Focus",
+	"SW5E.PowerCasting.AtWill": "At-Will Powers",
+	"SW5E.Powercasting.CastPower": "Cast Power",
+	"midi-qol.spell-damage": "Power Damage",
+	"midi-qol.SpellDamage": "Power Damage",
+	"midi-qol.NonSpellDamage": "Non-Power Damage",
+	"midi-qol.ActiveConcentrationSpell.Title": "Active Concentration Power",
+	"midi-qol.SpellSniper": "Power Sniper",
+	"midi-qol.RollOtherSpellDamage.Name": "Roll Other damage formula for powers",
+	"midi-qol.SpellUseSound.Name": " Power Use",
+	"midi-qol.SpellUseSoundRanged.Name": " Power Use (Ranged)",
+	"midi-qol.AutoRemoveTemplate.Name": "Auto remove placed template on power expiry"
 }

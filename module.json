@@ -2,7 +2,7 @@
   "id": "sw5e-module",
   "title": "SW5E",
   "description": "Implementation of SW5E as a module for the dnd5e system. Some SnV monster artwork may be unofficial fan-made original replacement art generated from text-only baselines; it is not licensed, approved, or endorsed by Disney or Lucasfilm.",
-  "version": "2.0.0-dev",
+  "version": "2.0.0-dev.3",
   "library": false,
   "manifestPlusVersion": "1.2.3",
   "compatibility": {
@@ -29,14 +29,14 @@
       }
     ],
     "requires": [
-        {
-            "id": "lib-wrapper",
-            "type": "module",
-            "compatibility": {
-                "minimum": "1.13.5.1",
-                "verified": "1.13.5.1"
-            }
+      {
+        "id": "lib-wrapper",
+        "type": "module",
+        "compatibility": {
+          "minimum": "1.13.5.1",
+          "verified": "1.13.5.1"
         }
+      }
     ]
   },
   "esmodules": [
@@ -64,7 +64,11 @@
       "path": "packs/armorproperties",
       "type": "JournalEntry",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "backgrounds",
@@ -75,8 +79,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["background"]
+          "types": [
+            "background"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -88,8 +98,16 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["class", "subclass", "feat"]
+          "types": [
+            "class",
+            "subclass",
+            "feat"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -99,7 +117,11 @@
       "path": "packs/conditions",
       "type": "JournalEntry",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "customization-options",
@@ -110,8 +132,16 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["class", "subclass", "feat"]
+          "types": [
+            "class",
+            "subclass",
+            "feat"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -123,8 +153,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["feat"]
+          "types": [
+            "feat"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -136,8 +172,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["vehicle"]
+          "types": [
+            "vehicle"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -149,8 +191,18 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["weapon", "equipment", "consumable", "loot", "container"]
+          "types": [
+            "weapon",
+            "equipment",
+            "consumable",
+            "loot",
+            "container"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -162,8 +214,19 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["weapon", "equipment", "consumable", "tool", "loot", "container"]
+          "types": [
+            "weapon",
+            "equipment",
+            "consumable",
+            "tool",
+            "loot",
+            "container"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -175,8 +238,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["feat"]
+          "types": [
+            "feat"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -188,8 +257,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["npc"]
+          "types": [
+            "npc"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -201,8 +276,15 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["race", "feat"]
+          "types": [
+            "race",
+            "feat"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -214,8 +296,17 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["weapon", "equipment", "loot", "consumable"]
+          "types": [
+            "weapon",
+            "equipment",
+            "loot",
+            "consumable"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -225,7 +316,11 @@
       "path": "packs/mandaloriancodexjournals",
       "type": "JournalEntry",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "mandaloriancodexnpcs",
@@ -236,8 +331,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["npc"]
+          "types": [
+            "npc"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -249,8 +350,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["npc"]
+          "types": [
+            "npc"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -262,8 +369,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["npc"]
+          "types": [
+            "npc"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -275,8 +388,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["npc"]
+          "types": [
+            "npc"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -288,8 +407,14 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["feat"]
+          "types": [
+            "feat"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -301,8 +426,15 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["spell", "sw5e-module.maneuver"]
+          "types": [
+            "spell",
+            "sw5e-module.maneuver"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -314,8 +446,15 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["race", "feat"]
+          "types": [
+            "race",
+            "feat"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -327,8 +466,17 @@
       "private": false,
       "flags": {
         "dnd5e": {
-          "types": ["weapon","equipment","feat","loot"]
+          "types": [
+            "weapon",
+            "equipment",
+            "feat",
+            "loot"
+          ]
         }
+      },
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
       }
     },
     {
@@ -338,7 +486,11 @@
       "path": "packs/tables",
       "type": "RollTable",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "weaponproperties",
@@ -347,7 +499,11 @@
       "path": "packs/weaponproperties",
       "type": "JournalEntry",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "phb-journals",
@@ -356,7 +512,11 @@
       "path": "packs/phb-journals",
       "type": "JournalEntry",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "expanded-content-journals",
@@ -365,7 +525,11 @@
       "path": "packs/expanded-content-journals",
       "type": "JournalEntry",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "wretched-hives-journals",
@@ -374,7 +538,11 @@
       "path": "packs/wretched-hives-journals",
       "type": "JournalEntry",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     }
   ],
   "packFolders": [
@@ -395,6 +563,14 @@
           ]
         },
         {
+          "name": "Powers & Maneuvers",
+          "sorting": "m",
+          "color": "#b72c1f",
+          "packs": [
+            "powers-maneuvers"
+          ]
+        },
+        {
           "name": "Features",
           "sorting": "m",
           "color": "#b72c1f",
@@ -404,8 +580,7 @@
             "customization-options",
             "feats",
             "species",
-            "hgttgspecies",
-            "powers-maneuvers"
+            "hgttgspecies"
           ]
         },
         {

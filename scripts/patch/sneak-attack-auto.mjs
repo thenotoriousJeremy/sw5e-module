@@ -3,13 +3,21 @@ import { safeRegisterWrapper } from "../module-support.mjs";
 /**
  * Resolves Operative level for Sneak Attack calculation.
  */
-function getOperativeDiceCount(actor) {
-	const rollData = actor.getRollData();
+function getOperativeDiceCount(actor, existingRollData = null) {
+	const rollData = existingRollData ?? actor.getRollData?.() ?? {};
+	const scale = rollData.scale?.operative?.["sneak-attack"] 
+		?? rollData.scale?.rogue?.["sneak-attack"];
+	if ( scale?.number ) return scale.number;
+	if ( typeof scale === "number" ) return scale;
+
 	const operativeLevels = rollData.classes?.operative?.levels 
 		|| rollData.classes?.rogue?.levels 
-		|| actor.items?.find?.(i => i.type === "class" && (i.name.toLowerCase().includes("operative") || i.name.toLowerCase().includes("rogue")))?.system?.levels 
-		|| 1;
-	return Math.ceil(operativeLevels / 2);
+		|| actor.items?.find?.(i => i.type === "class" && (i.name.toLowerCase().includes("operative") || i.name.toLowerCase().includes("rogue")))?.system?.levels;
+
+	if ( operativeLevels ) return Math.max(1, Math.ceil(operativeLevels / 2));
+
+	const level = rollData.details?.level ?? actor.system?.details?.level ?? rollData.details?.cr ?? actor.system?.details?.cr ?? 1;
+	return Math.max(1, Math.ceil(Number(level) / 2));
 }
 
 /**

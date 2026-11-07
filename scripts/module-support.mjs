@@ -60,11 +60,11 @@ export const localizeOr = localizeOrFallback;
 const registeredWrappers = new Set();
 
 export function safeRegisterWrapper(target, callback, mode = "WRAPPER") {
-	if ( !globalThis.libWrapper?.register ) return false;
+	if ( typeof globalThis.libWrapper?.register !== "function" ) return false;
 	const key = `${target}::${mode}`;
 	if ( registeredWrappers.has(key) ) return true;
 	try {
-		libWrapper.register(getModuleId(), target, callback, mode);
+		globalThis.libWrapper.register(getModuleId(), target, callback, mode);
 		registeredWrappers.add(key);
 		return true;
 	} catch (_) {
@@ -117,19 +117,74 @@ export function normalizeModuleType(type, subtype) {
 	return getModuleType(subtype);
 }
 
+export const LEGACY_PACK_NAME_MAP = Object.freeze({
+	invocations: "character-classes",
+	archetypefeatures: "character-classes",
+	archetypes: "character-classes",
+	classfeatures: "character-classes",
+	classes: "character-classes",
+	speciesfeatures: "species",
+	backgroundfeatures: "backgrounds",
+	techpowers: "powers-maneuvers",
+	forcepowers: "powers-maneuvers",
+	maneuvers: "powers-maneuvers",
+	fightingstyles: "customization-options",
+	fightingmasteries: "customization-options",
+	lightsaberforms: "customization-options",
+	weaponfocuses: "customization-options",
+	weaponsupremacies: "customization-options",
+	multiclassimprovements: "customization-options",
+	splashclassimprovements: "customization-options",
+	blasters: "equipment",
+	vibroweapons: "equipment",
+	lightweapons: "equipment",
+	exoticblasters: "equipment",
+	exoticvibroweapons: "equipment",
+	exoticlightweapons: "equipment",
+	armor: "equipment",
+	adventuringgear: "equipment",
+	ammunition: "equipment",
+	consumables: "equipment",
+	gamingsets: "equipment",
+	musicalinstruments: "equipment",
+	artisansimplements: "equipment",
+	implements: "equipment",
+	kits: "equipment",
+	shields: "equipment",
+	tools: "equipment",
+	treasure: "equipment",
+	droidcustomization: "equipment",
+	modification: "equipment",
+	ventures: "deployments",
+	deploymentfeatures: "deployments",
+	starshipactions: "starships",
+	starshiparmor: "starships",
+	starshipequipment: "starships",
+	starshipfeatures: "starships",
+	starshipmodifications: "starships",
+	starshipsizes: "starships",
+	starshipweapons: "starships"
+});
+
 export function normalizeCompendiumUuid(uuid, { moduleId=getModuleId(), documentType="Item" }={}) {
 	if ( typeof uuid !== "string" ) return uuid;
 	const moduleIds = COMPENDIUM_MODULE_ID_CANDIDATES.map(escapeRegex).join("|");
 	let res = uuid.replace(new RegExp(`^Compendium\\.(${moduleIds})\\.`), `Compendium.${moduleId}.`);
-	const m = res.match(/^Compendium\.([^.]+)\.([^.]+)\.([^.]+)$/);
-	if ( m ) {
-		res = `Compendium.${m[1]}.${m[2]}.${documentType}.${m[3]}`;
-	}
+	// Old SW5E pack names only apply to this module's packs (dnd5e has its own "classes"/"classfeatures" packs)
+	const renamePack = (scope, pack) => (scope === moduleId ? (LEGACY_PACK_NAME_MAP[pack] ?? pack) : pack);
+	const m3 = res.match(/^Compendium\.([^.]+)\.([^.]+)\.([^.]+)$/);
+	if ( m3 ) return `Compendium.${m3[1]}.${renamePack(m3[1], m3[2])}.${documentType}.${m3[3]}`;
+	const m4 = res.match(/^Compendium\.([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)$/);
+	if ( m4 ) return `Compendium.${m4[1]}.${renamePack(m4[1], m4[2])}.${m4[3]}.${m4[4]}`;
 	return res;
 }
 
 export function normalizeCompendiumReferences(text, { moduleId=getModuleId() }={}) {
 	if ( typeof text !== "string" ) return text;
 	const moduleIds = COMPENDIUM_MODULE_ID_CANDIDATES.map(escapeRegex).join("|");
-	return text.replace(new RegExp(`Compendium\\.(${moduleIds})\\.`, "g"), `Compendium.${moduleId}.`);
+	let res = text.replace(new RegExp(`Compendium\\.(${moduleIds})\\.`, "g"), `Compendium.${moduleId}.`);
+	for ( const [oldPack, newPack] of Object.entries(LEGACY_PACK_NAME_MAP) ) {
+		res = res.replaceAll(`Compendium.${moduleId}.${oldPack}.`, `Compendium.${moduleId}.${newPack}.`);
+	}
+	return res;
 }

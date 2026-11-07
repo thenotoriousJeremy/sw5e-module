@@ -425,32 +425,7 @@ async function writeCandidate(run, candidate) {
 		}
 		console.log(`Migrating ${candidate.documentType} document ${candidate.logName}`);
 		const payload = candidate.writePayload ?? candidate.preparedUpdate;
-		if ( Array.isArray(payload?.effects) ) {
-			if ( candidate.documentType === "ActorDelta" ) {
-				payload.effects = payload.effects.filter(eff => {
-					const id = eff?._id ?? eff?.id;
-					return !(typeof id === "string" && id.startsWith("dnd5e"));
-				});
-			}
-			if ( globalThis.game?.release?.generation >= 14 ) {
-				for ( const eff of payload.effects ) {
-					if ( eff && typeof eff === "object" ) delete eff.changes;
-				}
-			}
-		}
-		try {
-			await candidate.document.update(payload, candidate.options);
-		} catch (updateErr) {
-			if ( updateErr?.message?.includes("proxy can't report")
-				|| updateErr?.message?.includes("DataFieldOperatorValue")
-				|| updateErr?.message?.includes("non-extensible")
-				|| updateErr?.message?.includes("incompatible property descriptor") ) {
-				const fallback = unwrapForcedReplacementsDeep(foundry.utils.deepClone(payload));
-				await candidate.document.update(fallback, candidate.options);
-			} else {
-				throw updateErr;
-			}
-		}
+		await candidate.document.update(payload, candidate.options);
 		run.summary.documentsUpdated += 1;
 	} catch(err) {
 		recordDocumentFailure(run, err, {
@@ -1101,30 +1076,11 @@ async function _migrateWorldDocuments(migrationData, run=createMigrationRunState
 					writePayload = foundry.utils.deepClone(updateData);
 					["items", "effects"].forEach(col => {
 						for ( const [i, update] of (writePayload[col] ?? []).entries() ) {
-							const original = token.actor[col]?.get(update._id);
-							if ( !original ) continue;
-							const baseData = original.toObject();
-							if ( col === "effects" ) {
-								delete baseData.changes;
-								delete update.changes;
-							}
-							const merged = foundry.utils.mergeObject(baseData, update, { inplace: false });
-							if ( col === "effects" ) {
-								delete merged.changes;
-							}
-							writePayload[col][i] = merged;
+							const original = token.actor[col].get(update._id);
+							writePayload[col][i] = foundry.utils.mergeObject(original.toObject(), update, { inplace: false });
 						}
 					});
 					preparedUpdate = applyUpdateToClone(source, writePayload);
-				}
-				if ( Array.isArray(writePayload?.effects) ) {
-					writePayload.effects = writePayload.effects.filter(eff => {
-						const id = eff?._id ?? eff?.id;
-						return !(typeof id === "string" && id.startsWith("dnd5e"));
-					});
-					for ( const eff of writePayload.effects ) {
-						if ( eff && typeof eff === "object" ) delete eff.changes;
-					}
 				}
 				return {
 					documentType: "ActorDelta",
@@ -2032,10 +1988,38 @@ function getInvalidDocumentSource(collection, id, legacyKey) {
 	return legacy ? foundry.utils.deepClone(legacy) : null;
 }
 
+const EMBEDDED_COLLECTION_KEYS = ["items", "effects", "results", "pages", "tokens"];
+
+function collectForcedReplacementPaths(obj, prefix="", out=[]) {
+	if ( !obj || (typeof obj !== "object") || Array.isArray(obj) ) return out;
+	for ( const [key, value] of Object.entries(obj) ) {
+		const path = prefix ? `${prefix}.${key}` : key;
+		if ( isForcedReplacement(value) ) {
+			out.push([path, structuredClone(unwrapForcedReplacement(value))]);
+		} else if ( value && (typeof value === "object") && !Array.isArray(value) && !EMBEDDED_COLLECTION_KEYS.includes(key) ) {
+			collectForcedReplacementPaths(value, path, out);
+		}
+	}
+	return out;
+}
+
 function applyUpdateData(target, updateData) {
 	if ( foundry.utils.isEmpty(updateData) ) return;
-	const plainUpdate = unwrapForcedReplacementsDeep(updateData);
-	foundry.utils.mergeObject(target, foundry.utils.expandObject(plainUpdate), { inplace: true });
+	const forcedPaths = collectForcedReplacementPaths(updateData);
+	const plainUpdate = foundry.utils.expandObject(unwrapForcedReplacementsDeep(updateData));
+	for ( const key of EMBEDDED_COLLECTION_KEYS ) {
+		if ( Array.isArray(target?.[key]) && Array.isArray(plainUpdate?.[key]) ) {
+			const rawUpdates = Array.isArray(updateData[key]) ? updateData[key] : plainUpdate[key];
+			applyEmbeddedUpdates(target[key], rawUpdates);
+			delete plainUpdate[key];
+		}
+	}
+	if ( !foundry.utils.isEmpty(plainUpdate) ) {
+		foundry.utils.mergeObject(target, plainUpdate, { inplace: true });
+	}
+	for ( const [path, value] of forcedPaths ) {
+		foundry.utils.setProperty(target, path, value);
+	}
 }
 
 function applyUpdateToClone(source, updateData) {
@@ -2218,7 +2202,12 @@ function _normalizeSubclassValue(value, moduleId) {
 		};
 	}
 
-	return { value: {}, changed: Object.keys(value).length > 0 };
+	const keys = Object.keys(value);
+	const isCleanedEmptySubclassValue = keys.length > 0
+		&& keys.every(k => (k === "document" || k === "uuid") && value[k] === null);
+	if ( isCleanedEmptySubclassValue ) return { value, changed: false };
+
+	return { value: {}, changed: keys.length > 0 };
 }
 
 /**

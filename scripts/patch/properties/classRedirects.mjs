@@ -1,29 +1,23 @@
-import { safeRegisterWrapper } from "../../module-support.mjs";
+const CLASS_SCALE_REDIRECTS = Object.freeze({
+	barbarian: "berserker",
+	rogue: "operative",
+	paladin: "guardian",
+	ranger: "scout",
+	cleric: "consular",
+	druid: "sentinel",
+	bard: "scholar",
+	sorcerer: "consular",
+	warlock: "sentinel",
+	wizard: "engineer"
+});
 
-export function patchClassRedirects() {
-	function actorGetRollData(wrapped, ...args) {
-		const data = wrapped(...args);
-		if ( data && data.scale ) {
-			const redirects = {
-				barbarian: 'berserker',
-				rogue: 'operative',
-				paladin: 'guardian',
-				ranger: 'scout',
-				cleric: 'consular',
-				druid: 'sentinel',
-				bard: 'scholar',
-				sorcerer: 'consular',
-				warlock: 'sentinel',
-				wizard: 'engineer'
-			};
-			for ( const [dndClass, swClass] of Object.entries(redirects) ) {
-				if ( data.scale[swClass] && !data.scale[dndClass] ) {
-					data.scale[dndClass] = data.scale[swClass];
-				}
+export function applyClassScaleRedirects(data) {
+	if ( data && data.scale && typeof data.scale === "object" ) {
+		for ( const [dndClass, swClass] of Object.entries(CLASS_SCALE_REDIRECTS) ) {
+			if ( data.scale[swClass] && !data.scale[dndClass] ) {
+				data.scale[dndClass] = data.scale[swClass];
 			}
 		}
-		return data;
 	}
-	const target = 'dnd5e.documents.Actor5e.prototype.getRollData';
-	safeRegisterWrapper(target, actorGetRollData, 'MIXED');
+	return data;
 }

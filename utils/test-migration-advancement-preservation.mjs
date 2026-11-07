@@ -471,6 +471,116 @@ try {
 		});
 	});
 
+	await check("migrateWorld delta Actor update preserves all embedded items and unchanged system fields", async () => {
+		resetMigrationTestHarness();
+		const scholarItem = {
+			_id: "ScholarClass00001",
+			name: "Scholar",
+			type: "class",
+			img: "icons/svg/book.svg",
+			system: {
+				identifier: "scholar",
+				levels: 11,
+				hd: { denomination: "d8", spent: 0 },
+				spellcasting: { superiorityProgression: "full" },
+				advancement: {
+					AdvLang000000001: {
+						_id: "AdvLang000000001",
+						type: "ItemGrant",
+						configuration: { pool: ["languages:standard:basic"] },
+						value: {}
+					}
+				},
+				activities: {}
+			},
+			flags: {},
+			effects: [{ _id: "ScholarEff0000001", name: "Keep Effect", changes: [] }]
+		};
+		const featItem = {
+			_id: "FeatItem000000001",
+			name: "Critical Analysis",
+			type: "feat",
+			img: "icons/svg/aura.svg",
+			system: {
+				identifier: "critical-analysis",
+				advancement: {},
+				activities: { [ACT_UTILITY._id]: structuredClone(ACT_UTILITY) }
+			},
+			flags: {},
+			effects: [{ _id: "FeatEff0000000001", name: "Target Analysis", changes: [] }]
+		};
+		const updates = [];
+		const actorSource = {
+			_id: "KarricActor000001",
+			name: "Karric Or'Din",
+			type: "character",
+			img: "icons/svg/mystery-man.svg",
+			system: { attributes: { hp: { value: 69 } } },
+			flags: {},
+			items: [scholarItem, featItem],
+			effects: []
+		};
+		const actor = {
+			id: actorSource._id,
+			_id: actorSource._id,
+			name: actorSource.name,
+			uuid: `Actor.${actorSource._id}`,
+			documentName: "Actor",
+			items: {
+				get(id) {
+					const found = actorSource.items.find(i => i._id === id);
+					return found ? { ...found, _source: found, toObject: () => structuredClone(found) } : null;
+				}
+			},
+			effects: { get: () => null },
+			toObject() { return structuredClone(actorSource); },
+			async update(payload, options={}) {
+				updates.push({ payload, options });
+			}
+		};
+		installMigrationTestHarness({
+			actors: [actor],
+			moduleMigrationVersion: "1.3.4",
+			needsMigrationVersion: "1.3.6"
+		});
+		await migrateWorld();
+		assert.equal(updates.length, 1);
+		const writtenItems = updates[0].payload.items;
+		assert.equal(writtenItems.length, 2, "must preserve all embedded items in clone");
+		const writtenScholar = writtenItems.find(i => i._id === "ScholarClass00001");
+		assert.equal(writtenScholar.system.levels, 11);
+		assert.equal(writtenScholar.system.identifier, "scholar");
+		assert.equal(writtenScholar.system.hd.denomination, "d8");
+		assert.equal(writtenScholar.system.spellcasting.superiorityProgression, "full");
+		assert.equal(writtenScholar.effects.length, 1);
+		assert.deepEqual(writtenScholar.system.advancement.AdvLang000000001.configuration.pool, ["languages:standard:common"]);
+		const writtenFeat = writtenItems.find(i => i._id === "FeatItem000000001");
+		assert.equal(writtenFeat.effects.length, 1);
+	});
+
+	await check("cleaned empty Subclass advancement value { document: null, uuid: null } is not flagged changed", () => {
+		const classItem = {
+			_id: "ClassSub000000001",
+			name: "Consular",
+			type: "class",
+			system: {
+				advancement: {
+					SubAdv0000000001: {
+						_id: "SubAdv0000000001",
+						type: "Subclass",
+						configuration: {},
+						value: { document: null, uuid: null }
+					}
+				}
+			},
+			flags: {},
+			effects: []
+		};
+		const flags = { persistSourceMigration: false };
+		const update = migrateItemData(structuredClone(classItem), {}, flags);
+		assert.equal(update["system.advancement"], undefined);
+	});
+
 	console.log(`\n${passed} checks passed (migration advancement/activity preservation)`);
 } finally {
 	resetMigrationTestHarness();

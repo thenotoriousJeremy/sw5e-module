@@ -190,23 +190,23 @@ export function patchConfig(config, strict = true) {
 	if (strict) config.weaponIds = {
 		// Blasters
 		"affixedrifle": "Compendium.sw5e-module.equipment.Item.ZKM6kkOgHXGnXMgi",
-		"anti-materielblaster": "Compendium.sw5e-module.equipment.Item.xxbqOdjKYp7aJyPW",
+		"anti-materielblaster": "Compendium.sw5e-module.equipment.Item.g2ctzQkLc0FU5vvr",
 		"anti-materielrifle": "Compendium.sw5e-module.equipment.Item.LXfN4Frdg9Neip42",
 		"arccaster": "Compendium.sw5e-module.equipment.Item.xGH5V5Dh3Xd8yRZr",
 		"assaultcannon": "Compendium.sw5e-module.equipment.Item.mXu2wQEqg6czu3X1",
 		"beamrifle": "Compendium.sw5e-module.equipment.Item.eU07RkTEbHfAkaCn",
-		"bkg": "Compendium.sw5e-module.equipment.Item.ZFpQK4ESemqB1t2C",
-		"blastercannon": "Compendium.sw5e-module.equipment.Item.Vv4dApl6faYAwijP",
+		"bkg": "Compendium.sw5e-module.equipment.Item.E4pxyFnJGMm4voXh",
+		"blastercannon": "Compendium.sw5e-module.equipment.Item.hSJ4w4xMMf7ECdfZ",
 		"blastercarbine": "Compendium.sw5e-module.equipment.Item.PoGaGtinF97I9fQ0",
 		"blasterpistol": "Compendium.sw5e-module.equipment.Item.rz0YqUmRxFl79W0K",
 		"blasterrifle": "Compendium.sw5e-module.equipment.Item.Nww9kzfPy9D246fg",
 		"bo-rifle": "Compendium.sw5e-module.equipment.Item.AohJSYDPWfhsAqHM",
 		"bolt-thrower": "Compendium.sw5e-module.equipment.Item.9VhsUL3z9o62lUsT",
 		"bowcaster": "Compendium.sw5e-module.equipment.Item.WeVSJ3sJaeIAnnvc",
-		"carbinerifle": "Compendium.sw5e-module.equipment.Item.TaTZBUpykWuUtejN",
-		"chaingun": "Compendium.sw5e-module.equipment.Item.pJxx1oaNmTaKgbyB",
+		"carbinerifle": "Compendium.sw5e-module.equipment.Item.WNNRAQT9goUnhGaL",
+		"chaingun": "Compendium.sw5e-module.equipment.Item.7p0nNFUBhl4bZouX",
 		"compoundbow": "Compendium.sw5e-module.equipment.Item.45PDLB373AvNUyJT",
-		"cryocannon": "Compendium.sw5e-module.equipment.Item.EgG7GDchK8ICHjcA",
+		"cryocannon": "Compendium.sw5e-module.equipment.Item.XoBEl3qOFLwh8vDu",
 		"cryocarbine": "Compendium.sw5e-module.equipment.Item.PkRIfISeSwgqXOBf",
 		"cryopistol": "Compendium.sw5e-module.equipment.Item.btSGBSe1oW54ekiK",
 		"cryorifle": "Compendium.sw5e-module.equipment.Item.4Jw4d9459nFSSsUF",
@@ -226,7 +226,7 @@ export function patchConfig(config, strict = true) {
 		"heavybowcaster": "Compendium.sw5e-module.equipment.Item.Jf8Or7nDFSHPic54",
 		"heavycarbine": "Compendium.sw5e-module.equipment.Item.YK7Nzdui6FW7dNjE",
 		"heavypistol": "Compendium.sw5e-module.equipment.Item.6S2Lb686mrKTQMTp",
-		"heavyrepeater": "Compendium.sw5e-module.equipment.Item.iVExqc7VtLDTqETL",
+		"heavyrepeater": "Compendium.sw5e-module.equipment.Item.DuIr3jPNHPJLTu6c",
 		"heavyshotgun": "Compendium.sw5e-module.equipment.Item.TSOf2xTMf792t4af",
 		"heavyslugpistol": "Compendium.sw5e-module.equipment.Item.HXyrCz4Kun53F4kK",
 		"hold-out": "Compendium.sw5e-module.equipment.Item.V7uuRrAqCINlkgFk",
@@ -235,52 +235,52 @@ export function patchConfig(config, strict = true) {
 		"incineratorpistol": "Compendium.sw5e-module.equipment.Item.EY3jaFiEsO9UzEz9",
 		"incineratorrifle": "Compendium.sw5e-module.equipment.Item.66PqJG2lNxMNCg5C",
 		"incineratorsniper": "Compendium.sw5e-module.equipment.Item.l1vS9YRrwQktdgbI",
-		"ioncannon": "Compendium.sw5e-module.equipment.Item.XdzPCQqlF97NDSn3",
+		"ioncannon": "Compendium.sw5e-module.equipment.Item.1BGl0Qy3bz3MgSBD",
 		"ioncarbine": "Compendium.sw5e-module.equipment.Item.FJMwehrWtdagwsqn",
 		"ionpistol": "Compendium.sw5e-module.equipment.Item.4CdI8yfutf7ZggfY",
 		"ionrifle": "Compendium.sw5e-module.equipment.Item.aXCB2Uap09IIAV0p",
 		"iws": "Compendium.sw5e-module.equipment.Item.EmpVpcgRewUPxdJr",
 		"lightbow": "Compendium.sw5e-module.equipment.Item.gIGxUwvW06msv36V",
-		"lightningcannon": "Compendium.sw5e-module.equipment.Item.DVGS3sXfo73Hb5SP",
+		"lightningcannon": "Compendium.sw5e-module.equipment.Item.35UQKVNvfj5ugGGO",
 		"lightningcarbine": "Compendium.sw5e-module.equipment.Item.Aq421AKVuVHZjFJQ",
 		"lightningpistol": "Compendium.sw5e-module.equipment.Item.tAzbTqCc6S6aeCvc",
 		"lightningrifle": "Compendium.sw5e-module.equipment.Item.es7oacLob9VulqVC",
 		"lightpistol": "Compendium.sw5e-module.equipment.Item.3MuBVRCfB4j2pmm1",
-		"lightrepeater": "Compendium.sw5e-module.equipment.Item.iKTCOo5LZpBXpwS6",
+		"lightrepeater": "Compendium.sw5e-module.equipment.Item.ihm1ryoZcK9IwqWk",
 		"lightslugpistol": "Compendium.sw5e-module.equipment.Item.md4uo61mzq3xBFh0",
 		"marksmanblaster": "Compendium.sw5e-module.equipment.Item.iY4iRHbLcx10OgRQ",
 		"mortarlauncher": "Compendium.sw5e-module.equipment.Item.jWIMqI3Wg3EJZjMv",
 		"needler": "Compendium.sw5e-module.equipment.Item.tzlA3eYfQSOLVlUw",
 		"nightstingerrifle": "Compendium.sw5e-module.equipment.Item.9h8aYCXd9O2aJThy",
-		"radiationcannon": "Compendium.sw5e-module.equipment.Item.Kv2ENVsbFMsU7XW3",
+		"radiationcannon": "Compendium.sw5e-module.equipment.Item.bbLkIBweN5gYoMpQ",
 		"radrifle": "Compendium.sw5e-module.equipment.Item.i1d3IODE5XVAeLuw",
 		"railgun": "Compendium.sw5e-module.equipment.Item.zuPhwZGH0j2ovgG7",
-		"repeatingblaster": "Compendium.sw5e-module.equipment.Item.K1YmAWmG1bR4o5CG",
+		"repeatingblaster": "Compendium.sw5e-module.equipment.Item.raY5P76NFUD8s8yQ",
 		"revolver": "Compendium.sw5e-module.equipment.Item.Fd6o5uHTGQCNBQP3",
 		"rocketlauncher": "Compendium.sw5e-module.equipment.Item.pYsmiZ98tXTfdbt0",
 		"rocketrifle": "Compendium.sw5e-module.equipment.Item.q5JrhC2pyO64xhbu",
-		"rotarycannon": "Compendium.sw5e-module.equipment.Item.i1xzHcuxKjWm7J3z",
+		"rotarycannon": "Compendium.sw5e-module.equipment.Item.glGXaMJOpNao0ti9",
 		"scatterblaster": "Compendium.sw5e-module.equipment.Item.aEhiMrl8fQ4uE3od",
 		"scattergun": "Compendium.sw5e-module.equipment.Item.Ul4lKHTI2TocCqBm",
 		"sentrygun": "Compendium.sw5e-module.equipment.Item.O2CMHIk0z1iv5rvq",
-		"shattercannon": "Compendium.sw5e-module.equipment.Item.9IBmtJNH1vmtLwIQ",
+		"shattercannon": "Compendium.sw5e-module.equipment.Item.CtinbEwDRqhsG2IF",
 		"shatterpistol": "Compendium.sw5e-module.equipment.Item.yVgru3dfq2S3HzVB",
 		"shatterrifle": "Compendium.sw5e-module.equipment.Item.Ger4Tz2ZQHBsvIdD",
 		"shortbow": "Compendium.sw5e-module.equipment.Item.bwGON0wPMPw4L2QJ",
 		"shotgun": "Compendium.sw5e-module.equipment.Item.twTqep64yEvD27WD",
 		"shoulderblaster": "Compendium.sw5e-module.equipment.Item.W9dZwJA9S6GuupCx",
-		"shouldercannon": "Compendium.sw5e-module.equipment.Item.FxHxjPlEzGyWRFJu",
+		"shouldercannon": "Compendium.sw5e-module.equipment.Item.40r9E774OIX3163K",
 		"slugpistol": "Compendium.sw5e-module.equipment.Item.nFL3lIO5cZyGdi7h",
 		"slugthrower": "Compendium.sw5e-module.equipment.Item.UnQu0tKV6bRU8fcE",
-		"smartcannon": "Compendium.sw5e-module.equipment.Item.QSYdAFTMq5E4Ojzc",
+		"smartcannon": "Compendium.sw5e-module.equipment.Item.2lOIj4Qk00gttLI0",
 		"smartpistol": "Compendium.sw5e-module.equipment.Item.Z3zN5LhPEBnA2gB3",
 		"sniperrifle": "Compendium.sw5e-module.equipment.Item.Q45OrdLhguL9OWNU",
-		"soniccannon": "Compendium.sw5e-module.equipment.Item.6cQyUA1TgCwFTJzJ",
+		"soniccannon": "Compendium.sw5e-module.equipment.Item.Bisy84amsQCLVtse",
 		"soniccarbine": "Compendium.sw5e-module.equipment.Item.efeQYIZhTk6GGTv4",
 		"sonicpistol": "Compendium.sw5e-module.equipment.Item.8EKfBUh1sNYcdyxQ",
 		"sonicrifle": "Compendium.sw5e-module.equipment.Item.Iv36Kvf4Twtr0WQf",
 		"stealthcarbine": "Compendium.sw5e-module.equipment.Item.Gq8Xo1CEp8m1HLEa",
-		"subrepeater": "Compendium.sw5e-module.equipment.Item.5G4BTuYkl4IcdMw0",
+		"subrepeater": "Compendium.sw5e-module.equipment.Item.5BFTGsS018IXpS5p",
 		"switchcannon": "Compendium.sw5e-module.equipment.Item.KO4QzzK90ddtTCeP",
 		"switchcarbine": "Compendium.sw5e-module.equipment.Item.OZhhFSXfVaTxlvMy",
 		"switchpistol": "Compendium.sw5e-module.equipment.Item.BF0DbpSuicX8qHhb",
@@ -1771,6 +1771,18 @@ export function patchConfig(config, strict = true) {
 			"ritual",
 			"freeLearn"
 		]),
+		maneuver: new Set([
+			"concentration",
+			"mgc"
+		]),
+		"sw5e-module.maneuver": new Set([
+			"concentration",
+			"mgc"
+		]),
+		"sw5e.maneuver": new Set([
+			"concentration",
+			"mgc"
+		]),
 		tool: new Set([
 			"concentration",
 			"mgc"
@@ -1808,6 +1820,9 @@ export function patchConfig(config, strict = true) {
 		delete config.damageTypes.piercing;
 		delete config.damageTypes.radiant;
 	}
+	config.customDamageResistanceTypes ??= {};
+	config.customDamageResistanceTypes.forcePower = "SW5E.DamageResistanceForcePower";
+	config.customDamageResistanceTypes.techPower = "SW5E.DamageResistanceTechPower";
 	// Powercasting
 	Object.assign(config.spellcasting.powerCasting, {
 		label: "SW5E.Powercasting.Label",
@@ -2035,6 +2050,31 @@ export function patchConfig(config, strict = true) {
 	config.weaponTypes = {
 		...config.weaponStandardTypes,
 		...config.weaponStarshipTypes
+	};
+	config.weaponTypeMap = {
+		...config.weaponTypeMap,
+		exoticB: "ranged",
+		exoticBL: "ranged",
+		exoticLW: "melee",
+		exoticV: "melee",
+		exoticVB: "melee",
+		exoticVW: "melee",
+		martialB: "ranged",
+		martialBL: "ranged",
+		martialLW: "melee",
+		martialV: "melee",
+		martialVB: "melee",
+		martialVW: "melee",
+		simpleB: "ranged",
+		simpleBL: "ranged",
+		simpleLW: "melee",
+		simpleV: "melee",
+		simpleVB: "melee",
+		simpleVW: "melee",
+		"primary (starship)": "ranged",
+		"secondary (starship)": "ranged",
+		"tertiary (starship)": "ranged",
+		"quaternary (starship)": "ranged"
 	};
 	// Compendium Packs
 	config.sourcePacks.BACKGROUNDS = `${getModuleId()}.backgrounds`;
@@ -2381,6 +2421,13 @@ config.languages.standard.children = {
 			section: "SW5E.Features",
 			type: Number,
 			placeholder: 1
+		},
+		rangedCriticalDamageDice: {
+			name: "SW5E.FlagsRangedCriticalDice",
+			hint: "SW5E.FlagsRangedCriticalDiceHint",
+			section: "SW5E.Features",
+			type: Number,
+			placeholder: 0
 		}
 	};
 	preLocalize("characterFlags", { keys: ["name", "hint", "section"] });

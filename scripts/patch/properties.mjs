@@ -4,7 +4,6 @@ import { patchKeen } from "./properties/keen.mjs";
 import { patchBrutal } from "./properties/brutal.mjs";
 import { patchVicious } from "./properties/vicious.mjs";
 import { patchHeavy } from "./properties/heavy.mjs";
-import { patchClassRedirects } from "./properties/classRedirects.mjs";
 import { patchDouble } from "./properties/double.mjs";
 import { patchShocking } from "./properties/shocking.mjs";
 import { patchPenetrating } from "./properties/penetrating.mjs";
@@ -247,7 +246,6 @@ export function patchProperties() {
 	patchBrutal();
 	patchVicious();
 	patchHeavy();
-	patchClassRedirects();
 	patchDouble();
 	patchShocking();
 	patchPenetrating();

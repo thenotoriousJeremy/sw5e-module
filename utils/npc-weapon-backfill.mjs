@@ -191,7 +191,8 @@ function buildWeaponSystem(sourceWeaponSystem, sourceAttackSystem, existingWeapo
 	system.price = cloneData(existingWeapon.price ?? system.price);
 	system.equipped = existingWeapon.equipped ?? true;
 	system.target = cloneData(sourceAttack.target ?? existingWeapon.target ?? system.target);
-	system.range = cloneData(sourceAttack.range ?? existingWeapon.range ?? system.range);
+	const resolvedRange = sourceAttack.range?.value ? sourceAttack.range : (existingWeapon.range?.value ? existingWeapon.range : (system.range?.value ? system.range : (sourceAttack.range ?? existingWeapon.range ?? system.range)));
+	system.range = cloneData(resolvedRange);
 	system.ability = sourceAttack.ability ?? existingWeapon.ability ?? system.ability ?? "";
 	system.actionType = sourceAttack.actionType ?? existingWeapon.actionType ?? system.actionType ?? "";
 	system.chatFlavor = sourceAttack.chatFlavor ?? existingWeapon.chatFlavor ?? system.chatFlavor ?? "";

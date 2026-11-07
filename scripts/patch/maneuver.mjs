@@ -146,18 +146,21 @@ function getHtmlRoot(html) {
 function adjustItemSpellcastingGetter() {
 	Hooks.on('sw5e.Item5e.spellcasting', function (_this, result, config, ...args) {
 		const spellcasting = _this.system.spellcasting;
-		if ( !spellcasting ) return;
+		if ( !spellcasting || !config.result ) return;
 		const isSubclass = _this.type === "subclass";
 		const classSC = isSubclass ? _this.class?.system?.spellcasting : spellcasting;
 		const subclassSC = isSubclass ? spellcasting : _this.subclass?.system?.spellcasting;
+		const res = { ...config.result };
+		res.levels ??= _this.system.levels;
 		for (const superType of ["superiority"]) {
-			const prop = superType + "Progression"
-			delete result[prop];
+			const prop = superType + "Progression";
 			const classPC = classSC?.[prop] ?? "none";
 			const subclassPC = subclassSC?.[prop] ?? "none";
-			if (subclassPC !== "none") result[superType] = subclassPC;
-			else result[superType] = classPC;
+			if (subclassPC !== "none") res[superType] = subclassPC;
+			else if (classPC !== "none") res[superType] = classPC;
+			else res[superType] = "none";
 		}
+		config.result = res;
 	});
 }
 
@@ -434,7 +437,9 @@ function patchPowerAbilityScore() {
 
 		if (preCalculated) return;
 		for (const [identifier, cls] of Object.entries(_this.classes)) {
-			if (cls.spellcasting && (cls.spellcasting.superiorityProgression !== "none")) result[identifier] = cls;
+			const hasSuperiority = (cls.spellcasting?.superiority && cls.spellcasting.superiority !== "none")
+				|| (cls.system?.spellcasting?.superiorityProgression && cls.system.spellcasting.superiorityProgression !== "none");
+			if (hasSuperiority) result[identifier] = cls;
 		}
 	});
 }

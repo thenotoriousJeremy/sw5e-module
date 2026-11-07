@@ -122,14 +122,16 @@ function getPreparedPowercastingCards(actor) {
 
 	/** Ability-only attack (superiority cards). */
 	const makeAbilityAttack = ability => {
-		const attack = abilities?.[ability]?.attack;
+		const raw = abilities?.[ability]?.attack;
+		const attack = (raw && typeof raw === "object") ? raw.value : raw;
 		if ( !Number.isFinite(Number(attack)) ) return "-";
 		return formatAttack(attack);
 	};
 
 	/** Ability attack + force/tech school bonuses (Focus Generator, etc.). */
 	const makeSchoolAttack = (ability, castType, school) => {
-		const base = Number(abilities?.[ability]?.attack);
+		const raw = abilities?.[ability]?.attack;
+		const base = Number((raw && typeof raw === "object") ? raw.value : raw);
 		if ( !Number.isFinite(base) ) return "-";
 		const bonus = getSchoolPowerAttackBonus(actor, castType, school, rollData);
 		return formatAttack(base + bonus);
@@ -476,23 +478,24 @@ function insertPowercastingElement(containerElement, mountPoint, mountContainer,
 function adjustItemSpellcastingGetter() {
 	Hooks.on('sw5e.Item5e.spellcasting', function (_this, result, config, ...args) {
 		const spellcasting = _this.system.spellcasting;
-		if (!spellcasting) return;
+		if (!spellcasting || !config.result) return;
 
 		const isSubclass = _this.type === "subclass";
 		const classSC = isSubclass ? _this.class?.system?.spellcasting : spellcasting;
 		const subclassSC = isSubclass ? spellcasting : _this.subclass?.system?.spellcasting;
+		const res = { ...config.result };
+		res.levels ??= _this.system.levels;
 
 		for (const castType of ["force", "tech"]) {
 			const prop = castType + "Progression";
-			delete result[prop];
-
 			const classPC = classSC?.[prop] ?? "none";
 			const subclassPC = subclassSC?.[prop] ?? "none";
 
-			if (subclassPC && subclassPC !== "none") result[castType] = subclassPC;
-			else if (classPC && classPC !== "none") result[castType] = classPC;
-			else result[castType] = "none";
+			if (subclassPC && subclassPC !== "none") res[castType] = subclassPC;
+			else if (classPC && classPC !== "none") res[castType] = classPC;
+			else res[castType] = "none";
 		}
+		config.result = res;
 	});
 }
 
@@ -666,6 +669,7 @@ function preparePowercasting() {
 					effectiveMax: getNumericValue(target.points?.max) ?? getNumericValue(obj.points) ?? 0
 				};
 				const sourcePowercasting = _this._source?.system?.powercasting?.[castType] ?? {};
+				const sourcePointsMax = getNumericValue(sourcePowercasting.points?.max);
 				const sourceKnown = sourcePowercasting.known ?? {};
 				target.known.max = resolvePreparedPowersKnownMax({
 					isNPC: false,
@@ -675,8 +679,12 @@ function preparePowercasting() {
 				target.level ??= obj.casterLevel;
 				target.limit ??= obj.limit;
 				target.maxPowerLevel ??= obj.maxPowerLevel;
-				const pointsBonus = getNumericValue(target.points.max) ?? 0;
-				target.points.max = obj.points + pointsBonus;
+				if ( sourcePointsMax !== null ) {
+					target.points.max ??= obj.points;
+				} else {
+					const pointsBonus = getNumericValue(target.points.max) ?? 0;
+					target.points.max = obj.points + pointsBonus;
+				}
 			}
 		}
 
@@ -1049,7 +1057,9 @@ function patchPowerAbilityScore() {
 
 		if (preCalculated) return;
 		for (const [identifier, cls] of Object.entries(_this.classes)) for (const castType of ["force", "tech"]) {
-			if (cls.spellcasting && (cls.spellcasting[castType] !== "none")) result[identifier] = cls;
+			const hasCasting = (cls.spellcasting?.[castType] && cls.spellcasting[castType] !== "none")
+				|| (cls.system?.spellcasting?.[`${castType}Progression`] && cls.system.spellcasting[`${castType}Progression`] !== "none");
+			if (hasCasting) result[identifier] = cls;
 		}
 	});
 
@@ -1202,13 +1212,16 @@ function patchAbilityUseDialog() {
 					castLevel: lvl
 				});
 				const cost = resolved.finalCost;
-				const alreadyUsed = limit > 0 && lvl >= limit && powercasting.used.has(lvl);
+				const isUsed = powercasting.used instanceof Set
+					? powercasting.used.has(lvl)
+					: (Array.isArray(powercasting.used) && powercasting.used.includes(lvl));
+				const alreadyUsed = limit > 0 && lvl >= limit && isUsed;
 				return {
 					value: lvl,
 					label,
 					cost,
 					affordable: cost <= currentPoints,
-					disabled: alreadyUsed || (cost > currentPoints)
+					disabled: Boolean(alreadyUsed || (cost > currentPoints))
 				};
 			});
 
@@ -1220,16 +1233,24 @@ function patchAbilityUseDialog() {
 			};
 
 			if (!spellSlotOptions.some(o => !o.disabled)) {
-				const messageKey = spellSlotOptions.some(o => o.affordable)
-					? "SW5E.Powercasting.NoLevelsAvailable"
-					: "SW5E.Powercasting.NoPoints";
+				const allAffordableUsed = spellSlotOptions.some(o => o.affordable)
+					&& spellSlotOptions.filter(o => o.affordable).every(o => o.disabled);
 				const pointNamespace = powercastingType === "tech" ? "Tech" : "Force";
-				context.notes.push({
-					type: "warn",
-					message: game.i18n.format(messageKey, {
+				let message;
+				if ( allAffordableUsed ) {
+					message = game.i18n.format("SW5E.Powercasting.HighLevelAlreadyUsed", {
+						name: _this.item.name,
+						limit
+					});
+				} else {
+					message = game.i18n.format("SW5E.Powercasting.NoPoints", {
 						name: _this.item.name,
 						resource: game.i18n.localize(`SW5E.Powercasting.${pointNamespace}.Point.Label`)
-					})
+					});
+				}
+				context.notes.push({
+					type: "warn",
+					message
 				});
 			}
 		}
@@ -1265,26 +1286,35 @@ function patchAbilityUseDialog() {
 		}
 
 	if ( castLevel >= powercasting.limit ) {
+		powercasting.used ??= new Set();
+		if ( Array.isArray(powercasting.used) ) {
+			powercasting.used = new Set(powercasting.used);
+		}
 		powercasting.used.add(castLevel);
-		updates.actor[`system.powercasting.${powercastingType}.used`] = powercasting.used;
+		updates.actor[`system.powercasting.${powercastingType}.used`] = Array.from(powercasting.used);
 		}
 	});
 }
 
 function recoverPowerPoints() {
-	Hooks.on("dnd5e.shortRest", (actor, config) => {
-		for (const [castType, castConfig] of Object.entries(CONFIG.DND5E.powerCasting)) {
-			const points = actor.system.powercasting[castType].points;
-			if (!castConfig.shortRest) continue;
-			if (points.value === points.max) continue;
-			actor.update({ [`system.powercasting.${castType}.points.value`]: points.max });
-		}
-	});
-	Hooks.on("dnd5e.longRest", (actor, config) => {
-		for (const [castType, castConfig] of Object.entries(CONFIG.DND5E.powerCasting)) {
-			const { value, max } = actor.system.powercasting[castType].points;
-			if (value === max) continue;
-			actor.update({ [`system.powercasting.${castType}.points.value`]: max });
+	// Standard D&D5e rest transaction hook: merge updates directly into result.updateData
+	Hooks.on("dnd5e.preRestCompleted", (actor, result, config) => {
+		if ( !actor?.system?.powercasting ) return;
+		const isLong = config?.type === "long";
+		const isShort = config?.type === "short";
+		if ( !isLong && !isShort ) return;
+
+		for (const [castType, castConfig] of Object.entries(CONFIG.DND5E.powerCasting ?? {})) {
+			const powerData = actor.system.powercasting[castType];
+			if ( !powerData ) continue;
+			const max = Number(powerData.points?.max) || 0;
+
+			if ( isLong ) {
+				result.updateData[`system.powercasting.${castType}.points.value`] = max;
+				result.updateData[`system.powercasting.${castType}.used`] = [];
+			} else if ( isShort && castConfig.shortRest ) {
+				result.updateData[`system.powercasting.${castType}.points.value`] = max;
+			}
 		}
 	});
 }

@@ -2914,8 +2914,8 @@ function getStarshipAbilityRollEntry(actor, abilityId) {
 	const legacyAbility = getLegacyStarshipActorSystem(actor).abilities?.[abilityId] ?? {};
 	const value = toFiniteNumber(currentAbility?.value, toFiniteNumber(legacyAbility?.value, 10)) ?? 10;
 	const mod = toFiniteNumber(currentAbility?.mod, Math.floor((value - 10) / 2)) ?? 0;
-	const checkBonus = currentAbility?.bonuses?.check ?? legacyAbility?.bonuses?.check ?? "";
-	const saveBonus = currentAbility?.bonuses?.save ?? legacyAbility?.bonuses?.save ?? "";
+	const checkBonus = currentAbility?.bonuses?.check || currentAbility?.check?.roll?.bonus || legacyAbility?.bonuses?.check || "";
+	const saveBonus = currentAbility?.bonuses?.save || currentAbility?.save?.roll?.bonus || legacyAbility?.bonuses?.save || "";
 	const cfg = configuredAbilities[abilityId] ?? {};
 	const labelKey = typeof cfg?.label === "string" ? cfg.label : "";
 	const localizedLabel = labelKey ? game.i18n.localize(labelKey) : abilityId.toUpperCase();

@@ -82,6 +82,10 @@ export class PowerPointConfigApp extends HandlebarsApplicationMixin(ApplicationV
 		const hasMaxOverride = source.max !== null && source.max !== undefined && source.max !== "";
 		const discountFlagKey = getPowerPointDiscountFlagKey(this.castType);
 		const discountSourceValue = getActorPowerPointDiscountSource(this.actor, this.castType);
+		const used = this.actor?.system?.powercasting?.[this.castType]?.used;
+		const usedArray = used instanceof Set ? Array.from(used) : (Array.isArray(used) ? used : []);
+		const hasUsedHighLevel = usedArray.length > 0;
+		const usedHighLevelText = usedArray.map(l => `Level ${l}`).join(", ");
 		return {
 			castType: this.castType,
 			source,
@@ -90,6 +94,11 @@ export class PowerPointConfigApp extends HandlebarsApplicationMixin(ApplicationV
 			calculatedMax,
 			hasMaxOverride,
 			showCalculatedReset: this.actor?.type === "npc",
+			hasUsedHighLevel,
+			usedHighLevelText,
+			highLevelLegend: "High-Level Power Usage",
+			usedHighLevelLabel: "Expended Daily Slots",
+			resetUsedLabel: "Reset Expended Daily Slots",
 			maximumLegend: `Maximum ${formatPointsLabel(this.castType)}`,
 			currentLegend: `Current ${formatPointsLabel(this.castType)}`,
 			currentLabel: "Current Points",
@@ -136,6 +145,7 @@ export class PowerPointConfigApp extends HandlebarsApplicationMixin(ApplicationV
 			[discountFieldName]: normalizePowerPointDiscount(formData.get(discountFieldName))
 		};
 		if ( submitAction === "reset-calculated" ) updateData[`${basePath}.max`] = null;
+		if ( submitAction === "reset-used" ) updateData[`system.powercasting.${this.castType}.used`] = [];
 
 		const points = this.actor.system?.powercasting?.[this.castType]?.points ?? {};
 		const runtime = getPowerPointRuntime(this.actor, this.castType);

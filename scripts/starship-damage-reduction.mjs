@@ -1,5 +1,6 @@
 import { getModuleId, SETTINGS_NAMESPACE } from "./module-support.mjs";
 import { isSw5eStarshipActor } from "./patch/starship-movement.mjs";
+import { applyForcePowerTargetOptions } from "./force-power-damage-resistance.mjs";
 
 /** World setting: automate SW5e flat Damage Reduction on starships. */
 export const STARSHIP_FLAT_DR_SETTING = "starshipFlatDamageReduction";
@@ -145,6 +146,7 @@ function wrapDamageApplicationGetTargetOptions(wrapped, uuid) {
 	const options = wrapped.call(this, uuid) ?? { multiplier: 1 };
 	const fromAttack = isDamageMessageFromAttack(this.chatMessage);
 	options.sw5e = foundry.utils.mergeObject(options.sw5e ?? {}, { fromAttack }, { inplace: false });
+	applyForcePowerTargetOptions(this.chatMessage, options);
 	return options;
 }
 
