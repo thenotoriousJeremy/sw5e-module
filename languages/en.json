@@ -1515,6 +1515,33 @@
 				"Attr": "General Maneuvers Attribute"
 			}
 		},
+		"Versatility": {
+			"Title": "Maneuver Versatility",
+			"Badge": "Versatile",
+			"BadgeHint": "Maneuver Versatility: maneuvers that count as general. Click to change.",
+			"BadgePending": "Maneuver Versatility: {count} choice(s) left. Click to choose.",
+			"Intro": "Choose up to {max} maneuvers you know. They count as general maneuvers, so they use your general maneuver ability: {ability}{dc}.",
+			"DcSuffix": " (DC {dc})",
+			"BestAbility": "your best ability",
+			"Chosen": "Chosen: {count} / {max}",
+			"NextChoice": "Another choice at {className} level {level}.",
+			"NoMoreChoices": "No more choices at higher levels.",
+			"OverLimit": "{count} earlier choice(s) are over the limit of {max} and no longer count.",
+			"Replace": "Whenever you gain a level in this class, you can replace one of these maneuvers with another maneuver you know.",
+			"ChangeAbility": "Change Ability",
+			"Save": "Save Choices",
+			"NoManeuvers": "This character doesn't know any maneuvers yet.",
+			"AlreadyGeneral": "already general",
+			"Missing": "This character does not have Maneuver Versatility.",
+			"CountsAsGeneral": "General (Maneuver Versatility)",
+			"Open": "Choose Versatile Maneuvers",
+			"CountAsGeneral": "Count as General (Maneuver Versatility)",
+			"StopCounting": "Stop Counting as General",
+			"NoChoicesLeft": "All {max} Maneuver Versatility choices are in use. Remove one first.",
+			"ChatPending": "{actor} can choose {count} more maneuver(s) to count as general maneuvers.",
+			"LoginPending": "{actor} can choose {count} more maneuver(s) for Maneuver Versatility (Powers tab).",
+			"ActorMissing": "That character no longer exists."
+		},
 		"Warn": {
 			"Identifier": "'Superiority' scale identifier is being overwritten by Superiority data."
 		}

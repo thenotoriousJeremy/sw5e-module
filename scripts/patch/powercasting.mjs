@@ -19,6 +19,7 @@ import { getSchoolPowerAttackBonus, patchPowerBonuses } from "./power-bonuses.mj
 import { applySpecialTraitsTabLabel } from "./special-traits-sheet.mjs";
 import { applyStarshipTabsContext } from "./starship-sheet.mjs";
 import { hasSuperiorityStyleGrant } from "../superiority-style.mjs";
+import { bindManeuverVersatilityBadge, buildManeuverVersatilityBadge } from "./maneuver-versatility.mjs";
 import {
 	POWER_POINT_DISCOUNT_APPLIED,
 	classifyPowercastingType,
@@ -947,9 +948,15 @@ function injectPowersTabPowercastingSummary(root, actor, { isEditable = false } 
 			const theme = SUPERIORITY_SUMMARY_SEGMENT_THEME[i] ?? SUPERIORITY_SUMMARY_SEGMENT_THEME[0];
 			return formatPowersTabBannerSegment(lab, card.attr, card.attack, card.save, theme);
 		});
+		// Maneuver Versatility: "Versatile 3 / 5" badge, highlighted while choices are left.
+		const versatilityBadge = buildManeuverVersatilityBadge(actor);
+		const headClass = versatilityBadge
+			? "sw5e-powers-banner-head"
+			: "sw5e-powers-banner-head sw5e-powers-banner-head--single";
 		blocks.push(`<div class="sw5e-powers-banner-block" data-sw5e-summary="superiority">`
-			+ `<div class="sw5e-powers-banner-head sw5e-powers-banner-head--single">`
+			+ `<div class="${headClass}">`
 			+ `<div class="sw5e-powers-banner-head-left"><div class="sw5e-powers-banner-kicker">${kicker}${configCog}</div></div>`
+			+ (versatilityBadge ? `<div class="sw5e-powers-banner-head-right">${versatilityBadge}</div>` : "")
 			+ `</div>`
 			+ `<div class="sw5e-powers-banner-flow">${joinPowersBannerSegments(segs)}</div></div>`);
 	}
@@ -969,6 +976,7 @@ function injectPowersTabPowercastingSummary(root, actor, { isEditable = false } 
 		event.stopPropagation();
 		openSuperiorityAbilityConfig(actor);
 	});
+	bindManeuverVersatilityBadge(wrap, actor);
 	powercastingCardsSection.prepend(wrap);
 }
 

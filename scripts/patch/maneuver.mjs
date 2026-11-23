@@ -482,7 +482,8 @@ function patchPowerbooks() {
 
 		// Iterate over every maneuver item, adding maneuvers to the powerbook by section
 		getActorManeuvers(context.actor).forEach(maneuver => {
-			const type = maneuver.system.type.value || "general";
+			// Maneuver Versatility choices are listed with the general maneuvers they count as.
+			const type = maneuver.system.effectiveType ?? (maneuver.system.type.value || "general");
 			const key = `maneuvers-${type}`;
 
 			// Sections for maneuvers which the caster "should not" have, but maneuver items exist for

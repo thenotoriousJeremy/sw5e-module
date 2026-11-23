@@ -1,4 +1,6 @@
 import { getBestAbility } from "./../../utils.mjs";
+import { localizeOrFallback } from "../../module-support.mjs";
+import { getEffectiveManeuverType } from "../../maneuver-versatility.mjs";
 import {
 	adaptManeuverCardContext,
 	maneuverChatPropertyDescriptors
@@ -223,7 +225,9 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 		this.duration.concentration = this.properties.has("concentration");
 
 		const labels = this.parent.labels ??= {};
-		labels.type = CONFIG.DND5E.superiority.types[this.type.value]?.label;
+		labels.type = this.countsAsGeneral
+			? localizeOrFallback("SW5E.Superiority.Versatility.CountsAsGeneral", "General (Maneuver Versatility)")
+			: CONFIG.DND5E.superiority.types[this.effectiveType]?.label;
 
 		labels.properties = this.properties.reduce((acc, c) => {
 			const config = this.validProperties.has(c) ? CONFIG.DND5E.itemProperties[c] : null;
@@ -268,7 +272,7 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 
 		const actor = this.parent.actor;
 		if ( actor ) {
-			const type = this.type.value || "general";
+			const type = this.effectiveType;
 			const typeConfig = CONFIG.DND5E.superiority?.types?.[type];
 			if ( typeConfig ) {
 				const { simplifyBonus } = dnd5e.utils;
@@ -300,7 +304,7 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 	/** @inheritDoc */
 	async getCardData(enrichmentOptions = {}) {
 		const context = await super.getCardData(enrichmentOptions);
-		const typeLabel = CONFIG.DND5E.superiority.types[this.type.value]?.label ?? "";
+		const typeLabel = this.parent.labels?.type ?? CONFIG.DND5E.superiority.types[this.effectiveType]?.label ?? "";
 		return adaptManeuverCardContext(context, {
 			typeLabel,
 			extraProperties: this.chatProperties
@@ -323,9 +327,10 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 	/** @inheritDoc */
 	async getSheetData(context) {
 		if (this.parent.actor) {
+			const type = this.effectiveType;
 			const ability = CONFIG.DND5E.abilities[
-				this.parent.actor.system?.superiority?.types?.[this.type.value]?.attr
-				?? CONFIG.DND5E.superiority.types[this.type.value]?.attr?.[0]
+				this.parent.actor.system?.superiority?.types?.[type]?.attr
+				?? CONFIG.DND5E.superiority.types[type]?.attr?.[0]
 				?? this.parent.actor.system.attributes?.spellcasting
 				?? "int"
 			]?.label?.toLowerCase();
@@ -366,7 +371,28 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 	/** @override */
 	get availableAbilities() {
 		if (this.ability) return new Set([this.ability]);
-		return new Set(CONFIG.DND5E.superiority.types[this.type.value].attr ?? []);
+		return new Set(CONFIG.DND5E.superiority.types[this.effectiveType]?.attr ?? []);
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * The superiority type this maneuver is used as. A maneuver chosen for Maneuver Versatility
+	 * counts as general for its owner; otherwise this is the printed type.
+	 * @type {string}
+	 */
+	get effectiveType() {
+		return getEffectiveManeuverType(this.parent);
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Whether this maneuver is printed as physical or mental but counts as general (Maneuver Versatility).
+	 * @type {boolean}
+	 */
+	get countsAsGeneral() {
+		return ((this.type.value || "general") !== "general") && (this.effectiveType === "general");
 	}
 
 	/* -------------------------------------------- */
@@ -386,7 +412,7 @@ export default class ManeuverData extends ItemDataModel.mixin(ItemDescriptionTem
 	/** @inheritDoc */
 	get _typeAbilityMod() {
 		if ( this.ability ) return this.ability;
-		const type = this.type.value || "general";
+		const type = this.effectiveType;
 		const actorAttr = this.parent.actor?.system?.superiority?.types?.[type]?.attr;
 		if ( actorAttr && this.availableAbilities.has(actorAttr) ) return actorAttr;
 		return getBestAbility(this.parent.actor, this.availableAbilities).id ?? this.availableAbilities.first() ?? "int";

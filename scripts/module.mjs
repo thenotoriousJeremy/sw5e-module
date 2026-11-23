@@ -68,6 +68,8 @@ import { patchCharacterFlags } from "./patch/character-flags.mjs";
 import { migrateLegacyEffectKeys, patchLegacyEffectKeys } from "./patch/legacy-effect-keys.mjs";
 import { patchDerivedConditions } from "./patch/derived-conditions.mjs";
 import { patchSlowedMovement } from "./patch/slowed-movement.mjs";
+import { openManeuverVersatility, patchManeuverVersatility } from "./patch/maneuver-versatility.mjs";
+import { getManeuverVersatilityState } from "./maneuver-versatility.mjs";
 import { patchAutoAnimationsPresets } from "./patch/autoanimations-presets.mjs";
 import { patchAtlPresets } from "./patch/atl-presets.mjs";
 
@@ -96,6 +98,10 @@ globalThis.sw5e = {
 	},
 	characterImporter: {
 		...characterImporterApi
+	},
+	maneuverVersatility: {
+		open: openManeuverVersatility,
+		getState: getManeuverVersatilityState
 	}
 };
 
@@ -161,6 +167,7 @@ Hooks.once('init', async function() {
 	patchLegacyEffectKeys();
 	patchDerivedConditions();
 	patchSlowedMovement();
+	patchManeuverVersatility();
 	patchAutoAnimationsPresets();
 	patchAtlPresets();
 });

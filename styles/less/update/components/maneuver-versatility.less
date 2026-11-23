@@ -1,0 +1,127 @@
+/* Maneuver Versatility: Powers-tab badge, chooser dialog, and chat reminder. */
+
+@versatility-accent: var(--dnd5e-color-gold, #c9a227);
+
+/* —— Powers tab: "Versatile 3 / 5" badge in the Superiority banner —— */
+.dnd5e2.sheet.actor .sw5e-powers-banner-head-right .sw5e-versatility-badge {
+  cursor: pointer;
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
+
+  &:hover,
+  &:focus-visible {
+    border-color: @versatility-accent;
+    outline: none;
+  }
+
+  &.sw5e-versatility--pending {
+    border-color: @versatility-accent;
+    box-shadow: 0 0 6px color-mix(in oklab, @versatility-accent 70%, transparent);
+  }
+
+  .sw5e-versatility-pending {
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: @versatility-accent;
+  }
+}
+
+/* —— Chooser dialog —— */
+.sw5e-maneuver-versatility {
+  .sw5e-mv {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sw5e-mv-intro {
+    margin: 0;
+  }
+
+  .sw5e-mv-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-weight: 600;
+
+    &.pending .sw5e-mv-counter {
+      color: @versatility-accent;
+    }
+  }
+
+  .sw5e-mv-next {
+    font-weight: 400;
+    font-size: var(--font-size-12, 12px);
+    opacity: 0.85;
+  }
+
+  .sw5e-mv-over {
+    margin: 0;
+    color: var(--color-level-warning, #b47a00);
+  }
+
+  .sw5e-mv-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin: 0;
+  }
+
+  .sw5e-mv-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    input {
+      flex: 0 0 auto;
+      margin: 0;
+    }
+
+    img {
+      flex: 0 0 24px;
+      border: none;
+      border-radius: 3px;
+    }
+
+    .sw5e-mv-name {
+      flex: 1;
+    }
+
+    .sw5e-mv-note {
+      font-size: var(--font-size-11, 11px);
+      opacity: 0.8;
+    }
+
+    &.disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+  }
+
+  .sw5e-mv-empty {
+    margin: 0;
+    font-style: italic;
+  }
+
+  .hint {
+    margin: 0;
+  }
+}
+
+/* —— Chat reminder —— */
+.chat-message .sw5e-mv-alert {
+  h3 {
+    margin: 0 0 0.25rem;
+  }
+
+  p {
+    margin: 0 0 0.4rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}

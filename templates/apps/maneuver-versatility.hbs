@@ -1,0 +1,47 @@
+<div class="sw5e-mv">
+	{{#if missing}}
+	<p class="sw5e-mv-empty">{{missingLabel}}</p>
+	{{else}}
+	<p class="sw5e-mv-intro">{{intro}}</p>
+
+	<div class="sw5e-mv-status{{#if pending}} pending{{/if}}">
+		<span class="sw5e-mv-counter" data-sw5e-mv-counter>{{chosenLabel}}</span>
+		<span class="sw5e-mv-next">{{nextLabel}}</span>
+	</div>
+
+	{{#if overLabel}}
+	<p class="sw5e-mv-over">{{overLabel}}</p>
+	{{/if}}
+
+	{{#each groups}}
+	<fieldset class="sw5e-mv-group">
+		<legend>{{label}}</legend>
+		{{#each maneuvers}}
+		<label class="sw5e-mv-row{{#if disabled}} disabled{{/if}}">
+			<input type="checkbox" name="chosen.{{id}}" {{checked checked}} {{disabled disabled}} data-eligible="{{eligible}}">
+			<img src="{{img}}" alt="" width="24" height="24">
+			<span class="sw5e-mv-name">{{name}}</span>
+			{{#if note}}<span class="sw5e-mv-note">{{note}}</span>{{/if}}
+		</label>
+		{{/each}}
+	</fieldset>
+	{{else}}
+	<p class="sw5e-mv-empty">{{emptyLabel}}</p>
+	{{/each}}
+
+	<p class="hint">{{replaceLabel}}</p>
+	{{/if}}
+
+	{{#if editable}}
+	<footer class="form-footer">
+		<button type="button" data-action="configureAbility">
+			<i class="fa-solid fa-dice-d20" inert></i>
+			<span>{{abilityButtonLabel}}</span>
+		</button>
+		<button type="submit">
+			<i class="fa-solid fa-floppy-disk" inert></i>
+			<span>{{saveLabel}}</span>
+		</button>
+	</footer>
+	{{/if}}
+</div>

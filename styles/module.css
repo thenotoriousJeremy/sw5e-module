@@ -5763,3 +5763,102 @@ section.sw5e-droid-customizations-manager .sw5e-aug-actions .sw5e-aug-remove:foc
   transition: color 0.2s ease, text-shadow 0.2s ease;
   text-shadow: 0 0 8px color-mix(in srgb, var(--color-shadow-highlight, #4fc3f7) 35%, transparent);
 }
+/* Maneuver Versatility: Powers-tab badge, chooser dialog, and chat reminder. */
+/* —— Powers tab: "Versatile 3 / 5" badge in the Superiority banner —— */
+.dnd5e2.sheet.actor .sw5e-powers-banner-head-right .sw5e-versatility-badge {
+  cursor: pointer;
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+.dnd5e2.sheet.actor .sw5e-powers-banner-head-right .sw5e-versatility-badge:hover,
+.dnd5e2.sheet.actor .sw5e-powers-banner-head-right .sw5e-versatility-badge:focus-visible {
+  border-color: var(--dnd5e-color-gold, #c9a227);
+  outline: none;
+}
+.dnd5e2.sheet.actor .sw5e-powers-banner-head-right .sw5e-versatility-badge.sw5e-versatility--pending {
+  border-color: var(--dnd5e-color-gold, #c9a227);
+  box-shadow: 0 0 6px color-mix(in oklab, var(--dnd5e-color-gold, #c9a227) 70%, transparent);
+}
+.dnd5e2.sheet.actor .sw5e-powers-banner-head-right .sw5e-versatility-badge .sw5e-versatility-pending {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--dnd5e-color-gold, #c9a227);
+}
+/* —— Chooser dialog —— */
+.sw5e-maneuver-versatility .sw5e-mv {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sw5e-maneuver-versatility .sw5e-mv-intro {
+  margin: 0;
+}
+.sw5e-maneuver-versatility .sw5e-mv-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+.sw5e-maneuver-versatility .sw5e-mv-status.pending .sw5e-mv-counter {
+  color: var(--dnd5e-color-gold, #c9a227);
+}
+.sw5e-maneuver-versatility .sw5e-mv-next {
+  font-weight: 400;
+  font-size: var(--font-size-12, 12px);
+  opacity: 0.85;
+}
+.sw5e-maneuver-versatility .sw5e-mv-over {
+  margin: 0;
+  color: var(--color-level-warning, #b47a00);
+}
+.sw5e-maneuver-versatility .sw5e-mv-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0;
+}
+.sw5e-maneuver-versatility .sw5e-mv-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.sw5e-maneuver-versatility .sw5e-mv-row input {
+  flex: 0 0 auto;
+  margin: 0;
+}
+.sw5e-maneuver-versatility .sw5e-mv-row img {
+  flex: 0 0 24px;
+  border: none;
+  border-radius: 3px;
+}
+.sw5e-maneuver-versatility .sw5e-mv-row .sw5e-mv-name {
+  flex: 1;
+}
+.sw5e-maneuver-versatility .sw5e-mv-row .sw5e-mv-note {
+  font-size: var(--font-size-11, 11px);
+  opacity: 0.8;
+}
+.sw5e-maneuver-versatility .sw5e-mv-row.disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.sw5e-maneuver-versatility .sw5e-mv-empty {
+  margin: 0;
+  font-style: italic;
+}
+.sw5e-maneuver-versatility .hint {
+  margin: 0;
+}
+/* —— Chat reminder —— */
+.chat-message .sw5e-mv-alert h3 {
+  margin: 0 0 0.25rem;
+}
+.chat-message .sw5e-mv-alert p {
+  margin: 0 0 0.4rem;
+}
+.chat-message .sw5e-mv-alert button {
+  width: 100%;
+}

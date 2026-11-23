@@ -54,7 +54,8 @@ test("configured icon SVG assets exist on disk", () => {
 
 test("maneuver-type column template looks up superiority.types icons", () => {
 	assert.match(TEMPLATE, /@root\.config\.superiority\.types/);
-	assert.match(TEMPLATE, /entry\.system\.type\.value/);
+	// Effective type: a Maneuver Versatility choice shows the general icon it counts as.
+	assert.match(TEMPLATE, /entry\.system\.effectiveType/);
 	assert.match(TEMPLATE, /typeConfig\.icon/);
 	assert.match(TEMPLATE, /dnd5e-icon/);
 	assert.doesNotMatch(TEMPLATE, /\{\{.*spellSchools/);
