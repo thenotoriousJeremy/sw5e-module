@@ -74,6 +74,32 @@ This addendum does not rewrite the 5.3.3 historical bullets, the Q-09 note, the 
 
 **Upgrade (supersedes the 14.367 / 6.0.0 install wording for this unpublished line):** back up every world; copy-then-migrate from **SW5e 1.4.3**; never migrate a production original in place; install Foundry **14.368** (minimum **14.367**) and **dnd5e 6.0.3** (minimum **6.0.0**); if a 6.0 pre-release was installed, uninstall/reinstall per dnd5e notes; install lib-wrapper **1.13.5.1**; install SW5e **2.x**; run **dnd5e system migration first**, then **SW5e module migration**. Confirm portraits, tokens, and starship Hull/Shields.
 
+#### Addendum — 2026-11-19 — ported v.next behavior, live gates pending
+
+This addendum does not rewrite the sections above, the `[1.4.0]` history, or the compatibility minimums. Verified pins stay Foundry **14.368** and dnd5e **6.0.3**. Foundry **14.370** / dnd5e **6.1.1** was not run.
+
+Offline evidence exists for these ports:
+
+- Compendium size identifiers such as `huge-starship` use the Huge/Gargantuan hull and shield tier gain.
+- Hull spend and shield recovery write one size-item update.
+- Equipment fields `regrateco`, `cscap`, `sscap`, and `powerdicerec` stay on EquipmentData. Explicit regeneration `0` disables regeneration.
+- Each Commando source actor has one IWS weapon whose Blaster Mode activity is Dexterity `1d8 + @mod` energy.
+- Drake role ability bonuses for Corvette, Cruiser, and Explorer use add mode. Listed Freighter, Yacht, Warship, Gunship, Battleship, and renamed fighter embeddings publish movement on `system.attributes.movement.speeds`. Fire-Linked descriptions that still said “slave circuit” now use the canonical modification text. No Drake remediation script ships with this change.
+- World Item packs are scanned and repaired before `pack.migrate()`. A partial repair does not stamp `2.0.0`.
+- Starship weapons can store facing and turret status. Weapon damage applies Wisdom before the routing check. Empty Force/Tech meters stay hidden in Play when caster level is zero. The Pilot compendium item no longer carries level advancements.
+
+Live Foundry checks for both version combinations remain pending. Do not treat this addendum as a compatibility bump.
+
+#### Addendum — 2026-11-19 — Foundry 14.370 and dnd5e 6.1.1
+
+The 2026-09-15 declarations above remain the historical unpublished target. They are superseded for the current working tree by the declarations below. The older text is retained.
+
+**Current unpublished 2.0.0 declarations:** Foundry minimum **14.367**, verified **14.370**. dnd5e minimum, verified, and maximum **6.1.1** (the maximum is what makes the exact pin enforceable; verified alone does not). lib-wrapper **1.13.5.1**. `TARGET_DND5E_VERSION` stays **6.0.0** because it only stamps `_stats.systemVersion` after a normalization rewrite, and dnd5e 6.1.1 still migrates worlds at **6.0.0**.
+
+**Upgrade (supersedes the 6.0.0 install steps above for this unpublished line):** back up every world; do not migrate a production original in place; install Foundry **14.370** and **dnd5e 6.1.1**; install lib-wrapper **1.13.5.1**; install SW5e; run **dnd5e system migration first**, then **SW5e module migration**.
+
+Validated on the local world `vanilla-v14` at Foundry **14.370** / dnd5e **6.1.1** on 2026-11-19. This addendum supersedes the verified-pin wording in the 2026-09-18 Foundry 14.368 / dnd5e 6.0.3 addendum and the “14.370 / 6.1.1 was not run” sentence in the port addendum above. Those earlier paragraphs stay as history. This addendum does not tag or publish 2.0.0.
+
 ---
 
 ### [1.4.0] 2026-07-14

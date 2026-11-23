@@ -20,11 +20,11 @@ import {
 } from "../starship-sheet-categorize.mjs";
 import { localizeOrFallback } from "../starship-sheet-html.mjs";
 import { isSw5eStarshipActor, STARSHIP_FEATURES_TAB_ID } from "../starship-sheet-ids.mjs";
+import { isStarshipWeaponItem } from "../starship-weapon-rolls.mjs";
 import {
 	applyStarshipFeatureRecoveryRowContext,
 	getStarshipFeaturesFeatColumns
 } from "./starship-feature-recovery-labels.mjs";
-import { isStarshipWeaponItem } from "../starship-weapon-rolls.mjs";
 
 let vehicleSheetPrepareContextWrapped = false;
 let vehicleSheetStarshipCargoInventoryWrapped = false;
@@ -512,6 +512,12 @@ export function injectStarshipFeaturesSections(sheet, context) {
 	return categorized;
 }
 
+/**
+ * Add facing and turret text to the stock inventory subtitle.
+ * The stock string is left as prepared. Only the added pieces are escaped.
+ * @param {Item} item
+ * @param {object} ctx
+ */
 function appendStarshipWeaponInventorySubtitle(item, ctx) {
 	if ( !isStarshipWeaponItem(item) ) return;
 	const parts = [];

@@ -6,6 +6,8 @@ import {
 	makeLegacyPowerAttackFields,
 	makeLegacyPowerBonusFields
 } from "./power-bonuses.mjs";
+import { addStarshipEquipmentRegenRateField } from "./starship-equipment-schema.mjs";
+import { addStarshipWeaponFacingFields } from "./starship-weapon-facing.mjs";
 
 const { BooleanField, NumberField, SchemaField, SetField, StringField } = foundry.data.fields;
 
@@ -186,20 +188,6 @@ function changeProficiency(result, type) {
 	}
 }
 
-function addStarshipWeaponFacingFields(schema) {
-	schema.firingArc = new StringField({
-		required: true,
-		blank: true,
-		initial: "",
-		label: "SW5E.StarshipWeaponFacing"
-	});
-	schema.turreted = new BooleanField({
-		required: true,
-		initial: false,
-		label: "SW5E.StarshipWeaponTurreted"
-	});
-}
-
 export function patchDataModels() {
 	// Powercasting
 	libWrapper.register(getModuleId(), 'dnd5e.dataModels.item.ClassData.defineSchema', addProgression, 'WRAPPER');
@@ -228,7 +216,12 @@ export function patchDataModels() {
 	libWrapper.register(getModuleId(), 'dnd5e.dataModels.item.WeaponData.defineSchema', function (wrapped, ...args) {
 		const result = wrapped(...args);
 		changeProficiency(result, "weapon");
-		addStarshipWeaponFacingFields(result);
+		addStarshipWeaponFacingFields(result, { StringField, BooleanField });
+		return result;
+	}, 'WRAPPER');
+	libWrapper.register(getModuleId(), 'dnd5e.dataModels.item.EquipmentData.defineSchema', function (wrapped, ...args) {
+		const result = wrapped(...args);
+		addStarshipEquipmentRegenRateField(result, { SchemaField, NumberField, StringField });
 		return result;
 	}, 'WRAPPER');
 

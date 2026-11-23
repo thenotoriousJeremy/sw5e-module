@@ -9,6 +9,7 @@ import { patchMedpac } from "./patch/medpac.mjs";
 import { patchBlasterReload } from "./patch/blaster-reload.mjs";
 import { patchBlasterAmmoUx } from "./patch/blaster-ammo-ux.mjs";
 import { patchChassisItemSheet } from "./patch/chassis-item-sheet.mjs";
+import { patchStarshipWeaponFacing } from "./patch/starship-weapon-facing.mjs";
 import { patchPowercasting } from "./patch/powercasting.mjs";
 import { patchForceRecovery } from "./patch/force-recovery.mjs";
 import { patchIdealOfTheTranquil } from "./patch/ideal-of-the-tranquil.mjs";
@@ -57,7 +58,6 @@ import { patchCharacterSheetTabNavigation } from "./patch/character-sheet-tab-na
 import { patchSpecialTraitsSheet } from "./patch/special-traits-sheet.mjs";
 import { patchSpecies } from "./patch/species.mjs";
 import { patchStealth } from "./patch/stealth.mjs";
-import { patchStarshipWeaponFacing } from "./patch/starship-weapon-facing.mjs";
 import { registerSneakAttackAutoBridge } from "./patch/sneak-attack-auto.mjs";
 import { getCharacterDeploymentSummary } from "./character-deployments.mjs";
 import { registerCharacterFeaturesDiagnostics } from "./dev/character-features-diagnostics.mjs";
@@ -133,6 +133,7 @@ Hooks.once('init', async function() {
 	patchProperties();
 	patchEquippableAttunement();
 	patchChassisItemSheet();
+	patchStarshipWeaponFacing();
 	patchStarshipCreate();
 	patchStarshipPrepare();
 	patchStarshipArmorClassConfig();
@@ -159,7 +160,6 @@ Hooks.once('init', async function() {
 	patchSpecialTraitsSheet();
 	patchSpecies();
 	patchStealth();
-	patchStarshipWeaponFacing();
 	registerSneakAttackAutoBridge();
 	patchArgonCombatHud();
 	patchDaeIntegration();

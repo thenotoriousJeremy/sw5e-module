@@ -1,6 +1,27 @@
 import { getModuleId } from "../module-support.mjs";
 import { isStarshipWeaponItem } from "../starship-weapon-rolls.mjs";
 
+/**
+ * Facing and turret are descriptive metadata on every weapon document.
+ * Defaults apply only when the source value is absent. Blank facing stays blank.
+ * @param {object} schema
+ * @param {{ StringField: Function, BooleanField: Function }} fields
+ */
+export function addStarshipWeaponFacingFields(schema, { StringField, BooleanField }) {
+	schema.firingArc = new StringField({
+		required: true,
+		blank: true,
+		initial: "",
+		label: "SW5E.StarshipWeaponFacing"
+	});
+	schema.turreted = new BooleanField({
+		required: true,
+		initial: false,
+		label: "SW5E.StarshipWeaponTurreted"
+	});
+	return schema;
+}
+
 const HOST_CLASS = "sw5e-starship-weapon-facing";
 const MENU_CLASS = "sw5e-firing-arc-menu";
 const OPTION_CLASS = "sw5e-firing-arc-option";
